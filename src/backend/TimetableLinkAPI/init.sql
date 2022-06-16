@@ -1,19 +1,19 @@
-use timetable;
+USE timetable;
 
-create table mailingList(
-    id bigint primary key auto_increment,
-    textIdentifier varchar(40) unique
+CREATE TABLE mailingList(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    textIdentifier VARCHAR(40) UNIQUE
 );
 
-create table email(
-    id bigint primary key auto_increment,
-    emailAddress varchar(60) unique
+CREATE TABLE email(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    emailAddress VARCHAR(60) UNIQUE
 );
 
-create table emailBelonging(
-    id bigint primary key auto_increment,
-    emailId bigint,
-    mailingListId bigint,
-    foreign key (emailId) references email (id) on delete cascade,
-    foreign key (mailingListId) references mailingList (id) on delete cascade
+CREATE TABLE emailBelonging(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    emailId BIGINT,
+    mailingListId BIGINT,
+    FOREIGN KEY (emailId) REFERENCES email (id) ON DELETE CASCADE,
+    FOREIGN KEY (mailingListId) references mailingList (id) ON DELETE CASCADE
 );

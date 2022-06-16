@@ -1,15 +1,14 @@
 package com.timetable.event;
 
-import com.timetable.outlook.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventService {
-    private final EventManager eventManager;
+    private final OutlookEventManager eventManager;
 
     @Autowired
-    public EventService(EventManager eventManager) {
+    public EventService(OutlookEventManager eventManager) {
         this.eventManager = eventManager;
     }
 
