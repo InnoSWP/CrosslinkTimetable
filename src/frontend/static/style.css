@@ -174,7 +174,7 @@
       position: relative;
       width: 420px;
       height: 75px;
-      background: rgba(164, 164, 164, 1);
+      background: rgb(175, 225, 175);/*rgba(164, 164, 164, 1); */
       margin-top: 5px;
       border-radius: 4px;
     }
@@ -389,28 +389,28 @@
   width: 160px;
   background-color: transparent;
   border: transparent;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
   margin-right: 20px;
-  color: white;
+  color: rgba(0, 0, 0);
 }
 
 .eventtitle::placeholder, .eventlocation::placeholder {
-  color: rgba(255, 255, 255, .5);
+  color: rgba(0, 0, 0, .5);
 }
 .eventlocation {
-  color: white;
+  color: black;
   width: 160px;
   background-color: transparent;
   border: transparent;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
 }
 
 .eventstarttime {
   width: 130px;
   background-color: transparent;
   border: transparent;
-  color: white;
-  border-bottom: 1px solid white;
+  color: rgba(0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
   margin-right: 20px;
 }
 
@@ -425,14 +425,14 @@
   width: 130px;
   background-color: transparent;
   border: transparent;
-  color: white;
-  border-bottom: 1px solid white;
+  color: rgba(0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
   margin-right: 20px;
 }
 
 .eventsubmit {
   background-color: transparent;
-  color: white;
+  color: rgba(0, 0, 0);
   width: 40px;
   border-color: transparent;
 }
