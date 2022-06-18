@@ -1,53 +1,31 @@
 package com.timetable.event;
 
-import microsoft.exchange.webservices.data.autodiscover.IAutodiscoverRedirectionUrl;
+import com.timetable.outlook.OutlookConnector;
 import microsoft.exchange.webservices.data.core.ExchangeService;
-import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
 import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
-import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.property.complex.EmailAddress;
-import microsoft.exchange.webservices.data.property.complex.MessageBody;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
-@PropertySource("classpath:personal.properties")
 public class OutlookEventManager {
-    private ExchangeService service;
-    private ExchangeCredentials credentials;
+    private final ExchangeService service;
 
-    public OutlookEventManager(
-            @Value("${personal.email}") String personalEmail,
-            @Value("${personal.password}") String personalPassword) {
-        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-        ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
-        service.setCredentials(credentials);
-        try {
-            service.autodiscoverUrl(
-                    personalEmail, new RedirectionUrlCallback());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Autowired
+    public OutlookEventManager(OutlookConnector connector) {
+        service = connector.getService();
     }
 
-    public Long createEvent(Event event) throws Exception {
+    public void createEvent(Event event) throws Exception {
         Appointment appointment = new Appointment(service);
         appointment.setSubject(event.getName());
         appointment.setStart(event.getStartDate());
         appointment.setEnd(event.getEndDate());
         appointment.setLocation(event.getLocation());
+        //appointment.getRequiredAttendees().add(new Attendee("m.bhuiyan@innopolis.university"));
         appointment.save();
-        //EmailAddress email = new EmailAddress("i.kornienko@innopolis.university");
+        //EmailAddress email = new EmailAddress("m.bhuiyan@innopolis.university");
         //appointment.forward(MessageBody.getMessageBodyFromText("Come to the meeting!"), email);
-    }
-
-    private static class RedirectionUrlCallback implements IAutodiscoverRedirectionUrl {
-        public boolean autodiscoverRedirectionUrlValidationCallback(
-                String redirectionUrl) {
-            return redirectionUrl.toLowerCase().startsWith("https://");
-        }
     }
 }

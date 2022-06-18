@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -14,6 +15,7 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class SpringJdbcConfig {
     @Bean
+   //@Primary
     public DataSource mySqlDataSource(
             @Value("${spring.datasource.username}") String username,
             @Value("${spring.datasource.url}") String url,
@@ -30,7 +32,6 @@ public class SpringJdbcConfig {
     }
 
     @Bean
-    @Autowired
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }

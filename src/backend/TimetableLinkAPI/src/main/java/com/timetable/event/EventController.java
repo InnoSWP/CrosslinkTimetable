@@ -28,4 +28,11 @@ public class EventController {
                                          @PathVariable String mailingListTextIdentifier) {
 
     }
+
+    @PutMapping("/{eventId}/cancelInvitation/{mailingListTextIdentifier}")
+    public void cancelInvitationForEveryoneFromList(
+            @PathVariable Long eventId,
+            @PathVariable String mailingListTextIdentifier) {
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.timetable.mailing_list;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -11,9 +12,16 @@ public class MailingListMySQLRepository implements MailingListRepository {
 
     @Autowired
     public MailingListMySQLRepository(JdbcTemplate jdbcTemplate) {
+        //System.out.println("1");
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    @Override
+    public List<String> getMailingListsNames() {
+        return jdbcTemplate.queryForList(
+                "SELECT textIdentifier FROM MailingList", String.class);
+    }
 
     @Override
     public void createMailingList(MailingList mailingList) {
@@ -56,12 +64,16 @@ public class MailingListMySQLRepository implements MailingListRepository {
 
     @Override
     public void addEmailToList(Long mailingListId, String emailAddress) {
-        jdbcTemplate.update(
-                "INSERT INTO email (emailAddress) VALUES (?);",
-                emailAddress);
+        try {
+            jdbcTemplate.update(
+                    """
+                        INSERT INTO email (emailAddress) VALUES (?)
+                        """, emailAddress);
+        }
+        catch (Exception ignored) {}
         jdbcTemplate.update(
                 """
-                    INSERT INTO emailBelonging (mailingListId, emailId))
+                    INSERT INTO emailBelonging (mailingListId, emailId)
                     SELECT ?, id FROM email
                     WHERE emailAddress = ?
                     """, mailingListId, emailAddress);
