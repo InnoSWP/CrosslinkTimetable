@@ -214,7 +214,6 @@
         var arrow = createElement('div', 'arrow');
   
         //Create the event wrapper
-  
         details.appendChild(arrow);
         el.parentNode.appendChild(details);
       }
@@ -285,7 +284,6 @@
         submitForm.setAttribute('value', '➔');
         eventForm.appendChild(eventTitle);
         eventForm.appendChild(eventLocation);
-        eventForm.appendChild(eventDescription);
         eventForm.appendChild(br.cloneNode());
         eventForm.appendChild(eventStart);
         eventForm.appendChild(eventEnd);

@@ -173,7 +173,7 @@
     .details {
       position: relative;
       width: 420px;
-      height: 125px;
+      height: 100px;
       background: rgb(175, 225, 175);/*rgba(164, 164, 164, 1); */
       margin-top: 5px;
       border-radius: 4px;
@@ -205,7 +205,7 @@
     }
     
     .events {
-      height: 125px;
+      height: 100px;
       padding: 7px 0;
       overflow-y: auto;
       overflow-x: hidden;
