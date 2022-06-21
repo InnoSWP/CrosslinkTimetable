@@ -257,9 +257,6 @@
         var eventLocation = createElement('input', 'eventlocation');
         eventLocation.setAttribute('type', 'text');
         eventLocation.setAttribute('placeholder', 'Event Location');
-        var eventDescription = createElement('input', 'eventdescription');
-        eventDescription.setAttribute('type', 'text');
-        eventDescription.setAttribute('placeholder', 'Event Description');
         let times = [
           '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', 
           '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', 
