@@ -22,9 +22,9 @@
       -webkit-transform: translate3d(0, 0, 0);
       -moz-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
-      width: 420px;
+      width: 440px;
       margin: 0 auto;
-      height: 570px;
+      height: 700px;
       overflow: hidden;
     }
     
@@ -173,7 +173,7 @@
     .details {
       position: relative;
       width: 420px;
-      height: 100px;
+      height: 125px;
       background: rgb(175, 225, 175);/*rgba(164, 164, 164, 1); */
       margin-top: 5px;
       border-radius: 4px;
@@ -205,7 +205,7 @@
     }
     
     .events {
-      height: 100px;
+      height: 125px;
       padding: 7px 0;
       overflow-y: auto;
       overflow-x: hidden;
@@ -437,6 +437,14 @@
   color: rgba(0, 0, 0);
   border-bottom: 1px solid rgba(0, 0, 0, .5);
   margin-right: 20px;
+}
+
+.eventmembers {
+    color: black;
+    width: 345px;
+    background-color: transparent;
+    border: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, .5);
 }
 
 .eventsubmit {

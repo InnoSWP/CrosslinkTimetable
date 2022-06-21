@@ -269,6 +269,9 @@
           '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', 
           '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
         ]
+        let emails = [] // TODO : Here we need to add all groups of emails
+        var eventMembers = createElement('select', 'eventmembers')
+        eventMembers.appendChild(new Option("Group", 'Group', true));
         var eventStart = createElement('select', 'eventstarttime');
         eventStart.appendChild(new Option('Start', 'Start', true));
         var eventEnd = createElement('select', 'eventendtime');
@@ -276,6 +279,9 @@
         times.forEach(function(item, _){
           eventStart.appendChild(new Option(item, item));
           eventEnd.appendChild(new Option(item, item));
+        });
+        emails.forEach(function(item, _){
+          eventMembers.appendChild(new Option(item, item))
         });
         var submitForm = createElement('input', 'eventsubmit');
         submitForm.setAttribute('type', 'submit');
@@ -286,6 +292,7 @@
         eventForm.appendChild(br.cloneNode());
         eventForm.appendChild(eventStart);
         eventForm.appendChild(eventEnd);
+        eventForm.appendChild(eventMembers);
         eventForm.appendChild(submitForm);
         div.appendChild(eventForm);
         wrapper.appendChild(div);
