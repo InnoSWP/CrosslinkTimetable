@@ -1,15 +1,15 @@
 !function() {
 
-    var today = moment();
+    let today = moment();
   
     function Calendar(selector, events) {
       this.el = document.querySelector(selector);
       this.events = events;
       this.current = moment().date(1);
       this.draw();
-    //   var current = document.querySelector('.today');
+    //   let current = document.querySelector('.today');
     //   if(current) {
-    //     var self = this;
+    //     let self = this;
     //     window.setTimeout(function() {
     //       self.openDay(current);
     //     }, 500);
@@ -27,7 +27,7 @@
     }
   
     Calendar.prototype.drawHeader = function() {
-      var self = this;
+      let self = this;
       if(!this.header) {
         //Create the header elements
         this.header = createElement('div', 'header');
@@ -35,10 +35,10 @@
   
         this.title = createElement('h1');
   
-        var right = createElement('div', 'right');
+        let right = createElement('div', 'right');
         right.addEventListener('click', function() { self.nextMonth(); });
   
-        var left = createElement('div', 'left');
+        let left = createElement('div', 'left');
         left.addEventListener('click', function() { self.prevMonth(); });
   
         //Append the Elements
@@ -52,7 +52,7 @@
     }
   
     Calendar.prototype.drawMonth = function() {
-      var self = this;
+      let self = this;
       
       this.events.forEach(function(ev) {
        d = Math.random() * (29 - 1) + 1
@@ -85,31 +85,31 @@
     }
   
     Calendar.prototype.backFill = function() {
-      var clone = this.current.clone();
-      var dayOfWeek = clone.day();
+      let clone = this.current.clone();
+      let dayOfWeek = clone.day();
   
       if(!dayOfWeek) { return; }
   
       clone.subtract('days', dayOfWeek+1);
   
-      for(var i = dayOfWeek; i > 0 ; i--) {
+      for(let i = dayOfWeek; i > 0 ; i--) {
         this.drawDay(clone.add('days', 1));
       }
     }
   
     Calendar.prototype.fowardFill = function() {
-      var clone = this.current.clone().add('months', 1).subtract('days', 1);
-      var dayOfWeek = clone.day();
+      let clone = this.current.clone().add('months', 1).subtract('days', 1);
+      let dayOfWeek = clone.day();
   
       if(dayOfWeek === 6) { return; }
   
-      for(var i = dayOfWeek; i < 6 ; i++) {
+      for(let i = dayOfWeek; i < 6 ; i++) {
         this.drawDay(clone.add('days', 1));
       }
     }
   
     Calendar.prototype.currentMonth = function() {
-      var clone = this.current.clone();
+      let clone = this.current.clone();
   
       while(clone.month() === this.current.month()) {
         this.drawDay(clone);
@@ -125,24 +125,24 @@
     }
   
     Calendar.prototype.drawDay = function(day) {
-      var self = this;
+      let self = this;
       this.getWeek(day);
   
       //Outer Day
-      var outer = createElement('div', this.getDayClass(day));
+      let outer = createElement('div', this.getDayClass(day));
       outer.addEventListener('click', function() {
         self.openDay(this);
       });
   
       //Day Name
-      var name = createElement('div', 'day-name', day.format('ddd'));
+      let name = createElement('div', 'day-name', day.format('ddd'));
   
       //Day Number
-      var number = createElement('div', 'day-number', day.format('DD'));
+      let number = createElement('div', 'day-number', day.format('DD'));
   
   
       //Events
-      var events = createElement('div', 'day-events');
+      let events = createElement('div', 'day-events');
       this.drawEvents(day, events);
   
       outer.appendChild(name);
@@ -153,7 +153,7 @@
   
     Calendar.prototype.drawEvents = function(day, element) {
       if(day.month() === this.current.month()) {
-        var todaysEvents = this.events.reduce(function(memo, ev) {
+        let todaysEvents = this.events.reduce(function(memo, ev) {
           if(ev.date.isSame(day, 'day')) {
             memo.push(ev);
           }
@@ -161,7 +161,7 @@
         }, []);
   
         todaysEvents.forEach(function(ev) {
-          var evSpan = createElement('span', ev.color);
+          let evSpan = createElement('span', ev.color);
           element.appendChild(evSpan);
         });
       }
@@ -178,11 +178,11 @@
     }
   
     Calendar.prototype.openDay = function(el) {
-      var details, arrow;
-      var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
-      var day = this.current.clone().date(dayNumber);
+      let details, arrow;
+      let dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
+      let day = this.current.clone().date(dayNumber);
   
-      var currentOpened = document.querySelector('.details');
+      let currentOpened = document.querySelector('.details');
   
       //Check to see if there is an open detais box on the current row
       if(currentOpened && currentOpened.parentNode === el.parentNode) {
@@ -211,7 +211,7 @@
         details = createElement('div', 'details in');
   
         //Create the arrow
-        var arrow = createElement('div', 'arrow');
+        let arrow = createElement('div', 'arrow');
   
         //Create the event wrapper
   
@@ -219,7 +219,7 @@
         el.parentNode.appendChild(details);
       }
   
-      var todaysEvents = this.events.reduce(function(memo, ev) {
+      let todaysEvents = this.events.reduce(function(memo, ev) {
         if(ev.date.isSame(day, 'day')) {
           memo.push(ev);
         }
@@ -233,13 +233,13 @@
   
     Calendar.prototype.renderEvents = function(events, ele) {
       //Remove any events in the current details element
-      var currentWrapper = ele.querySelector('.events');
-      var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
+      let currentWrapper = ele.querySelector('.events');
+      let wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
   
       events.forEach(function(ev) {
-        var div = createElement('div', 'event');
-        var square = createElement('div', 'event-category ' + ev.color);
-        var span = createElement('span', '', ev.eventName);
+        let div = createElement('div', 'event');
+        let square = createElement('div', 'event-category ' + ev.color);
+        let span = createElement('span', '', ev.eventName);
   
         div.appendChild(square);
         div.appendChild(span);
@@ -247,17 +247,17 @@
       });
   
       if(!events.length) {
-        var div = createElement('div', 'event empty');
-        var br = createElement('br');
-        var eventForm = createElement("form");
+        let div = createElement('div', 'event empty');
+        let br = createElement('br');
+        let eventForm = createElement("form");
         eventForm.setAttribute("method", "post");
-        var eventTitle = createElement('input', 'eventtitle');
+        let eventTitle = createElement('input', 'eventtitle');
         eventTitle.setAttribute('type', 'text');
         eventTitle.setAttribute('placeholder', 'Event Title');
-        var eventLocation = createElement('input', 'eventlocation');
+        let eventLocation = createElement('input', 'eventlocation');
         eventLocation.setAttribute('type', 'text');
         eventLocation.setAttribute('placeholder', 'Event Location');
-        var eventDescription = createElement('input', 'eventdescription');
+        let eventDescription = createElement('input', 'eventdescription');
         eventDescription.setAttribute('type', 'text');
         eventDescription.setAttribute('placeholder', 'Event Description');
         let times = [
@@ -269,15 +269,15 @@
           '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', 
           '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
         ]
-        var eventStart = createElement('select', 'eventstarttime');
+        let eventStart = createElement('select', 'eventstarttime');
         eventStart.appendChild(new Option('Start', 'Start', true));
-        var eventEnd = createElement('select', 'eventendtime');
+        let eventEnd = createElement('select', 'eventendtime');
         eventEnd.appendChild(new Option('End', 'End', true));
         times.forEach(function(item, _){
           eventStart.appendChild(new Option(item, item));
           eventEnd.appendChild(new Option(item, item));
         });
-        var submitForm = createElement('input', 'eventsubmit');
+        let submitForm = createElement('input', 'eventsubmit');
         submitForm.setAttribute('type', 'submit');
         submitForm.setAttribute('value', '➔');
         eventForm.appendChild(eventTitle);
@@ -315,8 +315,8 @@
     }
   
     Calendar.prototype.drawLegend = function() {
-      var legend = createElement('div', 'legend');
-      var calendars = this.events.map(function(e) {
+      let legend = createElement('div', 'legend');
+      let calendars = this.events.map(function(e) {
         return e.calendar + '|' + e.color;
       }).reduce(function(memo, e) {
         if(memo.indexOf(e) === -1) {
@@ -324,8 +324,8 @@
         }
         return memo;
       }, []).forEach(function(e) {
-        var parts = e.split('|');
-        var entry = createElement('span', 'entry ' +  parts[1], parts[0]);
+        let parts = e.split('|');
+        let entry = createElement('span', 'entry ' +  parts[1], parts[0]);
         legend.appendChild(entry);
       });
       this.el.appendChild(legend);
@@ -346,7 +346,7 @@
     window.Calendar = Calendar;
   
     function createElement(tagName, className, innerText) {
-      var ele = document.createElement(tagName);
+      let ele = document.createElement(tagName);
       if(className) {
         ele.className = className;
       }
@@ -358,7 +358,7 @@
   }();
   
   !function() {
-    var data = [
+    let data = [
     ];
   
     
@@ -367,7 +367,7 @@
       
     }
   
-    var calendar = new Calendar('#calendar', data);
+    let calendar = new Calendar('#calendar', data);
   
   }();
   
