@@ -4,27 +4,23 @@ import java.util.Date;
 
 
 public class Event {
-    private final Long id;
     private final String name;
     private final Date startDate;
     private final Date endDate;
     private final String location;
+    private final String id;
 
 
-    public Event(Long id,
-                 String name,
+    public Event(String name,
                  Date startDate,
                  Date endDate,
-                 String location) {
-        this.id = id;
+                 String location,
+                 String id) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
-    }
-
-    public Long getId() {
-        return id;
+        this.id = id;
     }
 
     public String getName() {
@@ -43,4 +39,7 @@ public class Event {
         return location;
     }
 
+    public String getId() {
+        return id;
+    }
 }

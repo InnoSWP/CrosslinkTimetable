@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class MailingListMySQLRepository implements MailingListRepository {
@@ -12,7 +16,6 @@ public class MailingListMySQLRepository implements MailingListRepository {
 
     @Autowired
     public MailingListMySQLRepository(JdbcTemplate jdbcTemplate) {
-        //System.out.println("1");
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -20,14 +23,21 @@ public class MailingListMySQLRepository implements MailingListRepository {
     @Override
     public List<String> getMailingListsNames() {
         return jdbcTemplate.queryForList(
-                "SELECT textIdentifier FROM MailingList", String.class);
+                "SELECT textIdentifier FROM mailingList", String.class);
     }
 
     @Override
     public void createMailingList(MailingList mailingList) {
-        jdbcTemplate.update(
-                "INSERT INTO mailingList (textIdentifier) values (?)",
-                mailingList.getTextIdentifier());
+        String textIdentifier = mailingList.getTextIdentifier();
+
+        try {
+            jdbcTemplate.update(
+                    "INSERT INTO mailingList (textIdentifier) values (?)",
+                    textIdentifier);
+        } catch (Exception ignored) {}
+
+        Long mailingListId = getMailingListId(textIdentifier);
+        mailingList.getEmails().forEach(email -> addEmailToList(mailingListId, email));
     }
 
     @Override
@@ -51,6 +61,16 @@ public class MailingListMySQLRepository implements MailingListRepository {
         String textIdentifier = getTextIdentifier(mailingListId);
         return new MailingList(textIdentifier, suitableEmails);
     }
+
+    @Override
+    public List<MailingList> getAllMailingLists() {
+        List<Long> ids = jdbcTemplate.queryForList(
+                "SELECT id FROM mailingList", Long.class);
+        return ids.stream()
+                .map(this::getMailingList)
+                .toList();
+    }
+
 
     @Override
     public void deleteMailingList(Long mailingListId) {
@@ -81,9 +101,15 @@ public class MailingListMySQLRepository implements MailingListRepository {
 
     @Override
     public void deleteEmailFromList(Long mailingListId, String emailAddress) {
+        Long emailId = jdbcTemplate.queryForObject(
+                """
+                    SELECT email.id FROM email
+                    JOIN emailBelonging ON email.id = emailBelonging.emailId 
+                    WHERE email.emailAddress = ?; 
+                    """, Long.class, emailAddress);
         jdbcTemplate.update(
-                "DELETE FROM emailBelonging WHERE mailingListId = ?",
-                mailingListId);
+                "DELETE FROM emailBelonging WHERE mailingListId = ? AND emailId = ?",
+                mailingListId, emailId);
         jdbcTemplate.update(
                 """
                     DELETE FROM email
@@ -91,6 +117,27 @@ public class MailingListMySQLRepository implements MailingListRepository {
                     (SELECT emailId FROM emailBelonging);
                     """);
     }
+
+    @Override
+    public boolean mailingListExists(String textIdentifier) {
+        Long count = jdbcTemplate.queryForObject(
+                "SELECT count(id) FROM mailingList WHERE textIdentifier = ?", Long.class, textIdentifier);
+        return count != null && count.compareTo(0L) > 0;
+    }
+
+    @Override
+    public void updateMailingList(MailingList mailingList) {
+        Long id = getMailingListId(mailingList.getTextIdentifier());
+        Set<String> oldEmails = new HashSet<>(getEmailsByListId(id));
+        Set<String> newEmails = new HashSet<>(mailingList.getEmails());
+        Set<String> emailsToDelete = new HashSet<>(oldEmails);
+        emailsToDelete.removeAll(newEmails);
+        Set<String> emailsToAdd = new HashSet<>(newEmails);
+        emailsToAdd.removeAll(oldEmails);
+        emailsToDelete.forEach(email -> deleteEmailFromList(id, email));
+        emailsToAdd.forEach(email -> addEmailToList(id, email));
+    }
+
 
     private List<String> getEmailsByListId(Long mailingListId) {
         String getEmailsSqlRequest =
@@ -111,4 +158,5 @@ public class MailingListMySQLRepository implements MailingListRepository {
                 getMailingListTextIdentifierSql, String.class, mailingListId);
 
     }
+
 }

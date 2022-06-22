@@ -1,9 +1,5 @@
 package com.timetable.mailing_list;
 
-import microsoft.exchange.webservices.data.core.service.item.Contact;
-import microsoft.exchange.webservices.data.core.service.item.Item;
-import microsoft.exchange.webservices.data.core.service.schema.ServiceObjectSchema;
-import microsoft.exchange.webservices.data.search.FindItemsResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -28,13 +24,13 @@ public class MailingListController {
         mailingListService.deleteMailingList(textIdentifier);
     }
 
-    @PutMapping("/{textIdentifier}/emails")
+    @PatchMapping("/{textIdentifier}/emails/add")
     public void addEmailsToList(@PathVariable String textIdentifier,
                                 @RequestBody List<String> emails) {
         mailingListService.addEmailsToList(textIdentifier, emails);
     }
 
-    @DeleteMapping("/{textIdentifier}/emails")
+    @PatchMapping("/{textIdentifier}/emails/delete")
     public void deleteEmailsFromList(@PathVariable String textIdentifier,
                                      @RequestBody List<String> emails) {
         mailingListService.deleteEmailsFromList(textIdentifier, emails);
@@ -45,7 +41,17 @@ public class MailingListController {
         return mailingListService.getEmailsFromList(textIdentifier);
     }
 
-    @GetMapping("/mailingListsNames")
+    @GetMapping("/{textIdentifier}")
+    public MailingList getMailingList(@PathVariable String textIdentifier) {
+        return mailingListService.getMailingList(textIdentifier);
+    }
+
+    @GetMapping()
+    public List<MailingList> getAllMailingLists() {
+        return mailingListService.getAllMailingLists();
+    }
+
+    @GetMapping("/names")
     public List<String> getMailingListsNames() {
         return mailingListService.getMailingListsNames();
     }
