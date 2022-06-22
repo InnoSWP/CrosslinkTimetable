@@ -10,10 +10,12 @@
     //   let current = document.querySelector('.today');
     //   if(current) {
     //     let self = this;
+
     //     window.setTimeout(function() {
     //       self.openDay(current);
     //     }, 500);
     //   }
+
   }
 
   Calendar.prototype.draw = function() {
@@ -160,6 +162,7 @@
         }
         return memo;
       }, []);
+
 
       todaysEvents.forEach(function(ev) {
         let evSpan = createElement('span', ev.color);
@@ -403,3 +406,4 @@
   let calendar = new Calendar('#calendar', data);
 
 }();
+
