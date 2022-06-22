@@ -187,7 +187,7 @@
     let currentOpened = document.querySelector('.details');
 
     //Check to see if there is an open detais box on the current row
-    if (true){ //(currentOpened && currentOpened.parentNode === el.parentNode) {
+    //if (true){ //(currentOpened && currentOpened.parentNode === el.parentNode) {
       //   details = currentOpened;
       //   arrow = document.querySelector('.arrow');
       // } else {
@@ -215,13 +215,13 @@
       details.setAttribute('data-date', dayNumber);
 
       //Create the arrow
-      let arrow = createElement('div', 'arrow');
+      arrow = createElement('div', 'arrow');
 
       //Create the event wrapper
 
       details.appendChild(arrow);
       el.parentNode.appendChild(details);
-    }
+    //}
 
     let todaysEvents = this.events.reduce(function(memo, ev) {
       if(ev.date.isSame(day, 'day')) {
@@ -299,7 +299,7 @@
         let endTime = document.getElementById('eventendtime').value;
         let name = document.getElementById('eventtitle').value;
         let location = document.getElementById('eventlocation').value;
-        dict = {
+        let dict = {
           "January": '01', "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "Jule": "07",
           "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
         };
@@ -308,15 +308,13 @@
         let year = monyear[1];
         let formattedStart = `${year}-${month}-${date}T${startTime}:00.000+03:00`;
         let formattedEnd = `${year}-${month}-${date}T${endTime}:00.000+03:00`;
-        console.log(formattedStart)
-        console.log(formattedEnd);
 
         fetch("/events", {
           method: 'POST',
           body: JSON.stringify({"name": name,
             "location": location,
-            "startDate": startTime,
-            "endDate": endTime})
+            "startDate": formattedStart,
+            "endDate": formattedEnd})
         })
             .then (response => response.json())
             .then (() => {
@@ -405,4 +403,3 @@
   let calendar = new Calendar('#calendar', data);
 
 }();
-  
