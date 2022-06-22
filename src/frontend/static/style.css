@@ -173,7 +173,7 @@
     .details {
       position: relative;
       width: 420px;
-      height: 100px;
+      height: 75px;
       background: rgb(175, 225, 175);/*rgba(164, 164, 164, 1); */
       margin-top: 5px;
       border-radius: 4px;
@@ -205,7 +205,7 @@
     }
     
     .events {
-      height: 100px;
+      height: 75px;
       padding: 7px 0;
       overflow-y: auto;
       overflow-x: hidden;
@@ -394,7 +394,7 @@
   color: rgba(0, 0, 0);
 }
 
-.eventtitle::placeholder, .eventlocation::placeholder, .eventdescription {
+.eventtitle::placeholder, .eventlocation::placeholder {
   color: rgba(0, 0, 0, .5);
 }
 .eventlocation {
@@ -403,14 +403,6 @@
   background-color: transparent;
   border: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, .5);
-}
-
-.eventdescription {
-    color: black;
-    width: 345px;
-    background-color: transparent;
-    border: transparent;
-    border-bottom: 1px solid rgba(0, 0, 0, .5);
 }
 
 
