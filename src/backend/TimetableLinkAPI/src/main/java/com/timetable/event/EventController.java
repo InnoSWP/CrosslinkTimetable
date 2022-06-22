@@ -23,6 +23,7 @@ public class EventController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:63342")
     public String createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());
         String eventId = null;
