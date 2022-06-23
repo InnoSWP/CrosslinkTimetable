@@ -99,6 +99,15 @@ public class EventController {
         return events;
     }
 
+    @GetMapping("/names")
+    public List<String> getAllNames() {
+        List<String> names = null;
+        try {
+            names = getAllEvents().stream().map(Event::getName).toList();
+        } catch (Exception ex) {}
+        return names;
+    }
+
     @PatchMapping ("/{eventId}/invite/{mailingListTextIdentifier}")
     public void inviteAllFromMailingList(@PathVariable String eventId,
                                          @PathVariable String mailingListTextIdentifier) {

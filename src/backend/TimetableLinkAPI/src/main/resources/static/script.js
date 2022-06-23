@@ -406,3 +406,4 @@
   let calendar = new Calendar('#calendar', data);
 
 }();
+
