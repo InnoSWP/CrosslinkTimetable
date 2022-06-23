@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1dcff86c-bb4f-43e6-ae1d-9c54f56225ed" name="Changes" comment="commit to test" />
+    <list default="true" id="1dcff86c-bb4f-43e6-ae1d-9c54f56225ed" name="Changes" comment="commit to test">
+      <change afterPath="$PROJECT_DIR$/src/frontend/static/edit_mailing_list.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/frontend/views/edit_event.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/frontend/views/edit_mailing_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/static/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/views/post_mailing_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/views/post_mailing_list.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -28,6 +37,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/frontend/static/script.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="2Aq8HXrikx2AhjNE4Z4Tof6bo3r" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -40,8 +52,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Front end/GitHub/oldcoachman.github.io" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="D:\Applications\Tools\IntelliJ IDEA 2021.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -89,7 +102,7 @@
       <workItem from="1655914965152" duration="2074000" />
       <workItem from="1655924774303" duration="530000" />
       <workItem from="1655925336141" duration="2061000" />
-      <workItem from="1655927429680" duration="482000" />
+      <workItem from="1655927429680" duration="4268000" />
     </task>
     <task id="LOCAL-00001" summary="commit to test">
       <created>1655885236014</created>
