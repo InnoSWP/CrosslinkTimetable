@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create mailing list</title>
+</head>
+<body>
+<form>
+    <label for="mails">Enter emails separated by a space: </label>
+    <input type="text" id="mails">
+    <br>
+    <label for="mailingListName">Enter name: </label>
+    <input type="text" id="mailingListName">
+    <br>
+    <button id="createBtn">
+        Create
+    </button>
+</form>
+</body>
+<script>
+    let btn = document.getElementById("createBtn");
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        let mailsStr = document.getElementById("mails").value;
+        let mailsArray = mailsStr.split(" ");
+        let mailsName = document.getElementById("mailingListName").value;
+        console.log(mailsStr)
+        console.log(mailsName)
+        for (let i = 0; i < mailsArray.length; i++)
+            console.log(mailsArray[i])
+        fetch("/events", {
+            method: 'POST',
+            body: JSON.stringify({
+                'emails': mailsArray,
+                'textIdentifier': mailsName})
+        })
+            .then (response => response.json())
+            .then (() => {
+                alert("Mailing list is added successfully!");
+            })
+            .catch(error => console.log(error));
+    })
+</script>
+</html>

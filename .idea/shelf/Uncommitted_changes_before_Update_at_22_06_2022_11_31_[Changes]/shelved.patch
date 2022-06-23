@@ -1,0 +1,779 @@
+Index: CrosslinkTimetable/src/frontend/static/script.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>!function() {\r\n\r\n    var today = moment();\r\n  \r\n    function Calendar(selector, events) {\r\n      this.el = document.querySelector(selector);\r\n      this.events = events;\r\n      this.current = moment().date(1);\r\n      this.draw();\r\n    //   var current = document.querySelector('.today');\r\n    //   if(current) {\r\n    //     var self = this;\r\n    //     window.setTimeout(function() {\r\n    //       self.openDay(current);\r\n    //     }, 500);\r\n    //   }\r\n    }\r\n  \r\n    Calendar.prototype.draw = function() {\r\n      //Create Header\r\n      this.drawHeader();\r\n  \r\n      //Draw Month\r\n      this.drawMonth();\r\n  \r\n      this.drawLegend();\r\n    }\r\n  \r\n    Calendar.prototype.drawHeader = function() {\r\n      var self = this;\r\n      if(!this.header) {\r\n        //Create the header elements\r\n        this.header = createElement('div', 'header');\r\n        this.header.className = 'header';\r\n  \r\n        this.title = createElement('h1');\r\n  \r\n        var right = createElement('div', 'right');\r\n        right.addEventListener('click', function() { self.nextMonth(); });\r\n  \r\n        var left = createElement('div', 'left');\r\n        left.addEventListener('click', function() { self.prevMonth(); });\r\n  \r\n        //Append the Elements\r\n        this.header.appendChild(this.title); \r\n        this.header.appendChild(right);\r\n        this.header.appendChild(left);\r\n        this.el.appendChild(this.header);\r\n      }\r\n  \r\n      this.title.innerHTML = this.current.format('MMMM YYYY');\r\n    }\r\n  \r\n    Calendar.prototype.drawMonth = function() {\r\n      var self = this;\r\n      \r\n      this.events.forEach(function(ev) {\r\n       d = Math.random() * (29 - 1) + 1\r\n       ev.date = self.current.clone().date(d);\r\n      });\r\n      \r\n      \r\n      if(this.month) {\r\n        this.oldMonth = this.month;\r\n        this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');\r\n        this.oldMonth.addEventListener('webkitAnimationEnd', function() {\r\n          self.oldMonth.parentNode.removeChild(self.oldMonth);\r\n          self.month = createElement('div', 'month');\r\n          self.backFill();\r\n          self.currentMonth();\r\n          self.fowardFill();\r\n          self.el.appendChild(self.month);\r\n          window.setTimeout(function() {\r\n            self.month.className = 'month in ' + (self.next ? 'next' : 'prev');\r\n          }, 16);\r\n        });\r\n      } else {\r\n          this.month = createElement('div', 'month');\r\n          this.el.appendChild(this.month);\r\n          this.backFill();\r\n          this.currentMonth();\r\n          this.fowardFill();\r\n          this.month.className = 'month new';\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.backFill = function() {\r\n      var clone = this.current.clone();\r\n      var dayOfWeek = clone.day();\r\n  \r\n      if(!dayOfWeek) { return; }\r\n  \r\n      clone.subtract('days', dayOfWeek+1);\r\n  \r\n      for(var i = dayOfWeek; i > 0 ; i--) {\r\n        this.drawDay(clone.add('days', 1));\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.fowardFill = function() {\r\n      var clone = this.current.clone().add('months', 1).subtract('days', 1);\r\n      var dayOfWeek = clone.day();\r\n  \r\n      if(dayOfWeek === 6) { return; }\r\n  \r\n      for(var i = dayOfWeek; i < 6 ; i++) {\r\n        this.drawDay(clone.add('days', 1));\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.currentMonth = function() {\r\n      var clone = this.current.clone();\r\n  \r\n      while(clone.month() === this.current.month()) {\r\n        this.drawDay(clone);\r\n        clone.add('days', 1);\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.getWeek = function(day) {\r\n      if(!this.week || day.day() === 0) {\r\n        this.week = createElement('div', 'week');\r\n        this.month.appendChild(this.week);\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.drawDay = function(day) {\r\n      var self = this;\r\n      this.getWeek(day);\r\n  \r\n      //Outer Day\r\n      var outer = createElement('div', this.getDayClass(day));\r\n      outer.addEventListener('click', function() {\r\n        self.openDay(this);\r\n      });\r\n  \r\n      //Day Name\r\n      var name = createElement('div', 'day-name', day.format('ddd'));\r\n  \r\n      //Day Number\r\n      var number = createElement('div', 'day-number', day.format('DD'));\r\n  \r\n  \r\n      //Events\r\n      var events = createElement('div', 'day-events');\r\n      this.drawEvents(day, events);\r\n  \r\n      outer.appendChild(name);\r\n      outer.appendChild(number);\r\n      outer.appendChild(events);\r\n      this.week.appendChild(outer);\r\n    }\r\n  \r\n    Calendar.prototype.drawEvents = function(day, element) {\r\n      if(day.month() === this.current.month()) {\r\n        var todaysEvents = this.events.reduce(function(memo, ev) {\r\n          if(ev.date.isSame(day, 'day')) {\r\n            memo.push(ev);\r\n          }\r\n          return memo;\r\n        }, []);\r\n  \r\n        todaysEvents.forEach(function(ev) {\r\n          var evSpan = createElement('span', ev.color);\r\n          element.appendChild(evSpan);\r\n        });\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.getDayClass = function(day) {\r\n      classes = ['day'];\r\n      if(day.month() !== this.current.month()) {\r\n        classes.push('other');\r\n      } else if (today.isSame(day, 'day')) {\r\n        classes.push('today');\r\n      }\r\n      return classes.join(' ');\r\n    }\r\n  \r\n    Calendar.prototype.openDay = function(el) {\r\n      var details, arrow;\r\n      var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;\r\n      var day = this.current.clone().date(dayNumber);\r\n  \r\n      var currentOpened = document.querySelector('.details');\r\n  \r\n      //Check to see if there is an open detais box on the current row\r\n      if(currentOpened && currentOpened.parentNode === el.parentNode) {\r\n        details = currentOpened;\r\n        arrow = document.querySelector('.arrow');\r\n      } else {\r\n        //Close the open events on differnt week row\r\n        //currentOpened && currentOpened.parentNode.removeChild(currentOpened);\r\n        if(currentOpened) {\r\n          currentOpened.addEventListener('webkitAnimationEnd', function() {\r\n            currentOpened.parentNode.removeChild(currentOpened);\r\n          });\r\n          currentOpened.addEventListener('oanimationend', function() {\r\n            currentOpened.parentNode.removeChild(currentOpened);\r\n          });\r\n          currentOpened.addEventListener('msAnimationEnd', function() {\r\n            currentOpened.parentNode.removeChild(currentOpened);\r\n          });\r\n          currentOpened.addEventListener('animationend', function() {\r\n            currentOpened.parentNode.removeChild(currentOpened);\r\n          });\r\n          currentOpened.className = 'details out';\r\n        }\r\n  \r\n        //Create the Details Container\r\n        details = createElement('div', 'details in');\r\n  \r\n        //Create the arrow\r\n        var arrow = createElement('div', 'arrow');\r\n  \r\n        //Create the event wrapper\r\n  \r\n        details.appendChild(arrow);\r\n        el.parentNode.appendChild(details);\r\n      }\r\n  \r\n      var todaysEvents = this.events.reduce(function(memo, ev) {\r\n        if(ev.date.isSame(day, 'day')) {\r\n          memo.push(ev);\r\n        }\r\n        return memo;\r\n      }, []);\r\n  \r\n      this.renderEvents(todaysEvents, details);\r\n  \r\n      arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';\r\n    }\r\n  \r\n    Calendar.prototype.renderEvents = function(events, ele) {\r\n      //Remove any events in the current details element\r\n      var currentWrapper = ele.querySelector('.events');\r\n      var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));\r\n  \r\n      events.forEach(function(ev) {\r\n        var div = createElement('div', 'event');\r\n        var square = createElement('div', 'event-category ' + ev.color);\r\n        var span = createElement('span', '', ev.eventName);\r\n  \r\n        div.appendChild(square);\r\n        div.appendChild(span);\r\n        wrapper.appendChild(div);\r\n      });\r\n  \r\n      if(!events.length) {\r\n        var div = createElement('div', 'event empty');\r\n        var br = createElement('br');\r\n        var eventForm = createElement(\"form\");\r\n        eventForm.setAttribute(\"method\", \"post\");\r\n        var eventTitle = createElement('input', 'eventtitle');\r\n        eventTitle.setAttribute('type', 'text');\r\n        eventTitle.setAttribute('placeholder', 'Event Title');\r\n        var eventLocation = createElement('input', 'eventlocation');\r\n        eventLocation.setAttribute('type', 'text');\r\n        eventLocation.setAttribute('placeholder', 'Event Location');\r\n        let times = [\r\n          '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', \r\n          '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', \r\n          '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', \r\n          '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', \r\n          '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', \r\n          '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', \r\n          '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'\r\n        ]\r\n        var eventStart = createElement('select', 'eventstarttime');\r\n        eventStart.appendChild(new Option('Start', 'Start', true));\r\n        var eventEnd = createElement('select', 'eventendtime');\r\n        eventEnd.appendChild(new Option('End', 'End', true));\r\n        times.forEach(function(item, _){\r\n          eventStart.appendChild(new Option(item, item));\r\n          eventEnd.appendChild(new Option(item, item));\r\n        });\r\n        var submitForm = createElement('input', 'eventsubmit');\r\n        submitForm.setAttribute('type', 'submit');\r\n        submitForm.setAttribute('value', '➔');\r\n        eventForm.appendChild(eventTitle);\r\n        eventForm.appendChild(eventLocation);\r\n        eventForm.appendChild(br.cloneNode());\r\n        eventForm.appendChild(eventStart);\r\n        eventForm.appendChild(eventEnd);\r\n        eventForm.appendChild(submitForm);\r\n        div.appendChild(eventForm);\r\n        wrapper.appendChild(div);\r\n      }\r\n  \r\n      if(currentWrapper) {\r\n        currentWrapper.className = 'events out';\r\n        currentWrapper.addEventListener('webkitAnimationEnd', function() {\r\n          currentWrapper.parentNode.removeChild(currentWrapper);\r\n          ele.appendChild(wrapper);\r\n        });\r\n        currentWrapper.addEventListener('oanimationend', function() {\r\n          currentWrapper.parentNode.removeChild(currentWrapper);\r\n          ele.appendChild(wrapper);\r\n        });\r\n        currentWrapper.addEventListener('msAnimationEnd', function() {\r\n          currentWrapper.parentNode.removeChild(currentWrapper);\r\n          ele.appendChild(wrapper);\r\n        });\r\n        currentWrapper.addEventListener('animationend', function() {\r\n          currentWrapper.parentNode.removeChild(currentWrapper);\r\n          ele.appendChild(wrapper);\r\n        });\r\n      } else {\r\n        ele.appendChild(wrapper);\r\n      }\r\n    }\r\n  \r\n    Calendar.prototype.drawLegend = function() {\r\n      var legend = createElement('div', 'legend');\r\n      var calendars = this.events.map(function(e) {\r\n        return e.calendar + '|' + e.color;\r\n      }).reduce(function(memo, e) {\r\n        if(memo.indexOf(e) === -1) {\r\n          memo.push(e);\r\n        }\r\n        return memo;\r\n      }, []).forEach(function(e) {\r\n        var parts = e.split('|');\r\n        var entry = createElement('span', 'entry ' +  parts[1], parts[0]);\r\n        legend.appendChild(entry);\r\n      });\r\n      this.el.appendChild(legend);\r\n    }\r\n  \r\n    Calendar.prototype.nextMonth = function() {\r\n      this.current.add('months', 1);\r\n      this.next = true;\r\n      this.draw();\r\n    }\r\n  \r\n    Calendar.prototype.prevMonth = function() {\r\n      this.current.subtract('months', 1);\r\n      this.next = false;\r\n      this.draw();\r\n    }\r\n  \r\n    window.Calendar = Calendar;\r\n  \r\n    function createElement(tagName, className, innerText) {\r\n      var ele = document.createElement(tagName);\r\n      if(className) {\r\n        ele.className = className;\r\n      }\r\n      if(innerText) {\r\n        ele.innderText = ele.textContent = innerText;\r\n      }\r\n      return ele;\r\n    }\r\n  }();\r\n  \r\n  !function() {\r\n    var data = [\r\n    ];\r\n  \r\n    \r\n  \r\n    function addDate(ev) {\r\n      \r\n    }\r\n  \r\n    var calendar = new Calendar('#calendar', data);\r\n  \r\n  }();\r\n  
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CrosslinkTimetable/src/frontend/static/script.js b/CrosslinkTimetable/src/frontend/static/script.js
+--- a/CrosslinkTimetable/src/frontend/static/script.js	(revision bce3d961ae554ad8616b4a3269287fe67c52fa44)
++++ b/CrosslinkTimetable/src/frontend/static/script.js	(date 1655885956095)
+@@ -1,12 +1,12 @@
+ !function() {
+ 
+-    var today = moment();
+-  
+-    function Calendar(selector, events) {
+-      this.el = document.querySelector(selector);
+-      this.events = events;
+-      this.current = moment().date(1);
+-      this.draw();
++  var today = moment();
++
++  function Calendar(selector, events) {
++    this.el = document.querySelector(selector);
++    this.events = events;
++    this.current = moment().date(1);
++    this.draw();
+     //   var current = document.querySelector('.today');
+     //   if(current) {
+     //     var self = this;
+@@ -14,356 +14,395 @@
+     //       self.openDay(current);
+     //     }, 500);
+     //   }
+-    }
+-  
+-    Calendar.prototype.draw = function() {
+-      //Create Header
+-      this.drawHeader();
+-  
+-      //Draw Month
+-      this.drawMonth();
+-  
+-      this.drawLegend();
+-    }
+-  
+-    Calendar.prototype.drawHeader = function() {
+-      var self = this;
+-      if(!this.header) {
+-        //Create the header elements
+-        this.header = createElement('div', 'header');
+-        this.header.className = 'header';
+-  
+-        this.title = createElement('h1');
+-  
+-        var right = createElement('div', 'right');
+-        right.addEventListener('click', function() { self.nextMonth(); });
+-  
+-        var left = createElement('div', 'left');
+-        left.addEventListener('click', function() { self.prevMonth(); });
+-  
+-        //Append the Elements
+-        this.header.appendChild(this.title); 
+-        this.header.appendChild(right);
+-        this.header.appendChild(left);
+-        this.el.appendChild(this.header);
+-      }
+-  
+-      this.title.innerHTML = this.current.format('MMMM YYYY');
+-    }
+-  
+-    Calendar.prototype.drawMonth = function() {
+-      var self = this;
+-      
+-      this.events.forEach(function(ev) {
+-       d = Math.random() * (29 - 1) + 1
+-       ev.date = self.current.clone().date(d);
+-      });
+-      
+-      
+-      if(this.month) {
+-        this.oldMonth = this.month;
+-        this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
+-        this.oldMonth.addEventListener('webkitAnimationEnd', function() {
+-          self.oldMonth.parentNode.removeChild(self.oldMonth);
+-          self.month = createElement('div', 'month');
+-          self.backFill();
+-          self.currentMonth();
+-          self.fowardFill();
+-          self.el.appendChild(self.month);
+-          window.setTimeout(function() {
+-            self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
+-          }, 16);
+-        });
+-      } else {
+-          this.month = createElement('div', 'month');
+-          this.el.appendChild(this.month);
+-          this.backFill();
+-          this.currentMonth();
+-          this.fowardFill();
+-          this.month.className = 'month new';
+-      }
+-    }
+-  
+-    Calendar.prototype.backFill = function() {
+-      var clone = this.current.clone();
+-      var dayOfWeek = clone.day();
+-  
+-      if(!dayOfWeek) { return; }
+-  
+-      clone.subtract('days', dayOfWeek+1);
+-  
+-      for(var i = dayOfWeek; i > 0 ; i--) {
+-        this.drawDay(clone.add('days', 1));
+-      }
+-    }
+-  
+-    Calendar.prototype.fowardFill = function() {
+-      var clone = this.current.clone().add('months', 1).subtract('days', 1);
+-      var dayOfWeek = clone.day();
+-  
+-      if(dayOfWeek === 6) { return; }
+-  
+-      for(var i = dayOfWeek; i < 6 ; i++) {
+-        this.drawDay(clone.add('days', 1));
+-      }
+-    }
+-  
+-    Calendar.prototype.currentMonth = function() {
+-      var clone = this.current.clone();
+-  
+-      while(clone.month() === this.current.month()) {
+-        this.drawDay(clone);
+-        clone.add('days', 1);
+-      }
+-    }
+-  
+-    Calendar.prototype.getWeek = function(day) {
+-      if(!this.week || day.day() === 0) {
+-        this.week = createElement('div', 'week');
+-        this.month.appendChild(this.week);
+-      }
+-    }
+-  
+-    Calendar.prototype.drawDay = function(day) {
+-      var self = this;
+-      this.getWeek(day);
+-  
+-      //Outer Day
+-      var outer = createElement('div', this.getDayClass(day));
+-      outer.addEventListener('click', function() {
+-        self.openDay(this);
+-      });
+-  
+-      //Day Name
+-      var name = createElement('div', 'day-name', day.format('ddd'));
+-  
+-      //Day Number
+-      var number = createElement('div', 'day-number', day.format('DD'));
+-  
+-  
+-      //Events
+-      var events = createElement('div', 'day-events');
+-      this.drawEvents(day, events);
+-  
+-      outer.appendChild(name);
+-      outer.appendChild(number);
+-      outer.appendChild(events);
+-      this.week.appendChild(outer);
+-    }
+-  
+-    Calendar.prototype.drawEvents = function(day, element) {
+-      if(day.month() === this.current.month()) {
+-        var todaysEvents = this.events.reduce(function(memo, ev) {
+-          if(ev.date.isSame(day, 'day')) {
+-            memo.push(ev);
+-          }
+-          return memo;
+-        }, []);
+-  
+-        todaysEvents.forEach(function(ev) {
+-          var evSpan = createElement('span', ev.color);
+-          element.appendChild(evSpan);
+-        });
+-      }
+-    }
+-  
+-    Calendar.prototype.getDayClass = function(day) {
+-      classes = ['day'];
+-      if(day.month() !== this.current.month()) {
+-        classes.push('other');
+-      } else if (today.isSame(day, 'day')) {
+-        classes.push('today');
+-      }
+-      return classes.join(' ');
+-    }
+-  
+-    Calendar.prototype.openDay = function(el) {
+-      var details, arrow;
+-      var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
+-      var day = this.current.clone().date(dayNumber);
+-  
+-      var currentOpened = document.querySelector('.details');
+-  
+-      //Check to see if there is an open detais box on the current row
+-      if(currentOpened && currentOpened.parentNode === el.parentNode) {
+-        details = currentOpened;
+-        arrow = document.querySelector('.arrow');
+-      } else {
+-        //Close the open events on differnt week row
+-        //currentOpened && currentOpened.parentNode.removeChild(currentOpened);
+-        if(currentOpened) {
+-          currentOpened.addEventListener('webkitAnimationEnd', function() {
+-            currentOpened.parentNode.removeChild(currentOpened);
+-          });
+-          currentOpened.addEventListener('oanimationend', function() {
+-            currentOpened.parentNode.removeChild(currentOpened);
+-          });
+-          currentOpened.addEventListener('msAnimationEnd', function() {
+-            currentOpened.parentNode.removeChild(currentOpened);
+-          });
+-          currentOpened.addEventListener('animationend', function() {
+-            currentOpened.parentNode.removeChild(currentOpened);
+-          });
+-          currentOpened.className = 'details out';
+-        }
+-  
+-        //Create the Details Container
+-        details = createElement('div', 'details in');
+-  
+-        //Create the arrow
+-        var arrow = createElement('div', 'arrow');
+-  
+-        //Create the event wrapper
+-  
+-        details.appendChild(arrow);
+-        el.parentNode.appendChild(details);
+-      }
+-  
+-      var todaysEvents = this.events.reduce(function(memo, ev) {
+-        if(ev.date.isSame(day, 'day')) {
+-          memo.push(ev);
+-        }
+-        return memo;
+-      }, []);
+-  
+-      this.renderEvents(todaysEvents, details);
+-  
+-      arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
+-    }
+-  
+-    Calendar.prototype.renderEvents = function(events, ele) {
+-      //Remove any events in the current details element
+-      var currentWrapper = ele.querySelector('.events');
+-      var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
+-  
+-      events.forEach(function(ev) {
+-        var div = createElement('div', 'event');
+-        var square = createElement('div', 'event-category ' + ev.color);
+-        var span = createElement('span', '', ev.eventName);
+-  
+-        div.appendChild(square);
+-        div.appendChild(span);
+-        wrapper.appendChild(div);
+-      });
+-  
+-      if(!events.length) {
+-        var div = createElement('div', 'event empty');
+-        var br = createElement('br');
+-        var eventForm = createElement("form");
+-        eventForm.setAttribute("method", "post");
+-        var eventTitle = createElement('input', 'eventtitle');
+-        eventTitle.setAttribute('type', 'text');
+-        eventTitle.setAttribute('placeholder', 'Event Title');
+-        var eventLocation = createElement('input', 'eventlocation');
+-        eventLocation.setAttribute('type', 'text');
+-        eventLocation.setAttribute('placeholder', 'Event Location');
+-        let times = [
+-          '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', 
+-          '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', 
+-          '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', 
+-          '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', 
+-          '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', 
+-          '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', 
+-          '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
+-        ]
+-        var eventStart = createElement('select', 'eventstarttime');
+-        eventStart.appendChild(new Option('Start', 'Start', true));
+-        var eventEnd = createElement('select', 'eventendtime');
+-        eventEnd.appendChild(new Option('End', 'End', true));
+-        times.forEach(function(item, _){
+-          eventStart.appendChild(new Option(item, item));
+-          eventEnd.appendChild(new Option(item, item));
+-        });
+-        var submitForm = createElement('input', 'eventsubmit');
+-        submitForm.setAttribute('type', 'submit');
+-        submitForm.setAttribute('value', '➔');
+-        eventForm.appendChild(eventTitle);
+-        eventForm.appendChild(eventLocation);
+-        eventForm.appendChild(br.cloneNode());
+-        eventForm.appendChild(eventStart);
+-        eventForm.appendChild(eventEnd);
+-        eventForm.appendChild(submitForm);
+-        div.appendChild(eventForm);
+-        wrapper.appendChild(div);
+-      }
+-  
+-      if(currentWrapper) {
+-        currentWrapper.className = 'events out';
+-        currentWrapper.addEventListener('webkitAnimationEnd', function() {
+-          currentWrapper.parentNode.removeChild(currentWrapper);
+-          ele.appendChild(wrapper);
+-        });
+-        currentWrapper.addEventListener('oanimationend', function() {
+-          currentWrapper.parentNode.removeChild(currentWrapper);
+-          ele.appendChild(wrapper);
+-        });
+-        currentWrapper.addEventListener('msAnimationEnd', function() {
+-          currentWrapper.parentNode.removeChild(currentWrapper);
+-          ele.appendChild(wrapper);
+-        });
+-        currentWrapper.addEventListener('animationend', function() {
+-          currentWrapper.parentNode.removeChild(currentWrapper);
+-          ele.appendChild(wrapper);
+-        });
+-      } else {
+-        ele.appendChild(wrapper);
+-      }
+-    }
+-  
+-    Calendar.prototype.drawLegend = function() {
+-      var legend = createElement('div', 'legend');
+-      var calendars = this.events.map(function(e) {
+-        return e.calendar + '|' + e.color;
+-      }).reduce(function(memo, e) {
+-        if(memo.indexOf(e) === -1) {
+-          memo.push(e);
+-        }
+-        return memo;
+-      }, []).forEach(function(e) {
+-        var parts = e.split('|');
+-        var entry = createElement('span', 'entry ' +  parts[1], parts[0]);
+-        legend.appendChild(entry);
+-      });
+-      this.el.appendChild(legend);
+-    }
+-  
+-    Calendar.prototype.nextMonth = function() {
+-      this.current.add('months', 1);
+-      this.next = true;
+-      this.draw();
+-    }
+-  
+-    Calendar.prototype.prevMonth = function() {
+-      this.current.subtract('months', 1);
+-      this.next = false;
+-      this.draw();
+-    }
+-  
+-    window.Calendar = Calendar;
+-  
+-    function createElement(tagName, className, innerText) {
+-      var ele = document.createElement(tagName);
+-      if(className) {
+-        ele.className = className;
+-      }
+-      if(innerText) {
+-        ele.innderText = ele.textContent = innerText;
+-      }
+-      return ele;
+-    }
+-  }();
+-  
+-  !function() {
+-    var data = [
+-    ];
+-  
+-    
+-  
+-    function addDate(ev) {
+-      
+-    }
+-  
+-    var calendar = new Calendar('#calendar', data);
+-  
+-  }();
++  }
++
++  Calendar.prototype.draw = function() {
++    //Create Header
++    this.drawHeader();
++
++    //Draw Month
++    this.drawMonth();
++
++    this.drawLegend();
++  }
++
++  Calendar.prototype.drawHeader = function() {
++    var self = this;
++    if(!this.header) {
++      //Create the header elements
++      this.header = createElement('div', 'header');
++      this.header.className = 'header';
++
++      this.title = createElement('h1');
++      this.title.setAttribute('id', 'monthname');
++
++      var right = createElement('div', 'right');
++      right.addEventListener('click', function() { self.nextMonth(); });
++
++      var left = createElement('div', 'left');
++      left.addEventListener('click', function() { self.prevMonth(); });
++
++      //Append the Elements
++      this.header.appendChild(this.title);
++      this.header.appendChild(right);
++      this.header.appendChild(left);
++      this.el.appendChild(this.header);
++    }
++
++    this.title.innerHTML = this.current.format('MMMM YYYY');
++  }
++
++  Calendar.prototype.drawMonth = function() {
++    var self = this;
++
++    this.events.forEach(function(ev) {
++      d = Math.random() * (29 - 1) + 1
++      ev.date = self.current.clone().date(d);
++    });
++
++
++    if(this.month) {
++      this.oldMonth = this.month;
++      this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
++      this.oldMonth.addEventListener('webkitAnimationEnd', function() {
++        self.oldMonth.parentNode.removeChild(self.oldMonth);
++        self.month = createElement('div', 'month');
++        self.backFill();
++        self.currentMonth();
++        self.fowardFill();
++        self.el.appendChild(self.month);
++        window.setTimeout(function() {
++          self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
++        }, 16);
++      });
++    } else {
++      this.month = createElement('div', 'month');
++      this.el.appendChild(this.month);
++      this.backFill();
++      this.currentMonth();
++      this.fowardFill();
++      this.month.className = 'month new';
++    }
++  }
++
++  Calendar.prototype.backFill = function() {
++    var clone = this.current.clone();
++    var dayOfWeek = clone.day();
++
++    if(!dayOfWeek) { return; }
++
++    clone.subtract('days', dayOfWeek+1);
++
++    for(var i = dayOfWeek; i > 0 ; i--) {
++      this.drawDay(clone.add('days', 1));
++    }
++  }
++
++  Calendar.prototype.fowardFill = function() {
++    var clone = this.current.clone().add('months', 1).subtract('days', 1);
++    var dayOfWeek = clone.day();
++
++    if(dayOfWeek === 6) { return; }
++
++    for(var i = dayOfWeek; i < 6 ; i++) {
++      this.drawDay(clone.add('days', 1));
++    }
++  }
++
++  Calendar.prototype.currentMonth = function() {
++    var clone = this.current.clone();
++
++    while(clone.month() === this.current.month()) {
++      this.drawDay(clone);
++      clone.add('days', 1);
++    }
++  }
++
++  Calendar.prototype.getWeek = function(day) {
++    if(!this.week || day.day() === 0) {
++      this.week = createElement('div', 'week');
++      this.month.appendChild(this.week);
++    }
++  }
++
++  Calendar.prototype.drawDay = function(day) {
++    var self = this;
++    this.getWeek(day);
++
++    //Outer Day
++    var outer = createElement('div', this.getDayClass(day));
++    outer.addEventListener('click', function() {
++      self.openDay(this);
++    });
++
++    //Day Name
++    var name = createElement('div', 'day-name', day.format('ddd'));
++
++    //Day Number
++    var number = createElement('div', 'day-number', day.format('DD'));
++
++
++    //Events
++    var events = createElement('div', 'day-events');
++    this.drawEvents(day, events);
++
++    outer.appendChild(name);
++    outer.appendChild(number);
++    outer.appendChild(events);
++    this.week.appendChild(outer);
++  }
++
++  Calendar.prototype.drawEvents = function(day, element) {
++    if(day.month() === this.current.month()) {
++      var todaysEvents = this.events.reduce(function(memo, ev) {
++        if(ev.date.isSame(day, 'day')) {
++          memo.push(ev);
++        }
++        return memo;
++      }, []);
++
++      todaysEvents.forEach(function(ev) {
++        var evSpan = createElement('span', ev.color);
++        element.appendChild(evSpan);
++      });
++    }
++  }
++
++  Calendar.prototype.getDayClass = function(day) {
++    classes = ['day'];
++    if(day.month() !== this.current.month()) {
++      classes.push('other');
++    } else if (today.isSame(day, 'day')) {
++      classes.push('today');
++    }
++    return classes.join(' ');
++  }
++
++  Calendar.prototype.openDay = function(el) {
++    var details, arrow;
++    var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
++    var day = this.current.clone().date(dayNumber);
++
++
++    var currentOpened = document.querySelector('.details');
++
++    //Check to see if there is an open detais box on the current row
++    if (true){ //(currentOpened && currentOpened.parentNode === el.parentNode) {
++      //   details = currentOpened;
++      //   arrow = document.querySelector('.arrow');
++      // } else {
++      //Close the open events on differnt week row
++      //currentOpened && currentOpened.parentNode.removeChild(currentOpened);
++      if(currentOpened) {
++        currentOpened.addEventListener('webkitAnimationEnd', function() {
++          currentOpened.parentNode.removeChild(currentOpened);
++        });
++        currentOpened.addEventListener('oanimationend', function() {
++          currentOpened.parentNode.removeChild(currentOpened);
++        });
++        currentOpened.addEventListener('msAnimationEnd', function() {
++          currentOpened.parentNode.removeChild(currentOpened);
++        });
++        currentOpened.addEventListener('animationend', function() {
++          currentOpened.parentNode.removeChild(currentOpened);
++        });
++        currentOpened.className = 'details out';
++      }
++
++      //Create the Details Container
++      details = createElement('div', 'details in');
++      details.setAttribute('id', 'datecontainer');
++      details.setAttribute('data-date', dayNumber);
++
++      //Create the arrow
++      var arrow = createElement('div', 'arrow');
++
++      //Create the event wrapper
++
++      details.appendChild(arrow);
++      el.parentNode.appendChild(details);
++    }
++
++    var todaysEvents = this.events.reduce(function(memo, ev) {
++      if(ev.date.isSame(day, 'day')) {
++        memo.push(ev);
++      }
++      return memo;
++    }, []);
++
++    this.renderEvents(todaysEvents, details);
++
++    arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
++  }
++
++  Calendar.prototype.renderEvents = function(events, ele) {
++    //Remove any events in the current details element
++    var currentWrapper = ele.querySelector('.events');
++    var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
++
++    events.forEach(function(ev) {
++      var div = createElement('div', 'event');
++      var square = createElement('div', 'event-category ' + ev.color);
++      var span = createElement('span', '', ev.eventName);
++
++      div.appendChild(square);
++      div.appendChild(span);
++      wrapper.appendChild(div);
++    });
++
++    if(!events.length) {
++      var div = createElement('div', 'event empty');
++      var br = createElement('br');
++      var eventForm = createElement("form");
++      eventForm.setAttribute("method", "post");
++      var eventTitle = createElement('input', 'eventtitle');
++      eventTitle.setAttribute('id', 'eventtitle');
++      eventTitle.setAttribute('type', 'text');
++      eventTitle.setAttribute('placeholder', 'Event Title');
++      var eventLocation = createElement('input', 'eventlocation');
++      eventLocation.setAttribute('id', 'eventlocation');
++      eventLocation.setAttribute('type', 'text');
++      eventLocation.setAttribute('placeholder', 'Event Location');
++      let times = [
++        '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00',
++        '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30',
++        '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00',
++        '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
++        '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
++        '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
++        '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
++      ]
++      const eventStart = createElement('select', 'eventstarttime');
++      eventStart.appendChild(new Option('Start', 'Start', true));
++      eventStart.setAttribute('id', 'eventstarttime');
++      const eventEnd = createElement('select', 'eventendtime');
++      eventEnd.appendChild(new Option('End', 'End', true));
++      eventEnd.setAttribute('id', 'eventendtime');
++      times.forEach(function(item, _){
++        eventStart.appendChild(new Option(item, item));
++        eventEnd.appendChild(new Option(item, item));
++      });
++      const submitForm = createElement('button', 'eventSubmit');
++      submitForm.innerText = '➔';
++      eventForm.appendChild(eventTitle);
++      eventForm.appendChild(eventLocation);
++      eventForm.appendChild(br.cloneNode());
++      eventForm.appendChild(eventStart);
++      eventForm.appendChild(eventEnd);
++      eventForm.appendChild(submitForm);
++      div.appendChild(eventForm);
++      wrapper.appendChild(div);
++      submitForm.addEventListener('click', (event) => {
++        event.preventDefault();
++        let date = document.getElementById('datecontainer').dataset['date'];
++        let startTime = document.getElementById('eventstarttime').value;
++        let endTime = document.getElementById('eventendtime').value;
++        let name = document.getElementById('eventtitle').value;
++        let location = document.getElementById('eventlocation').value;
++        dict = {
++          "January": '01', "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "Jule": "07",
++          "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
++        };
++        let monyear = document.getElementById('monthname').innerHTML.split(" ");
++        let month = dict[monyear[0]];
++        let year = monyear[1];
++        let formattedStart = `${year}-${month}-${date}T${startTime}:00.000+03:00`;
++        let formattedEnd = `${year}-${month}-${date}T${endTime}:00.000+03:00`;
++        console.log(formattedStart)
++        console.log(formattedEnd);
++
++        fetch("/events", {
++          method: 'POST',
++          body: JSON.stringify({"name": name,
++            "location": location,
++            "startDate": startTime,
++            "endDate": endTime})
++        })
++            .then (response => response.json())
++            .then (() => {
++              document.getElementsByClassName('event empty')[0].innerHTML = "Event Added Successfully!";
++            })
++            .catch(error => console.log(error));
++      });
++    }
++
++    if(currentWrapper) {
++      currentWrapper.className = 'events out';
++      currentWrapper.addEventListener('webkitAnimationEnd', function() {
++        currentWrapper.parentNode.removeChild(currentWrapper);
++        ele.appendChild(wrapper);
++      });
++      currentWrapper.addEventListener('oanimationend', function() {
++        currentWrapper.parentNode.removeChild(currentWrapper);
++        ele.appendChild(wrapper);
++      });
++      currentWrapper.addEventListener('msAnimationEnd', function() {
++        currentWrapper.parentNode.removeChild(currentWrapper);
++        ele.appendChild(wrapper);
++      });
++      currentWrapper.addEventListener('animationend', function() {
++        currentWrapper.parentNode.removeChild(currentWrapper);
++        ele.appendChild(wrapper);
++      });
++    } else {
++      ele.appendChild(wrapper);
++    }
++  }
++
++  Calendar.prototype.drawLegend = function() {
++    var legend = createElement('div', 'legend');
++    var calendars = this.events.map(function(e) {
++      return e.calendar + '|' + e.color;
++    }).reduce(function(memo, e) {
++      if(memo.indexOf(e) === -1) {
++        memo.push(e);
++      }
++      return memo;
++    }, []).forEach(function(e) {
++      var parts = e.split('|');
++      var entry = createElement('span', 'entry ' +  parts[1], parts[0]);
++      legend.appendChild(entry);
++    });
++    this.el.appendChild(legend);
++  }
++
++  Calendar.prototype.nextMonth = function() {
++    this.current.add('months', 1);
++    this.next = true;
++    this.draw();
++  }
++
++  Calendar.prototype.prevMonth = function() {
++    this.current.subtract('months', 1);
++    this.next = false;
++    this.draw();
++  }
++
++  window.Calendar = Calendar;
++
++  function createElement(tagName, className, innerText) {
++    var ele = document.createElement(tagName);
++    if(className) {
++      ele.className = className;
++    }
++    if(innerText) {
++      ele.innderText = ele.textContent = innerText;
++    }
++    return ele;
++  }
++}();
++
++!function() {
++  var data = [
++  ];
++
++
++
++  function addDate(ev) {
++
++  }
++
++  var calendar = new Calendar('#calendar', data);
++
++}();
+   
+\ No newline at end of file
