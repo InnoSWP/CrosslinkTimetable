@@ -31,7 +31,13 @@ public class EventService {
         List<String> eventIds = eventRepository.getAllIds();
         List<Event> events = new ArrayList<>();
         for (String id : eventIds) {
+<<<<<<< HEAD
             events.add(getEvent(id));
+=======
+            try {
+                events.add(getEvent(id));
+            } catch(Exception ignored) {}
+>>>>>>> main
         }
         return events;
     }
@@ -39,9 +45,17 @@ public class EventService {
     public List<Event> getEventsFromTimeInterval(Date start, Date end) throws Exception {
         List<Event> filteredEvents = new ArrayList<>();
         for (Event event : getAllEvents()) {
+<<<<<<< HEAD
             if (event.getStartDate().after(start) && event.getEndDate().before(end)) {
                 filteredEvents.add(event);
             }
+=======
+            try {
+                if (event.getStartDate().after(start) && event.getEndDate().before(end)) {
+                    filteredEvents.add(event);
+                }
+            } catch (Exception ignored) {}
+>>>>>>> main
         }
         return filteredEvents;
     }
