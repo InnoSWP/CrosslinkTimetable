@@ -23,10 +23,6 @@ public class EventController {
     }
 
     @PostMapping
-<<<<<<< HEAD
-=======
-    @CrossOrigin(origins = "http://localhost:63342")
->>>>>>> main
     public String createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());
         String eventId = null;
@@ -103,8 +99,6 @@ public class EventController {
         return events;
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/names")
     public List<String> getAllNames() {
         List<String> names = null;
@@ -114,7 +108,6 @@ public class EventController {
         return names;
     }
 
->>>>>>> main
     @PatchMapping ("/{eventId}/invite/{mailingListTextIdentifier}")
     public void inviteAllFromMailingList(@PathVariable String eventId,
                                          @PathVariable String mailingListTextIdentifier) {
