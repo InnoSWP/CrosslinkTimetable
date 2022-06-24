@@ -5,40 +5,18 @@
     <title>Create mailing list</title>
 </head>
 <body>
-<form>
-    <label for="mailingListName">Enter name: </label>
-    <input type="text" id="mailingListName">
-    <br>
-    <label for="mails">Enter emails separated by a space: </label>
-    <input type="text" id="mails">
-    <br>
-    <button id="createBtn">
-        Create
-    </button>
-</form>
+<label for="mailingListName">Enter name: </label>
+<input type="text" id="mailingListName">
+<br>
+<label for="mails">Enter emails separated by a space: </label>
+<input type="text" id="mails">
+<br>
+<button id="createBtn">
+    Create
+</button>
+<nav>
+    <a aria-current="page" href="edit_mailing_list.html">Edit mailing list</a>
+</nav>
 </body>
-<script>
-    let btn = document.getElementById("createBtn");
-    btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        let mailsStr = document.getElementById("mails").value;
-        let mailsArray = mailsStr.split(" ");
-        let mailsName = document.getElementById("mailingListName").value;
-        console.log(mailsStr)
-        console.log(mailsName)
-        for (let i = 0; i < mailsArray.length; i++)
-            console.log(mailsArray[i])
-        fetch("/events", {
-            method: 'POST',
-            body: JSON.stringify({
-                'emails': mailsArray,
-                'textIdentifier': mailsName})
-        })
-            .then (response => response.json())
-            .then (() => {
-                alert("Mailing list is added successfully!");
-            })
-            .catch(error => console.log(error));
-    })
-</script>
+<script src="post_mailing_list.js"></script>
 </html>
