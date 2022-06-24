@@ -42,8 +42,10 @@ public class MailingListService {
 
     public void deleteEmailsFromList(String textIdentifier, List<String> emails) {
         Long mailingListId = mailingListRepository.getMailingListId(textIdentifier);
-        emails.forEach(emailAddress ->
-                mailingListRepository.deleteEmailFromList(mailingListId, emailAddress));
+        emails.forEach(emailAddress -> {
+                try {
+            mailingListRepository.deleteEmailFromList(mailingListId, emailAddress);
+            } catch(Exception ignored){}});
     }
 
     public MailingList getMailingList(String textIdentifier) {

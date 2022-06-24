@@ -74,11 +74,12 @@ deleteEmailsBtn.addEventListener('click', (event) => {
     if (isAgree) {
         event.preventDefault();
         let mailsStr = document.getElementById("emailsArea").value;
-        let mailsArray = mailsStr.split(" ");
+        let mailsArray = mailsStr.split(" ").filter(el => el !== "");
+        console.log("ARRAY: " + mailsArray);
         fetch(`/mailingLists/${currentMailingListName}/emails/delete`, {
             method: 'PATCH',
-            body: JSON.stringify({
-                mailsArray}),
+            body: JSON.stringify(
+                mailsArray),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -100,8 +101,8 @@ addMailsBtn.addEventListener('click', (event) => {
         console.log(mailsArray[i])
     fetch(`/mailingLists/${currentMailingListName}/emails/add`, {
         method: 'PATCH',
-        body: JSON.stringify({
-            mailsArray}),
+        body: JSON.stringify(
+            mailsArray),
         headers: {
             'Content-Type': 'application/json'
         }
