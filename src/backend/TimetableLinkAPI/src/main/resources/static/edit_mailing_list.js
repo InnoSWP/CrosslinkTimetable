@@ -17,7 +17,7 @@ async function start() {
  * Load mailing list in selector form
  */
 function createMailNameList(nameList) {
-    document.getElementById("listName").innerHTML = `
+    document.getElementById("list-name").innerHTML = `
     <select id="select" onchange="loadByName(this.value)">
         <option>Choose a mailing list</option>
         ${Object.values(nameList).map(name => {
@@ -27,11 +27,11 @@ function createMailNameList(nameList) {
     `
 }
 
-let deleteMailingListBtn = document.getElementById("deleteMailingListBtn");
-let deleteEmailsBtn = document.getElementById("deleteEmailsBtn");
-let addMailsBtn = document.getElementById("addMailsBtn");
-let newMailingListNameBtn = document.getElementById("newMailingListNameBtn");
-let deleteAllEmailsBtn = document.getElementById("deleteAllEmailsBtn");
+let deleteMailingListBtn = document.getElementById("delete-mailing-list-btn");
+let deleteEmailsBtn = document.getElementById("delete-emails-btn");
+let addMailsBtn = document.getElementById("add-mails-btn");
+let newMailingListNameBtn = document.getElementById("new-mailing-list-name-btn");
+let deleteAllEmailsBtn = document.getElementById("delete-all-emails-btn");
 
 /**
  * Load chosen mailing list
@@ -50,7 +50,7 @@ async function loadByName(name) {
         let areaStr = '';
         for (let i = 0; i < mailsArray.length; i++)
             areaStr = areaStr + mailsArray[i] + " ";
-        document.getElementById("emailsArea").innerHTML = areaStr;
+        document.getElementById("emails-area").innerHTML = areaStr;
     } else {
         deleteMailingListBtn.setAttribute('disabled', 'disabled')
         deleteEmailsBtn.setAttribute('disabled', 'disabled')
@@ -86,7 +86,7 @@ deleteEmailsBtn.addEventListener('click', (event) => {
     let isAgree = confirm(`\Delete emails from the ${currentMailingListName} mailing list?`)
     if (isAgree) {
         event.preventDefault();
-        let mailsStr = document.getElementById("emailsArea").value;
+        let mailsStr = document.getElementById("emails-area").value;
         let mailsArray = mailsStr.split(" ").filter(el => el !== "");
         fetch(`/mailingLists/${currentMailingListName}/emails/delete`, {
             method: 'PATCH',
@@ -146,7 +146,7 @@ function isEmail(str) {
  */
 newMailingListNameBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    let newName = document.getElementById("newMailingListName").value;
+    let newName = document.getElementById("new-mailing-list-name").value;
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
         method: 'PATCH',
         // headers: {

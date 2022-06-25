@@ -11,7 +11,7 @@ async function start() {
 }
 
 function createEventsNameList(nameList) {
-    document.getElementById("eventName").innerHTML = `
+    document.getElementById("event-name").innerHTML = `
     <select onchange="loadByName(this.value)">
         <option>Choose an event</option>
         ${Object.keys(nameList).map(name => {
@@ -21,7 +21,7 @@ function createEventsNameList(nameList) {
     `
 }
 
-let btn = document.getElementById("deleteBtn");
+let btn = document.getElementById("delete-btn");
 
 async function loadByName(name) {
     if (name !== 'Choose an event') {

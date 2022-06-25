@@ -4,7 +4,7 @@ btn.addEventListener('click', (event) => {
     let mailsStr = document.getElementById("mails").value;
     let mailsArray = mailsStr.split(" ").filter(el => el !== "")
     if (validateEmails(mailsArray)) {
-        let mailsName = document.getElementById("mailingListName").value;
+        let mailsName = document.getElementById("mailing-list-name").value;
 
 
         fetch("/mailingLists", {
