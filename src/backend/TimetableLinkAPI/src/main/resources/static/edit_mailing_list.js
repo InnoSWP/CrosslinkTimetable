@@ -72,8 +72,8 @@ deleteMailingListBtn.addEventListener('click', (event) => {
                 'Content-Type': 'application/json'
             }
         })
-            .then (response => response.json())
-            .then (() => {
+            .then(response => response.json())
+            .then(() => {
             })
             .catch(error => console.log(error));
     }
@@ -96,8 +96,8 @@ deleteEmailsBtn.addEventListener('click', (event) => {
                 'Content-Type': 'application/json'
             }
         })
-            .then (response => response.json())
-            .then (() => {
+            .then(response => response.json())
+            .then(() => {
             })
             .catch(error => console.log(error));
     }
@@ -119,8 +119,8 @@ addMailsBtn.addEventListener('click', (event) => {
                 'Content-Type': 'application/json'
             }
         })
-            .then (response => response.json())
-            .then (() => {
+            .then(response => response.json())
+            .then(() => {
 
             })
             .catch(error => console.log(error));
@@ -153,8 +153,8 @@ newMailingListNameBtn.addEventListener('click', (event) => {
         //     'Content-Type': 'application/json'
         // }
     })
-        .then (response => response.json())
-        .then (() => {
+        .then(response => response.json())
+        .then(() => {
         })
         .catch(error => console.log(error));
 })
