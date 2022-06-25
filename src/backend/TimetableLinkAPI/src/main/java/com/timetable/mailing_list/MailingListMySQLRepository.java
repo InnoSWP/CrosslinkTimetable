@@ -4,6 +4,7 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class MailingListMySQLRepository implements MailingListRepository {
     public MailingListMySQLRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
 
     @Override
     public List<String> getMailingListsNames() {
@@ -150,7 +150,8 @@ public class MailingListMySQLRepository implements MailingListRepository {
     }
 
 
-    private List<String> getEmailsByListId(Long mailingListId) {
+    @Override
+    public List<String> getEmailsByListId(Long mailingListId) {
         String getEmailsSqlRequest =
                 """
                  SELECT DISTINCT emailAddress FROM
@@ -160,6 +161,39 @@ public class MailingListMySQLRepository implements MailingListRepository {
                  """;
         return jdbcTemplate.queryForList(
                         getEmailsSqlRequest, String.class, mailingListId);
+    }
+
+    public void init() {
+        jdbcTemplate.update(
+                """
+                    CREATE DATABASE IF NOT EXISTS timetable;
+                    USE timetable;
+                    
+                    SET SQL_SAFE_UPDATES = 0;
+                    
+                    CREATE TABLE IF NOT EXISTS mailingList (
+                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                        textIdentifier VARCHAR(40) UNIQUE
+                    );
+                    
+                    CREATE TABLE IF NOT EXISTS email(
+                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                        emailAddress VARCHAR(60) UNIQUE
+                    );
+                    
+                    CREATE TABLE IF NOT EXISTS emailBelonging(
+                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                        emailId BIGINT,
+                        mailingListId BIGINT,
+                        FOREIGN KEY (emailId) REFERENCES email (id) ON DELETE CASCADE,
+                        FOREIGN KEY (mailingListId) references mailingList (id) ON DELETE CASCADE
+                    );
+                    
+                    CREATE TABLE IF NOT EXISTS event(
+                        outlookAppointmentId varchar(400) PRIMARY KEY
+                    );
+                    """
+        );
     }
 
     private String getTextIdentifier(Long mailingListId) {

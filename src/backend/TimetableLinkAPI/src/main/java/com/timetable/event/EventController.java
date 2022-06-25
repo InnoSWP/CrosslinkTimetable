@@ -23,14 +23,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/user")
-    public String getUser( @Value("${spring.datasource.username}") String username,
-                           @Value("${spring.datasource.url}") String url,
-                           @Value("${spring.datasource.password}") String password,
-                           @Value("${spring.datasource.driver-class-name}") String driverClassName) {
-        return username + "\n" + url + "\n" + password + "\n" + driverClassName;
-    }
-
     @PostMapping
     public String createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());

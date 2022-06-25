@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class OutlookMailingListManager {
+public class OutlookMailingListManager implements MailingListManager {
     private final ExchangeService service;
     private final OutlookEventManager eventManager;
 
@@ -69,7 +69,7 @@ public class OutlookMailingListManager {
         appointment.update(ConflictResolutionMode.AlwaysOverwrite, SendInvitationsOrCancellationsMode.SendToNone);
     }
 
-    public void filterInvitations(AttendeeCollection attendees, List<String> emails) {
+    private void filterInvitations(AttendeeCollection attendees, List<String> emails) {
         for (int i = 0; i <= attendees.getCount(); i++) {
             Attendee attendee = attendees.getPropertyAtIndex(i);
             if (emails.contains(attendee.getAddress())) {

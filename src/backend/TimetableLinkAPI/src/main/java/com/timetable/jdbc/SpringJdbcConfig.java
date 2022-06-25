@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class SpringJdbcConfig {
     @Bean
-   //@Primary
     public DataSource mySqlDataSource(
             @Value("${spring.datasource.username}") String username,
             @Value("${spring.datasource.url}") String url,
