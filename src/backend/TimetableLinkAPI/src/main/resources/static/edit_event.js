@@ -23,21 +23,21 @@ function createEventsNameList (nameList) {
 
 const btn = document.getElementById('delete-btn')
 
-async function loadByName (name) {
-  if (name !== 'Choose an event') {
-    btn.removeAttribute('disabled')
-    console.log(name)
-    const link = `/events/${name}`
-    const response = await fetch(link)
-    const data = await response.json()
-    if (data.length === 0) {
-      alert('Error')
-    }
-    console.log(data)
-  } else {
-    btn.setAttribute('disabled', 'disabled')
-  }
-}
+// async function loadByName (name) {
+//   if (name !== 'Choose an event') {
+//     btn.removeAttribute('disabled')
+//     console.log(name)
+//     const link = `/events/${name}`
+//     const response = await fetch(link)
+//     const data = await response.json()
+//     if (data.length === 0) {
+//       alert('Error')
+//     }
+//     console.log(data)
+//   } else {
+//     btn.setAttribute('disabled', 'disabled')
+//   }
+// }
 
 btn.addEventListener('click', (event) => {
   event.preventDefault()
