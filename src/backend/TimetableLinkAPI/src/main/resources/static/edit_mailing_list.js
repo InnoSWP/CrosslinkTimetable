@@ -31,34 +31,33 @@ const deleteMailingListBtn = document.getElementById('delete-mailing-list-btn')
 const deleteEmailsBtn = document.getElementById('delete-emails-btn')
 const addMailsBtn = document.getElementById('add-mails-btn')
 const newMailingListNameBtn = document.getElementById('new-mailing-list-name-btn')
-// let deleteAllEmailsBtn = document.getElementById('delete-all-emails-btn')
 
 /**
  * Load chosen mailing list
  */
-// async function loadByName (name) {
-//   if (name !== 'Choose a mailing list') {
-//     deleteMailingListBtn.removeAttribute('disabled')
-//     deleteEmailsBtn.removeAttribute('disabled')
-//     addMailsBtn.removeAttribute('disabled')
-//     newMailingListNameBtn.removeAttribute('disabled')
-//     currentMailingListName = name
-//
-//     let link2 = `/mailingLists/${name}/emails`
-//     const response2 = await fetch(link2)
-//     let mailsArray = await response2.json()
-//     let areaStr = ''
-//     for (let i = 0; i < mailsArray.length; i++) {
-//       areaStr = areaStr + mailsArray[i] + ' '
-//     }
-//     document.getElementById('emails-area').innerHTML = areaStr
-//   } else {
-//     deleteMailingListBtn.setAttribute('disabled', 'disabled')
-//     deleteEmailsBtn.setAttribute('disabled', 'disabled')
-//     addMailsBtn.setAttribute('disabled', 'disabled')
-//     newMailingListNameBtn.setAttribute('disabled', 'disabled')
-//   }
-// }
+async function loadByName (name) {
+  if (name !== 'Choose a mailing list') {
+    deleteMailingListBtn.removeAttribute('disabled')
+    deleteEmailsBtn.removeAttribute('disabled')
+    addMailsBtn.removeAttribute('disabled')
+    newMailingListNameBtn.removeAttribute('disabled')
+    currentMailingListName = name
+
+    let link2 = `/mailingLists/${name}/emails`
+    const response2 = await fetch(link2)
+    let mailsArray = await response2.json()
+    let areaStr = ''
+    for (let i = 0; i < mailsArray.length; i++) {
+      areaStr = areaStr + mailsArray[i] + ' '
+    }
+    document.getElementById('emails-area').innerHTML = areaStr
+  } else {
+    deleteMailingListBtn.setAttribute('disabled', 'disabled')
+    deleteEmailsBtn.setAttribute('disabled', 'disabled')
+    addMailsBtn.setAttribute('disabled', 'disabled')
+    newMailingListNameBtn.setAttribute('disabled', 'disabled')
+  }
+}
 
 /**
  * Delete a mailing list
