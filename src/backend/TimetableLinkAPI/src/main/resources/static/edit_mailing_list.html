@@ -5,24 +5,30 @@
     <title>Title</title>
 </head>
 <body>
-<div id="listName"></div>
-<br>
-<label for="emailsArea">Emails for this lists</label>
-<textarea id="emailsArea"></textarea>
-<br>
-<label for="newMailingListName">Enter new name for this list: </label>
-<input type="text" id="newMailingListName">
-<button id="newMailingListNameBtn" disabled>Delete emails</button>
-<br>
-<label for="mails">Enter emails separated by a space you want to add: </label>
-<input type="text" id="mails">
-<button id="addMailsBtn">add e-mails</button>
-<br>
-<label for="deleteMails">Enter emails separated by a space you want to delete: </label>
-<input type="text" id="deleteMails">
-<button id="deleteEmailsBtn" disabled>Delete emails</button>
-<br>
-<button id="deleteMailingListBtn" disabled>Delete list</button>
+    <div id="listName"></div>
+    <br>
+    <label for="emailsArea">Emails for this lists</label>
+    <textarea id="emailsArea"></textarea>
+    <br>
+    <label for="newMailingListName">Enter new name for this list: </label>
+    <input type="text" id="newMailingListName">
+    <button id="newMailingListNameBtn" disabled>Delete emails</button>
+    <br>
+    <label for="mails">Enter emails separated by a space you want to add: </label>
+    <input type="text" id="mails">
+    <button id="addMailsBtn">add e-mails</button>
+    <br>
+    <label for="deleteMails">Enter emails separated by a space you want to delete: </label>
+    <input type="text" id="deleteMails">
+    <button id="deleteEmailsBtn" disabled>Delete emails</button>
+    <br>
+    <button id="deleteMailingListBtn" disabled>Delete list</button>
 </body>
 <script src="edit_mailing_list.js"></script>
+<style>
+    textarea {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+    }
+</style>
 </html>
