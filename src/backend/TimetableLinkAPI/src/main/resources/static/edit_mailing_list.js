@@ -84,7 +84,7 @@ function fetching (PATH, mailsArray) {
   fetch(PATH, {
     method: 'PATCH',
     body: JSON.stringify(
-        mailsArray),
+      mailsArray),
     headers: {
       'Content-Type': 'application/json'
     }
