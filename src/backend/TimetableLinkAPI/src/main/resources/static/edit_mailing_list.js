@@ -29,6 +29,9 @@ function createMailNameList(nameList) {
 
 let deleteMailingListBtn = document.getElementById("deleteMailingListBtn");
 let deleteEmailsBtn = document.getElementById("deleteEmailsBtn");
+let addMailsBtn = document.getElementById("addMailsBtn");
+let newMailingListNameBtn = document.getElementById("newMailingListNameBtn");
+let deleteAllEmailsBtn = document.getElementById("deleteAllEmailsBtn");
 
 /**
  * Load chosen mailing list
@@ -37,22 +40,22 @@ async function loadByName(name) {
     if (name !== 'Choose a mailing list') {
         deleteMailingListBtn.removeAttribute("disabled")
         deleteEmailsBtn.removeAttribute("disabled");
+        addMailsBtn.removeAttribute("disabled")
+        newMailingListNameBtn.removeAttribute("disabled")
         currentMailingListName = name;
-        let link1 = `/mailingLists/${name}`
-        const response1 = await fetch(link1)
-        const data1 = await response1.json()
 
         let link2 = `/mailingLists/${name}/emails`
         const response2 = await fetch(link2)
-        const data2 = await response2.json()
-
-        let mailsArray = data2;
+        let mailsArray = await response2.json();
         let areaStr = '';
         for (let i = 0; i < mailsArray.length; i++)
             areaStr = areaStr + mailsArray[i] + " ";
         document.getElementById("emailsArea").innerHTML = areaStr;
     } else {
         deleteMailingListBtn.setAttribute('disabled', 'disabled')
+        deleteEmailsBtn.setAttribute('disabled', 'disabled')
+        addMailsBtn.setAttribute('disabled', 'disabled')
+        newMailingListNameBtn.setAttribute('disabled', 'disabled')
     }
 }
 
@@ -103,7 +106,6 @@ deleteEmailsBtn.addEventListener('click', (event) => {
 /**
  * Add email(s) to a mailing list
  */
-let addMailsBtn = document.getElementById("addMailsBtn");
 addMailsBtn.addEventListener('click', (event) => {
     event.preventDefault();
     let mailsStr = document.getElementById("mails").value;
@@ -142,23 +144,20 @@ function isEmail(str) {
 /**
  * Change a mailing list's name
  */
-let newMailingListNameBtn = document.getElementById("newMailingListNameBtn");
-addMailsBtn.addEventListener('click', (event) => {
+newMailingListNameBtn.addEventListener('click', (event) => {
     event.preventDefault();
     let newName = document.getElementById("newMailingListName").value;
-    fetch(`/mailingLists`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            'emails': mailsArray,
-            'textIdentifier': mailsName}),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
+        method: 'PATCH',
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
     })
         .then (response => response.json())
         .then (() => {
         })
         .catch(error => console.log(error));
 })
+
 
 start()

@@ -2,27 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit mailing list</title>
 </head>
 <body>
+    <h2>Edit mailing lists</h2>
     <div id="listName"></div>
+    <button id="deleteMailingListBtn" disabled>Delete list</button>
     <br>
     <label for="emailsArea">Emails for this lists</label>
     <textarea id="emailsArea"></textarea>
     <br>
-    <label for="newMailingListName">Enter new name for this list: </label>
+    <h3>Set new name for mailing list</h3>
+    <br>
+    <label for="newMailingListName">Enter a name: </label>
     <input type="text" id="newMailingListName">
-    <button id="newMailingListNameBtn" disabled>Delete emails</button>
+    <button id="newMailingListNameBtn" disabled>Set name</button>
     <br>
-    <label for="mails">Enter emails separated by a space you want to add: </label>
+    <h3>Add emails</h3>
+    <br>
+    <label for="mails">Enter email(s) separated by the space you want to add: </label>
     <input type="text" id="mails">
-    <button id="addMailsBtn">add e-mails</button>
+    <button id="addMailsBtn" disabled>Add email(s)</button>
     <br>
-    <label for="deleteMails">Enter emails separated by a space you want to delete: </label>
+    <h3>Delete emails</h3>
+    <br>
+    <label for="deleteMails">Enter email(s) separated by the space you want to delete: </label>
     <input type="text" id="deleteMails">
-    <button id="deleteEmailsBtn" disabled>Delete emails</button>
-    <br>
-    <button id="deleteMailingListBtn" disabled>Delete list</button>
+    <button id="deleteEmailsBtn" disabled>Delete email(s)</button>
 </body>
 <script src="edit_mailing_list.js"></script>
 <style>
