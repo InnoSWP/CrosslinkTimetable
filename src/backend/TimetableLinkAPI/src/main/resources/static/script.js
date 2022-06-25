@@ -303,7 +303,7 @@
         let name = document.getElementById('eventtitle').value;
         let location = document.getElementById('eventlocation').value;
         let dict = {
-          "January": '01', "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "Jule": "07",
+          "January": '01', "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "July": "07",
           "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
         };
         let monyear = document.getElementById('monthname').innerHTML.split(" ");
@@ -314,6 +314,9 @@
 
         fetch("/events", {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({"name": name,
             "location": location,
             "startDate": formattedStart,

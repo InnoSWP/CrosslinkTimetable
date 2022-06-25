@@ -71,7 +71,6 @@ deleteMailingListBtn.addEventListener('click', (event) => {
         })
             .then (response => response.json())
             .then (() => {
-                alert("Mailing list is deleted successfully!");
             })
             .catch(error => console.log(error));
     }
@@ -96,7 +95,6 @@ deleteEmailsBtn.addEventListener('click', (event) => {
         })
             .then (response => response.json())
             .then (() => {
-                alert("Emails are deleted successfully!");
             })
             .catch(error => console.log(error));
     }
@@ -121,7 +119,7 @@ addMailsBtn.addEventListener('click', (event) => {
         })
             .then (response => response.json())
             .then (() => {
-                alert(`Emails are added to "${currentMailingListName}" mailing list successfully!`);
+
             })
             .catch(error => console.log(error));
     } else
@@ -159,7 +157,6 @@ addMailsBtn.addEventListener('click', (event) => {
     })
         .then (response => response.json())
         .then (() => {
-            alert(`Emails are added to "${currentMailingListName}" mailing list successfully!`);
         })
         .catch(error => console.log(error));
 })
