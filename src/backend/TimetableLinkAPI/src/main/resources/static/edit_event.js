@@ -2,7 +2,7 @@ let currentEventName
 
 async function start() {
     try {
-        const response = await fetch("/events/names")
+        const response = await fetch('/events/names')
         const data = await response.json()
         createEventsNameList(data)
     } catch (e) {
@@ -11,8 +11,8 @@ async function start() {
 }
 
 function createEventsNameList(nameList) {
-    document.getElementById("event-name").innerHTML = `
-    <select onchange="loadByName(this.value)">
+    document.getElementById('event-name').innerHTML = `
+    <select onchange='loadByName(this.value)'>
         <option>Choose an event</option>
         ${Object.keys(nameList).map(name => {
         return `<option>${name}</option>`
@@ -21,11 +21,11 @@ function createEventsNameList(nameList) {
     `
 }
 
-let btn = document.getElementById("delete-btn");
+let btn = document.getElementById('delete-btn');
 
 async function loadByName(name) {
     if (name !== 'Choose an event') {
-        btn.removeAttribute("disabled")
+        btn.removeAttribute('disabled')
         console.log(name)
         let link = `/events/${name}`
         const response = await fetch(link)
@@ -51,7 +51,7 @@ btn.addEventListener('click', (event) => {
     })
         .then (response => response.json())
         .then (() => {
-            alert("Event is deleted successfully!");
+            alert('Event is deleted successfully!');
         })
         .catch(error => console.log(error));
 })

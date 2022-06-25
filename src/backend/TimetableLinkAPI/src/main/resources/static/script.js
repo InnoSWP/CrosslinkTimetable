@@ -256,8 +256,8 @@
     if(!events.length) {
       let div = createElement('div', 'event empty');
       let br = createElement('br');
-      let eventForm = createElement("form");
-      eventForm.setAttribute("method", "post");
+      let eventForm = createElement('form');
+      eventForm.setAttribute('method', 'post');
       let eventTitle = createElement('input', 'eventtitle');
       eventTitle.setAttribute('id', 'eventtitle');
       eventTitle.setAttribute('type', 'text');
@@ -303,28 +303,28 @@
         let name = document.getElementById('eventtitle').value;
         let location = document.getElementById('eventlocation').value;
         let dict = {
-          "January": '01', "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "July": "07",
-          "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"
+          'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
+          'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'
         };
-        let monyear = document.getElementById('monthname').innerHTML.split(" ");
+        let monyear = document.getElementById('monthname').innerHTML.split(' ');
         let month = dict[monyear[0]];
         let year = monyear[1];
         let formattedStart = `${year}-${month}-${date}T${startTime}:00.000+03:00`;
         let formattedEnd = `${year}-${month}-${date}T${endTime}:00.000+03:00`;
 
-        fetch("/events", {
+        fetch('/events', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({"name": name,
-            "location": location,
-            "startDate": formattedStart,
-            "endDate": formattedEnd})
+          body: JSON.stringify({'name': name,
+            'location': location,
+            'startDate': formattedStart,
+            'endDate': formattedEnd})
         })
             .then (response => response.json())
             .then (() => {
-              document.getElementsByClassName('event empty')[0].innerHTML = "Event Added Successfully!";
+              document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
             })
             .catch(error => console.log(error));
       });

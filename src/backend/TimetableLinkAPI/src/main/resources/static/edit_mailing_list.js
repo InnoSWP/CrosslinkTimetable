@@ -5,7 +5,7 @@ let currentMailingListName
  */
 async function start() {
     try {
-        const response = await fetch("/mailingLists/names")
+        const response = await fetch('/mailingLists/names')
         const data = await response.json()
         createMailNameList(data)
     } catch (e) {
@@ -17,8 +17,8 @@ async function start() {
  * Load mailing list in selector form
  */
 function createMailNameList(nameList) {
-    document.getElementById("list-name").innerHTML = `
-    <select id="select" onchange="loadByName(this.value)">
+    document.getElementById('list-name').innerHTML = `
+    <select id='select' onchange='loadByName(this.value)'>
         <option>Choose a mailing list</option>
         ${Object.values(nameList).map(name => {
         return `<option>${name}</option>`
@@ -27,21 +27,21 @@ function createMailNameList(nameList) {
     `
 }
 
-let deleteMailingListBtn = document.getElementById("delete-mailing-list-btn");
-let deleteEmailsBtn = document.getElementById("delete-emails-btn");
-let addMailsBtn = document.getElementById("add-mails-btn");
-let newMailingListNameBtn = document.getElementById("new-mailing-list-name-btn");
-let deleteAllEmailsBtn = document.getElementById("delete-all-emails-btn");
+let deleteMailingListBtn = document.getElementById('delete-mailing-list-btn');
+let deleteEmailsBtn = document.getElementById('delete-emails-btn');
+let addMailsBtn = document.getElementById('add-mails-btn');
+let newMailingListNameBtn = document.getElementById('new-mailing-list-name-btn');
+let deleteAllEmailsBtn = document.getElementById('delete-all-emails-btn');
 
 /**
  * Load chosen mailing list
  */
 async function loadByName(name) {
     if (name !== 'Choose a mailing list') {
-        deleteMailingListBtn.removeAttribute("disabled")
-        deleteEmailsBtn.removeAttribute("disabled");
-        addMailsBtn.removeAttribute("disabled")
-        newMailingListNameBtn.removeAttribute("disabled")
+        deleteMailingListBtn.removeAttribute('disabled')
+        deleteEmailsBtn.removeAttribute('disabled');
+        addMailsBtn.removeAttribute('disabled')
+        newMailingListNameBtn.removeAttribute('disabled')
         currentMailingListName = name;
 
         let link2 = `/mailingLists/${name}/emails`
@@ -49,8 +49,8 @@ async function loadByName(name) {
         let mailsArray = await response2.json();
         let areaStr = '';
         for (let i = 0; i < mailsArray.length; i++)
-            areaStr = areaStr + mailsArray[i] + " ";
-        document.getElementById("emails-area").innerHTML = areaStr;
+            areaStr = areaStr + mailsArray[i] + ' ';
+        document.getElementById('emails-area').innerHTML = areaStr;
     } else {
         deleteMailingListBtn.setAttribute('disabled', 'disabled')
         deleteEmailsBtn.setAttribute('disabled', 'disabled')
@@ -63,7 +63,7 @@ async function loadByName(name) {
  * Delete a mailing list
  */
 deleteMailingListBtn.addEventListener('click', (event) => {
-    let isAgree = confirm(`Delete the "${currentMailingListName}" mailing list?`)
+    let isAgree = confirm(`Delete the '${currentMailingListName}' mailing list?`)
     if (isAgree) {
         event.preventDefault();
         fetch(`/mailingLists/${currentMailingListName}`, {
@@ -86,8 +86,8 @@ deleteEmailsBtn.addEventListener('click', (event) => {
     let isAgree = confirm(`\Delete emails from the ${currentMailingListName} mailing list?`)
     if (isAgree) {
         event.preventDefault();
-        let mailsStr = document.getElementById("emails-area").value;
-        let mailsArray = mailsStr.split(" ").filter(el => el !== "");
+        let mailsStr = document.getElementById('emails-area').value;
+        let mailsArray = mailsStr.split(' ').filter(el => el !== '');
         fetch(`/mailingLists/${currentMailingListName}/emails/delete`, {
             method: 'PATCH',
             body: JSON.stringify(
@@ -108,8 +108,8 @@ deleteEmailsBtn.addEventListener('click', (event) => {
  */
 addMailsBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    let mailsStr = document.getElementById("mails").value;
-    let mailsArray = mailsStr.split(" ").filter(el => el !== "");
+    let mailsStr = document.getElementById('mails').value;
+    let mailsArray = mailsStr.split(' ').filter(el => el !== '');
     if (validateEmails(mailsArray)) {
         fetch(`/mailingLists/${currentMailingListName}/emails/add`, {
             method: 'PATCH',
@@ -125,7 +125,7 @@ addMailsBtn.addEventListener('click', (event) => {
             })
             .catch(error => console.log(error));
     } else
-        alert("Emails are not in correct form. Try again");
+        alert('Emails are not in correct form. Try again');
 })
 
 function validateEmails(mailsArray) {
@@ -146,7 +146,7 @@ function isEmail(str) {
  */
 newMailingListNameBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    let newName = document.getElementById("new-mailing-list-name").value;
+    let newName = document.getElementById('new-mailing-list-name').value;
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
         method: 'PATCH',
         // headers: {
