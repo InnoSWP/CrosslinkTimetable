@@ -1,4 +1,4 @@
-let btn = document.getElementById("createBtn");
+let btn = document.getElementById("create-btn");
 btn.addEventListener('click', (event) => {
     event.preventDefault();
     let mailsStr = document.getElementById("mails").value;
