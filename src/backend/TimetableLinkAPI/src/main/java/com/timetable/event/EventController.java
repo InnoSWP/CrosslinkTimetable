@@ -2,6 +2,7 @@ package com.timetable.event;
 
 import org.apache.tomcat.util.buf.UDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 
@@ -22,11 +23,15 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping("/user")
+    public String getUser( @Value("${spring.datasource.username}") String username,
+                           @Value("${spring.datasource.url}") String url,
+                           @Value("${spring.datasource.password}") String password,
+                           @Value("${spring.datasource.driver-class-name}") String driverClassName) {
+        return username + "\n" + url + "\n" + password + "\n" + driverClassName;
+    }
+
     @PostMapping
-<<<<<<< HEAD
-=======
-    @CrossOrigin(origins = "http://localhost:63342")
->>>>>>> main
     public String createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());
         String eventId = null;
@@ -103,8 +108,6 @@ public class EventController {
         return events;
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/names")
     public List<String> getAllNames() {
         List<String> names = null;
@@ -114,7 +117,6 @@ public class EventController {
         return names;
     }
 
->>>>>>> main
     @PatchMapping ("/{eventId}/invite/{mailingListTextIdentifier}")
     public void inviteAllFromMailingList(@PathVariable String eventId,
                                          @PathVariable String mailingListTextIdentifier) {

@@ -3,10 +3,17 @@ version: '3'
 services:
   server:
     build: .
+    environment:
+      SPRING_APPLICATION_JSON: '{
+           "spring.datasource.url"  : "jdbc:mysql://db:3306/timetable"
+         }'
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - db
+    restart: on-failure
+    networks:
+      - backend
 
   db:
     image: mysql:8.0
@@ -19,5 +26,10 @@ services:
       - MYSQL_DATABASE=timetable
       - MYSQL_ROOT_PASSWORD=pass
     ports:
-      - '3306:3306'
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  backend:
 

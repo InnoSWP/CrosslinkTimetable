@@ -11,23 +11,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-<<<<<<< HEAD
-=======
-import org.springframework.web.servlet.config.annotation.*;
->>>>>>> main
+
 
 import javax.sql.DataSource;
 
 @SpringBootApplication
 @Import({SpringJdbcConfig.class})
-<<<<<<< HEAD
 public class App {
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
-=======
-//@EnableWebMvc
-public class App  {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
@@ -47,5 +37,4 @@ public class App  {
 //            }
 //        };
 //    }
->>>>>>> main
 }
