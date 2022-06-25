@@ -1,10 +1,10 @@
 const btn = document.getElementById('create-btn')
 btn.addEventListener('click', (event) => {
-  event.preventDefault();
+  event.preventDefault()
   const mailsStr = document.getElementById('mails').value
   const mailsArray = mailsStr.split(' ').filter(el => el !== '')
   if (validateEmails(mailsArray)) {
-    let mailsName = document.getElementById('mailing-list-name').value
+    const mailsName = document.getElementById('mailing-list-name').value
 
     fetch('/mailingLists', {
       method: 'POST',
@@ -29,10 +29,10 @@ btn.addEventListener('click', (event) => {
 function validateEmails (mailsArray) {
   for (const email of mailsArray) {
     if (!isEmail(email)) {
-        return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 
 function isEmail (str) {

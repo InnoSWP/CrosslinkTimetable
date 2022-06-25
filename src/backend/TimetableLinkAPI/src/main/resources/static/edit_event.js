@@ -21,30 +21,30 @@ function createEventsNameList (nameList) {
   `
 }
 
-let btn = document.getElementById('delete-btn')
+const btn = document.getElementById('delete-btn')
 
 async function loadByName (name) {
   if (name !== 'Choose an event') {
     btn.removeAttribute('disabled')
     console.log(name)
-    let link = `/events/${name}`
+    const link = `/events/${name}`
     const response = await fetch(link)
     const data = await response.json()
-    if (data.length === 0)
+    if (data.length === 0) {
       alert('Error')
+    }
     console.log(data)
   } else {
     btn.setAttribute('disabled', 'disabled')
   }
 }
 
-
 btn.addEventListener('click', (event) => {
   event.preventDefault()
   fetch(`/events/${currentEventName}`, {
     method: 'DELETE',
     body: JSON.stringify({
-      'eventId': currentEventName
+      eventId: currentEventName
     }),
     headers: {
       'Content-Type': 'application/json'
@@ -52,9 +52,9 @@ btn.addEventListener('click', (event) => {
   })
     .then(response => response.json())
     .then(() => {
-      alert('Event is deleted successfully!');
+      alert('Event is deleted successfully!')
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
 })
 
 start()
