@@ -80,6 +80,21 @@ deleteMailingListBtn.addEventListener('click', (event) => {
   }
 })
 
+function fetching (PATH, mailsArray) {
+  fetch(PATH, {
+    method: 'PATCH',
+    body: JSON.stringify(
+        mailsArray),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(() => {
+    })
+    .catch(error => console.log(error))
+}
+
 /**
  * Delete email(s) from a mailing list
  */
@@ -89,18 +104,7 @@ deleteEmailsBtn.addEventListener('click', (event) => {
     event.preventDefault()
     const mailsStr = document.getElementById('emails-area').value
     const mailsArray = mailsStr.split(' ').filter(el => el !== '')
-    fetch(`/mailingLists/${currentMailingListName}/emails/delete`, {
-      method: 'PATCH',
-      body: JSON.stringify(
-        mailsArray),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(() => {
-      })
-      .catch(error => console.log(error))
+    fetching(`/mailingLists/${currentMailingListName}/emails/delete`, mailsArray)
   }
 })
 
@@ -112,19 +116,7 @@ addMailsBtn.addEventListener('click', (event) => {
   const mailsStr = document.getElementById('mails').value
   const mailsArray = mailsStr.split(' ').filter(el => el !== '')
   if (validateEmails(mailsArray)) {
-    fetch(`/mailingLists/${currentMailingListName}/emails/add`, {
-      method: 'PATCH',
-      body: JSON.stringify(
-        mailsArray),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(() => {
-
-      })
-      .catch(error => console.log(error))
+    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
   } else {
     alert('Emails are not in correct form. Try again')
   }
