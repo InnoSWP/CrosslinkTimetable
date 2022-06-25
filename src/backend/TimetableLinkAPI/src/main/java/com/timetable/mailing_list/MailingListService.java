@@ -78,4 +78,8 @@ public class MailingListService {
         List<String> emails = getEmailsFromList(textIdentifier);
         mailingListManager.cancelInvitations(eventId, emails);
     }
+
+    public void updateTextIdentifier(String textIdentifier, String newTextIdentifier) {
+        mailingListRepository.updateTextIdentifier(textIdentifier, newTextIdentifier);
+    }
 }

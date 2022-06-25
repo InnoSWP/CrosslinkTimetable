@@ -2,6 +2,7 @@ package com.timetable.mailing_list;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -35,6 +36,14 @@ public class MailingListController {
                                      @RequestBody List<String> emails) {
         mailingListService.deleteEmailsFromList(textIdentifier, emails);
     }
+
+    @PatchMapping("/{textIdentifier}")
+    public void updateTextIdentifier(
+            @PathVariable String textIdentifier,
+            @RequestParam String newTextIdentifier) {
+        mailingListService.updateTextIdentifier(textIdentifier, newTextIdentifier);
+    }
+
 
     @GetMapping("/{textIdentifier}/emails")
     public List<String> getEmailsFormList(@PathVariable String textIdentifier) {

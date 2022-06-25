@@ -2,6 +2,7 @@ package com.timetable.event;
 
 import org.apache.tomcat.util.buf.UDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 
@@ -20,6 +21,14 @@ public class EventController {
     @Autowired
     public EventController(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @GetMapping("/user")
+    public String getUser( @Value("${spring.datasource.username}") String username,
+                           @Value("${spring.datasource.url}") String url,
+                           @Value("${spring.datasource.password}") String password,
+                           @Value("${spring.datasource.driver-class-name}") String driverClassName) {
+        return username + "\n" + url + "\n" + password + "\n" + driverClassName;
     }
 
     @PostMapping

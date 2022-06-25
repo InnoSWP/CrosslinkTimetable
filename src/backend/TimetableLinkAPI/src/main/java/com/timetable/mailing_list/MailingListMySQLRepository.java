@@ -1,5 +1,6 @@
 package com.timetable.mailing_list;
 
+import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -136,6 +137,16 @@ public class MailingListMySQLRepository implements MailingListRepository {
         emailsToAdd.removeAll(oldEmails);
         emailsToDelete.forEach(email -> deleteEmailFromList(id, email));
         emailsToAdd.forEach(email -> addEmailToList(id, email));
+    }
+
+    @Override
+    public void updateTextIdentifier(String textIdentifier, String newTextIdentifier) {
+        jdbcTemplate.update(
+                """
+                   UPDATE mailingList
+                   SET textIdentifier = ?
+                   WHERE textIdentifier = ?;
+                   """, newTextIdentifier, textIdentifier);
     }
 
 
