@@ -24,5 +24,5 @@ jobs:
           mvn --batch-mode --update-snapshots package
       - name: Run the Maven verify phase
         run: |
-          #cd src/backend/TimetableLinkAPI 
+          cd src/backend/TimetableLinkAPI 
           mvn --batch-mode --update-snapshots verify
