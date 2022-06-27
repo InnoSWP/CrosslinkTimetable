@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Create mailing list</title>
+    <link rel="stylesheet" href="./bootstrap.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h2>Create mailing lists</h2>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Create mailing list</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">
+                        Return to calendar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <p><a class="nav-link active" aria-current="page" href="edit_mailing_list.html">
+                        Edit mailing lists
+                    </a></p>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <label for="mailing-list-name">Enter name: </label>
     <input type="text" id="mailing-list-name">
     <br>
@@ -15,7 +33,6 @@
     <button id="create-btn">
     Create
     </button>
-    <p><a aria-current="page" href="edit_mailing_list.html">Edit mailing lists</a></p>
 </body>
 <script src="post_mailing_list.js"></script>
 </html>
