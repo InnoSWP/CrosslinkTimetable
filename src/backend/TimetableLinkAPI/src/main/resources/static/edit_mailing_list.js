@@ -98,7 +98,7 @@ function fetching (PATH, mailsArray) {
  * Delete email(s) from a mailing list
  */
 deleteEmailsBtn.addEventListener('click', (event) => {
-  const isAgree = confirm(`Delete emails from the ${currentMailingListName} mailing list?`)
+  const isAgree = confirm(`\Delete emails from the ${currentMailingListName} mailing list?`)
   if (isAgree) {
     event.preventDefault()
     const mailsStr = document.getElementById('emails-area').value
@@ -136,16 +136,13 @@ function isEmail (str) {
 }
 
 /**
- * Change a mailing list's name
+ * Change/update a mailing list's name
  */
 newMailingListNameBtn.addEventListener('click', (event) => {
   event.preventDefault()
   const newName = document.getElementById('new-mailing-list-name').value
   fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
     method: 'PATCH'
-    // headers: {
-    //     'Content-Type': 'application/json'
-    // }
   })
     .then(response => response.json())
     .then(() => {

@@ -309,8 +309,8 @@
         let monyear = document.getElementById('monthname').innerHTML.split(' ');
         let month = dict[monyear[0]];
         let year = monyear[1];
-        let formattedStart = `${year}-${month}-${date}T${startTime}:00.000+03:00`;
-        let formattedEnd = `${year}-${month}-${date}T${endTime}:00.000+03:00`;
+        let formattedStart = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${startTime}:00.000Z`;
+        let formattedEnd = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${endTime}:00.000Z`;
 
         fetch('/events', {
           method: 'POST',

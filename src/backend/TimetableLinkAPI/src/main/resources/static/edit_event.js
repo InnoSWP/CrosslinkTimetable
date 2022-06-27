@@ -1,5 +1,8 @@
 let currentEventName
 
+/**
+ * Fetch events
+ */
 async function start () {
   try {
     const response = await fetch('/events/names')
@@ -10,51 +13,81 @@ async function start () {
   }
 }
 
+/**
+ * Load event in selector form
+ */
 function createEventsNameList (nameList) {
   document.getElementById('event-name').innerHTML = `
   <select onchange='loadByName(this.value)'>
     <option>Choose an event</option>
-    ${Object.keys(nameList).map(name => {
+    ${Object.values(nameList).map(name => {
     return `<option>${name}</option>`
   }).join('')}
   </select>
   `
 }
 
-const btn = document.getElementById('delete-btn')
+const deleteEventBtn = document.getElementById('delete-event-btn')
+const newEventNameBtn = document.getElementById('new-event-name-btn')
 
-// async function loadByName (name) {
-//   if (name !== 'Choose an event') {
-//     btn.removeAttribute('disabled')
-//     console.log(name)
-//     const link = `/events/${name}`
-//     const response = await fetch(link)
-//     const data = await response.json()
-//     if (data.length === 0) {
-//       alert('Error')
-//     }
-//     console.log(data)
-//   } else {
-//     btn.setAttribute('disabled', 'disabled')
-//   }
-// }
+/**
+ * Load chosen event
+ */
+async function loadByName (name) {
+  if (name !== 'Choose an event') {
+    currentEventName = name;
+    deleteEventBtn.removeAttribute('disabled')
+    newEventNameBtn.removeAttribute('disabled')
+    let link = `/events/${currentEventName}`
 
-btn.addEventListener('click', (event) => {
+    fetch(link)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          console.log("START " + data["startDate"])
+          console.log("END " + data["endDate"])
+        })
+        .catch(error => console.log(error));
+  } else {
+    deleteEventBtn.setAttribute('disabled', 'disabled')
+    newEventNameBtn.setAttribute('disabled', 'disabled')
+  }
+}
+
+/**
+ * Delete an event
+ */
+deleteEventBtn.addEventListener('click', (event) => {
   event.preventDefault()
-  fetch(`/events/${currentEventName}`, {
-    method: 'DELETE',
-    body: JSON.stringify({
-      eventId: currentEventName
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(response => response.json())
-    .then(() => {
-      alert('Event is deleted successfully!')
+  const isAgree = confirm(`Delete the '${currentEventName}' event?`)
+  if (isAgree) {
+    fetch(`/events/${currentEventName}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    .catch(error => console.log(error))
+        .then(response => response.json())
+        .then(() => {
+        })
+        .catch(error => console.log(error))
+  }
 })
+
+/**
+ * Change/update an event's name
+ */
+newEventNameBtn.addEventListener('click', (event) => {
+  event.preventDefault()
+  const newName = document.getElementById('new-mailing-list-name').value
+  fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
+    method: 'PATCH'
+  })
+      .then(response => response.json())
+      .then(() => {
+      })
+      .catch(error => console.log(error))
+})
+
 
 start()

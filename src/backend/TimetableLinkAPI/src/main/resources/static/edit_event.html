@@ -2,12 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit event</title>
 </head>
 <body>
-<div id="event-name"></div>
-<br>
-<button id="delete-btn" disabled>Delete event</button>
-</body>
-<script src="edit_event.js"></script>
+    <h2>Edit event</h2>
+    <div id="event-name"></div>
+    <br>
+    <button id="delete-event-btn" disabled>Delete event</button>
+    </body>
+    <br>
+    <label for="info-area">Event's info</label>
+    <textarea id="info-area"></textarea>
+    <h3>Set new name for event</h3>
+    <br>
+    <label for="new-event-name">Enter a name: </label>
+    <input type="text" id="new-event-name">
+    <button id="new-event-name-btn" disabled>Set name</button>
+    <h2>Interaction with mailing lists</h2>
+    <br>
+    <div id="list-name"></div>
 </html>
+<script src="edit_event.js"></script>
+<!--<script src="edit_event_interaction_with_mailing_list.js"></script>-->
