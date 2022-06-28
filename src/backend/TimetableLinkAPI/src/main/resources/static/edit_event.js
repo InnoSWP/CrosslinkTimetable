@@ -141,8 +141,10 @@ deleteEventBtn.addEventListener('click', (event) => {
  */
 searchEventByDateBtn.addEventListener('click', (event) => {
     event.preventDefault()
-    const startDate = document.getElementById('search-event-start-date').value
-    const endDate = document.getElementById('search-event-end-date').value
+    const startDate = document.getElementById('search-event-start-date').value + "T" +
+        document.getElementById('search-event-start-time').value;
+    const endDate = document.getElementById('search-event-end-date').value + "T" +
+        document.getElementById('search-event-end-time').value;
 
     fetch(`events/eventsFromTimeInterval?start=${startDate}&end=${endDate}`, {
         method: 'GET',
