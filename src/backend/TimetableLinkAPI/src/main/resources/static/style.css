@@ -3,7 +3,7 @@
     }
     
     body {
-     overflow: hidden;
+     /*overflow: hidden;*/
      font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
      font-weight: 100;
      color: rgba(255, 255, 255, 1);
@@ -25,7 +25,7 @@
       width: 420px;
       margin: 0 auto;
       height: 570px;
-      overflow: hidden;
+      /*overflow: hidden;*/
     }
     
     .header {
@@ -138,7 +138,12 @@
       color: rgba(255, 255, 255, .5);
       letter-spacing: .7px;
     }
-    
+
+    ul {
+        text-align: center;
+        list-style: inside;
+    }
+
     .day-number {
       font-size: 24px;
       letter-spacing: 1.5px;
@@ -151,7 +156,7 @@
       text-align: center;
       height: 12px;
       line-height: 6px;
-      overflow: hidden;
+      /*overflow: hidden;*/
     }
     
     .day .day-events span {
@@ -435,3 +440,5 @@
   width: 40px;
   border-color: transparent;
 }
+
+
