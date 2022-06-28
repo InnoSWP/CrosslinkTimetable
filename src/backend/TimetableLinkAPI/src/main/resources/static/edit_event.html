@@ -11,16 +11,61 @@
     <button id="delete-event-btn" disabled>Delete event</button>
     </body>
     <br>
-    <label for="info-area">Event's info</label>
-    <textarea id="info-area"></textarea>
+    <label for="event-location">Location</label>
+    <textarea id="event-location"></textarea>
+    <br>
+    <label for="event-start-date">Start date</label>
+    <textarea id="event-start-date"></textarea>
+    <br>
+    <label for="event-end-date">End date</label>
+    <textarea id="event-end-date"></textarea>
+
+    <h3>Get events from the time interval</h3>
+    <label for="search-event-start-date">Enter a start date (in format YYYY-MM-DD): </label>
+    <input type="text" id="search-event-start-date">
+
+    <label for="search-event-end-date">Enter an end date (in format YYYY-MM-DD): </label>
+    <input type="text" id="search-event-end-date">
+    <button id="search-event-by-date-btn" disabled>OK</button>
+
+
     <h3>Set new name for event</h3>
     <br>
     <label for="new-event-name">Enter a name: </label>
     <input type="text" id="new-event-name">
     <button id="new-event-name-btn" disabled>Set name</button>
+
+    <h3>Set new location</h3>
+    <label for="new-event-location">Enter location: </label>
+    <input type="text" id="new-event-location">
+    <button id="new-event-location-btn" disabled>Set date</button>
+
+    <h3>Edit dates</h3>
+    <h4>Manual</h4>
+    <ul>Date format: YYYY-MM-DDTHH:mm:ss.sssZ
+    <li>Symbol T is just delimiter</li>
+    <li>The optional part Z indicates the time zone in the format +-hh:mm.
+        If you just specify the letter Z, we get UTC+0.</li></ul>
+
+
+    <label for="new-event-start-date">Enter a new start date: </label>
+    <input type="text" id="new-event-start-date">
+    <button id="new-event-start-date-btn" disabled>Set date</button>
+
+    <br>
+    <label for="new-event-end-date">Enter a new end date: </label>
+    <input type="text" id="new-event-end-date">
+    <button id="new-event-end-date-btn" disabled>Set date</button>
+
     <h2>Interaction with mailing lists</h2>
     <br>
     <div id="list-name"></div>
+    <br>
+
+    <h3>Send invitations to chosen event to all people from a chosen mail list</h3>
+    <button id="send-invitation-to-one-mailing-list-btn" disabled>Send</button>
+
+    <h3>Cancel invitations to chosen event to all people from a chosen mail list</h3>
+    <button id="cancel-invitation-to-one-mailing-list-btn" disabled>Cancel</button>
 </html>
 <script src="edit_event.js"></script>
-<!--<script src="edit_event_interaction_with_mailing_list.js"></script>-->

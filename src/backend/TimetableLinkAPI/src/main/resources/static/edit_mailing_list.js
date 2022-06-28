@@ -31,6 +31,7 @@ const deleteMailingListBtn = document.getElementById('delete-mailing-list-btn')
 const deleteEmailsBtn = document.getElementById('delete-emails-btn')
 const addMailsBtn = document.getElementById('add-mails-btn')
 const newMailingListNameBtn = document.getElementById('new-mailing-list-name-btn')
+const importOutlookContactsBtn = document.getElementById('import-outlook-contacts-btn')
 
 /**
  * Load chosen mailing list
@@ -41,6 +42,7 @@ async function loadByName (name) {
     deleteEmailsBtn.removeAttribute('disabled')
     addMailsBtn.removeAttribute('disabled')
     newMailingListNameBtn.removeAttribute('disabled')
+    importOutlookContactsBtn.removeAttribute('disabled')
     currentMailingListName = name
 
     let link2 = `/mailingLists/${name}/emails`
@@ -56,6 +58,7 @@ async function loadByName (name) {
     deleteEmailsBtn.setAttribute('disabled', 'disabled')
     addMailsBtn.setAttribute('disabled', 'disabled')
     newMailingListNameBtn.setAttribute('disabled', 'disabled')
+    importOutlookContactsBtn.removeAttribute('disabled')
   }
 }
 
@@ -78,6 +81,22 @@ deleteMailingListBtn.addEventListener('click', (event) => {
       .catch(error => console.log(error))
   }
 })
+
+/**
+ * Import contact lists from Outlook
+ */
+importOutlookContactsBtn.addEventListener('click', (event) => {
+  event.preventDefault()
+  fetch(`/mailingLists/importOutlookMailingLists`, {
+    method: 'PATCH'
+  })
+      .then(response => response.json())
+      .then(() => {
+      })
+      .catch(error => console.log(error))
+})
+
+
 
 function fetching (PATH, mailsArray) {
   fetch(PATH, {
