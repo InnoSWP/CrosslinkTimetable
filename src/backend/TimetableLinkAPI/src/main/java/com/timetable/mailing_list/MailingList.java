@@ -3,7 +3,9 @@ package com.timetable.mailing_list;
 import microsoft.exchange.webservices.data.property.complex.EmailAddress;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class MailingList {
     private final String textIdentifier;
@@ -23,19 +25,17 @@ public class MailingList {
     }
 
 
-//    public List<EmailAddress> getEmails() {
-//        return emails;
-//    }
-//
-//    public void setEmails(List<EmailAddress> emails) {
-//        this.emails = emails;
-//    }
-//
-//    public void addEvent(EmailAddress email) {
-//        emails.add(email);
-//    }
-//
-//    public void excludeEmail(EmailAddress email) {
-//        emails.remove(email);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MailingList that = (MailingList) o;
+        return textIdentifier.equals(that.textIdentifier)
+                && (new HashSet<>(emails)).equals(new HashSet<>(that.emails));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(textIdentifier, new HashSet<>(emails));
+    }
 }
