@@ -29,18 +29,27 @@
     <input type="text" id="event-location">
     <br>
     <label style="font-size: 20px" for="event-start-date">Start date</label>
-    <input type="text" id="event-start-date"/>
+    <input type="date" id="event-start-date"/>
+    <label style="font-size: 20px" for="event-start-time">Start time</label>
+    <input type="time" id="event-start-time"/>
     <br>
     <label style="font-size: 20px" for="event-end-date">End date</label>
-    <input type="text" id="event-end-date">
+    <input type="date" id="event-end-date">
+    <label style="font-size: 20px" for="event-end-time">End time</label>
+    <input type="time" id="event-end-time">
     <br>
     <br>
     <h3>Get events from the time interval</h3>
     <label style="font-size: 20px" for="search-event-start-date">Enter a start date: </label>
     <input type="date" id="search-event-start-date">
-
+    <label style="font-size: 20px" for="search-event-start-time">Enter a start time: </label>
+    <input type="time" id="search-event-start-time">
+    <br>
     <label style="font-size: 20px" for="search-event-end-date">Enter an end date: </label>
     <input type="date" id="search-event-end-date">
+    <label style="font-size: 20px" for="search-event-end-time">Enter an end time: </label>
+    <input type="time" id="search-event-end-time">
+    <br>
     <button id="search-event-by-date-btn" disabled>OK</button>
 
     <br>
@@ -67,12 +76,16 @@
 
 
     <label for="new-event-start-date">Enter a new start date: </label>
-    <input type="text" id="new-event-start-date">
+    <input type="date" id="new-event-start-date">
+    <label for="new-event-start-time">Enter a new start time: </label>
+    <input type="time" id="new-event-start-time">
     <button id="new-event-start-date-btn" disabled>Set date</button>
 
     <br>
     <label for="new-event-end-date">Enter a new end date: </label>
-    <input type="text" id="new-event-end-date">
+    <input type="date" id="new-event-end-date">
+    <label for="new-event-end-time">Enter a new end time: </label>
+    <input type="time" id="new-event-end-time">
     <button id="new-event-end-date-btn" disabled>Set date</button>
 
     <br>
