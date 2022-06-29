@@ -322,7 +322,10 @@
             'startDate': formattedStart,
             'endDate': formattedEnd})
         })
-            .then (response => response.json())
+            .then (response => {
+              console.log(response);
+              return response.json();
+            })
             .then (() => {
               document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
             })

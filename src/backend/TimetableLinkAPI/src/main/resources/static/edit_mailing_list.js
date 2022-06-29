@@ -6,6 +6,7 @@ let currentMailingListName
 async function start () {
   try {
     const response = await fetch('/mailingLists/names')
+    console.log(response);
     const data = await response.json()
     createMailNameList(data)
   } catch (e) {
@@ -75,7 +76,10 @@ deleteMailingListBtn.addEventListener('click', (event) => {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
       .then(() => {
       })
       .catch(error => console.log(error))
@@ -90,7 +94,10 @@ importOutlookContactsBtn.addEventListener('click', (event) => {
   fetch(`/mailingLists/importOutlookMailingLists`, {
     method: 'PATCH'
   })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
       .then(() => {
       })
       .catch(error => console.log(error))
@@ -107,7 +114,10 @@ function fetching (PATH, mailsArray) {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
     .then(() => {
     })
     .catch(error => console.log(error))
@@ -163,7 +173,10 @@ newMailingListNameBtn.addEventListener('click', (event) => {
   fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
     method: 'PATCH'
   })
-    .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
     .then(() => {
     })
     .catch(error => console.log(error))

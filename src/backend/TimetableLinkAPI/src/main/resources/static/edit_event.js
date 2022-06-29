@@ -1,4 +1,5 @@
 let currentEventName
+let currentEventId
 let currentMailingListName
 let currentEventLocation
 let currentEventStartDate
@@ -9,13 +10,15 @@ let currentEventEndDate
  */
 async function start () {
   try {
-    const response = await fetch('/events/names')
-    const data = await response.json()
-    createEventsNameList(data)
+    const response = await fetch('/events');
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    createEventsNameList(data);
 
-    const mailResponse = await fetch('/mailingLists/names')
-    const mailData = await mailResponse.json()
-    createMailNameList(mailData)
+    const mailResponse = await fetch('/mailingLists/names');
+    const mailData = await mailResponse.json();
+    createMailNameList(mailData);
   } catch (e) {
     alert('There was a problem fetching the events and/or mailing lists names.')
   }
@@ -24,15 +27,68 @@ async function start () {
 /**
  * Load event in selector form
  */
-function createEventsNameList (nameList) {
-  document.getElementById('event-name').innerHTML = `
-  <select onchange='loadEventByName(this.value)'>
-    <option>Choose an event</option>
-    ${Object.values(nameList).map(name => {
-    return `<option>${name}</option>`
-  }).join('')}
-  </select>
-  `
+function createEventsNameList (eventList) {
+  let selectField = document.createElement("select");
+  let defOp = document.createElement("option");
+  defOp.innerHTML = "Choose an event";
+  selectField.appendChild(defOp);
+  eventList.forEach(event => {
+      let eventId = event["id"];
+      let eventName = event["name"];
+      let option = document.createElement("option");
+      option.setAttribute("value", eventId);
+      option.innerHTML = eventName;
+      selectField.appendChild(option);
+  });
+  selectField.addEventListener('select', event => {
+      console.log(this.selectedItem);
+      console.log(this.selectedIndex);
+      loadEventById(this.selectedItem.value);
+  });
+    document.getElementById('event-name').appendChild(selectField);
+}
+
+function loadEventById(eventId){
+    if (name !== 'Choose an event') {
+        currentEventId = eventId;
+        deleteEventBtn.removeAttribute('disabled')
+        searchEventByDateBtn.removeAttribute('disabled')
+        newEventNameBtn.removeAttribute('disabled')
+        newEventLocationBtn.removeAttribute('disabled')
+        newEventStartDateBtn.removeAttribute('disabled')
+        newEventEndDateBtn.removeAttribute('disabled')
+        let link = `/events/${eventId}`
+
+        fetch(link)
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+
+                currentEventLocation = data["location"]
+                currentEventStartDate = data["startDate"]
+                currentEventEndDate = data["endDate"]
+
+                console.log(data);
+
+                console.log("LOCATION " + currentEventLocation)
+                console.log("START " + currentEventStartDate)
+                console.log("END " + currentEventEndDate)
+
+                document.getElementById('event-location').innerHTML = currentEventLocation
+                document.getElementById('event-start-date').innerHTML = currentEventStartDate
+                document.getElementById('event-end-date').innerHTML = currentEventEndDate
+            })
+            .catch(error => console.log(error));
+    } else {
+        deleteEventBtn.setAttribute('disabled', 'disabled')
+        newEventNameBtn.setAttribute('disabled', 'disabled')
+        newEventLocationBtn.setAttribute('disabled', 'disabled')
+        newEventStartDateBtn.setAttribute('disabled', 'disabled')
+        newEventEndDateBtn.setAttribute('disabled', 'disabled')
+        searchEventByDateBtn.setAttribute('disabled', 'disabled')
+    }
 }
 
 /**
@@ -62,45 +118,9 @@ const cancelInvitationToOneMailingListBtn = document.getElementById('cancel-invi
 /**
  * Load chosen event
  */
-async function loadEventByName (name) {
-  if (name !== 'Choose an event') {
-    currentEventName = name;
-    deleteEventBtn.removeAttribute('disabled')
-      searchEventByDateBtn.removeAttribute('disabled')
-    newEventNameBtn.removeAttribute('disabled')
-      newEventLocationBtn.removeAttribute('disabled')
-      newEventStartDateBtn.removeAttribute('disabled')
-      newEventEndDateBtn.removeAttribute('disabled')
-    let link = `/events/${currentEventName}`
-
-    fetch(link)
-        .then(response => response.json())
-        .then(data => {
-
-          currentEventLocation = data["location"]
-          currentEventStartDate = data["startDate"]
-          currentEventEndDate = data["endDate"]
-
-          console.log(data);
-
-          console.log("LOCATION " + currentEventLocation)
-          console.log("START " + currentEventStartDate)
-          console.log("END " + currentEventEndDate)
-
-          document.getElementById('event-location').innerHTML = currentEventLocation
-          document.getElementById('event-start-date').innerHTML = currentEventStartDate
-          document.getElementById('event-end-date').innerHTML = currentEventEndDate
-        })
-        .catch(error => console.log(error));
-  } else {
-    deleteEventBtn.setAttribute('disabled', 'disabled')
-    newEventNameBtn.setAttribute('disabled', 'disabled')
-      newEventLocationBtn.setAttribute('disabled', 'disabled')
-      newEventStartDateBtn.setAttribute('disabled', 'disabled')
-      newEventEndDateBtn.setAttribute('disabled', 'disabled')
-      searchEventByDateBtn.setAttribute('disabled', 'disabled')
-  }
-}
+// async function loadEventByName (name) {
+//
+// }
 
 /**
  * Load chosen mailing list
@@ -129,7 +149,10 @@ deleteEventBtn.addEventListener('click', (event) => {
         'Content-Type': 'application/json'
       }
     })
-        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            return response.json();
+        })
         .then(() => {
         })
         .catch(error => console.log(error))
