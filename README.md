@@ -1,6 +1,12 @@
-# Brief Intro
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
-Project repo to link Moodle, MS Exchange, DoE updates and University Events in one centralized system.
+# Cross Link for University Innopolis schedules
+
+---
+
+This application is a combination of all Innopolis University timetables. With it, DoE will create events that will be sent to the calendars of students and teachers of the university. Moreover, this application combines all the events created on Moodle and MS Exchange and also sends them to the Outlook calendars of students and teachers.
+
+![Demo for DoE](pictures/DemoCalendar.png)
 
 ## Important Links
 
@@ -9,6 +15,12 @@ Project repo to link Moodle, MS Exchange, DoE updates and University Events in o
 - [Product Backlog](https://docs.google.com/document/d/1eF4ok6R33ai33qpmHXXPxxG4ZWCH8k8phtmZDnNVtxg/edit?usp=sharing)
 - [API Design](https://app.swaggerhub.com/apis/Timetable2/timetable/1.0.0)
 - [Mock Server](https://www.postman.com/orange-astronaut-888988/workspace/timetable-api/collection/21222264-0d7b6da3-1e13-4bd9-af09-11720e694a00?ctx=documentation)
+
+## Why this important?
+
+In University Innopolis there a lot of links that have some events on them(e.g. Moodle, Outlook, MS Exchange). So, our application unite all these timetables and send them to Outlook Calendar, because every participant of University Innopolis has Outlook account.
+
+
 
 ## Developer Guide
 
