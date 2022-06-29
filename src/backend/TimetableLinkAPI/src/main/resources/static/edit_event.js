@@ -40,14 +40,21 @@ function createEventsNameList (eventList) {
       option.innerHTML = eventName;
       selectField.appendChild(option);
   });
-  selectField.addEventListener('select', event => {
-      console.log(this.selectedItem);
-      console.log(this.selectedIndex);
-      loadEventById(this.selectedItem.value);
+  selectField.addEventListener('change', () => {
+      loadEventById(selectField.options[selectField.selectedIndex].value);
   });
     document.getElementById('event-name').appendChild(selectField);
 }
 
+function stringToDate(datetimeString){
+  let parts = datetimeString.split("T");
+  let datePart = new Date(parts[0]);
+  console.log(datePart);
+};
+
+/**
+ * Load chosen event
+ */
 function loadEventById(eventId){
     if (name !== 'Choose an event') {
         currentEventId = eventId;
@@ -69,16 +76,21 @@ function loadEventById(eventId){
                 currentEventLocation = data["location"]
                 currentEventStartDate = data["startDate"]
                 currentEventEndDate = data["endDate"]
-
                 console.log(data);
 
-                console.log("LOCATION " + currentEventLocation)
-                console.log("START " + currentEventStartDate)
-                console.log("END " + currentEventEndDate)
+                console.log(currentEventLocation);
+                console.log(currentEventStartDate);
+                stringToDate(currentEventStartDate);
+                console.log(currentEventEndDate);
+                
+                let startTimeParts = currentEventStartDate.split('T');
+                let endTimeParts = currentEventEndDate.split('T')
 
-                document.getElementById('event-location').innerHTML = currentEventLocation
-                document.getElementById('event-start-date').innerHTML = currentEventStartDate
-                document.getElementById('event-end-date').innerHTML = currentEventEndDate
+                document.getElementById('event-location').value = currentEventLocation
+                document.getElementById('event-start-date').value = startTimeParts[0]
+                document.getElementById('event-start-time').value = startTimeParts[1]
+                document.getElementById('event-end-date').value = endTimeParts[0]
+                document.getElementById('event-end-time').value = endTimeParts[1]
             })
             .catch(error => console.log(error));
     } else {
@@ -114,13 +126,6 @@ const newEventEndDateBtn = document.getElementById('new-event-end-date-btn')
 
 const sendInvitationToOneMailingListBtn = document.getElementById('send-invitation-to-one-mailing-list-btn');
 const cancelInvitationToOneMailingListBtn = document.getElementById('cancel-invitation-to-one-mailing-list-btn')
-
-/**
- * Load chosen event
- */
-// async function loadEventByName (name) {
-//
-// }
 
 /**
  * Load chosen mailing list
