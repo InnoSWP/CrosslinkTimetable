@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:personal.properties")
 public class OutlookConnector {
-    private ExchangeService service;
-    private ExchangeCredentials credentials;
+    private final ExchangeService service;
+    //private ExchangeCredentials credentials;
 
     @Autowired
     public OutlookConnector(

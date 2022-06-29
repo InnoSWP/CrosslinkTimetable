@@ -2,6 +2,7 @@ version: '3'
 
 services:
   server:
+    container_name: timetable_server
     build: .
     environment:
       SPRING_APPLICATION_JSON: '{
@@ -12,10 +13,10 @@ services:
     depends_on:
       - db
     restart: on-failure
-    networks:
-      - backend
+
 
   db:
+    container_name: timetable_db
     image: mysql:8.0
     platform: linux/x86_64
     restart: always
@@ -27,9 +28,6 @@ services:
       - MYSQL_ROOT_PASSWORD=pass
     ports:
       - "3306:3306"
-    networks:
-      - backend
 
-networks:
-  backend:
+
 
