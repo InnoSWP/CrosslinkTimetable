@@ -127,10 +127,10 @@ function fetching (PATH, mailsArray) {
  * Delete email(s) from a mailing list
  */
 deleteEmailsBtn.addEventListener('click', (event) => {
-  const isAgree = confirm(`\Delete emails from the ${currentMailingListName} mailing list?`)
+  const isAgree = confirm(`\Delete email(s) from the ${currentMailingListName} mailing list?`)
   if (isAgree) {
     event.preventDefault()
-    const mailsStr = document.getElementById('emails-area').value
+    const mailsStr = document.getElementById('delete-mails').value
     const mailsArray = mailsStr.split(' ').filter(el => el !== '')
     fetching(`/mailingLists/${currentMailingListName}/emails/delete`, mailsArray)
   }

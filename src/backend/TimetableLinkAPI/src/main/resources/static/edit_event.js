@@ -82,15 +82,15 @@ function loadEventById(eventId){
                 console.log(currentEventStartDate);
                 stringToDate(currentEventStartDate);
                 console.log(currentEventEndDate);
-                
+
                 let startTimeParts = currentEventStartDate.split('T');
                 let endTimeParts = currentEventEndDate.split('T')
 
                 document.getElementById('event-location').value = currentEventLocation
                 document.getElementById('event-start-date').value = startTimeParts[0]
-                document.getElementById('event-start-time').value = startTimeParts[1]
+                document.getElementById('event-start-time').value = startTimeParts[1].substr(0,5)
                 document.getElementById('event-end-date').value = endTimeParts[0]
-                document.getElementById('event-end-time').value = endTimeParts[1]
+                document.getElementById('event-end-time').value = endTimeParts[1].substr(0,5)
             })
             .catch(error => console.log(error));
     } else {
