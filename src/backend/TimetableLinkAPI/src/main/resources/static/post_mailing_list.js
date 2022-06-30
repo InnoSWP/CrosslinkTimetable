@@ -36,6 +36,6 @@ function validateEmails (mailsArray) {
 }
 
 function isEmail (str) {
-  const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+  const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@innopolis.university$/
   return !!(str.match(pattern))
 }
