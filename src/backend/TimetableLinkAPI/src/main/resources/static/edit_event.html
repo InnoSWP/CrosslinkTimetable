@@ -5,6 +5,7 @@
     <title>Edit event</title>
     <link rel="stylesheet" href="./bootstrap.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./edit_pages.css">
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
@@ -19,32 +20,37 @@
         </ul>
     </div>
 </nav>
-<div>
+<div class="major">
     <div id="event-name"></div>
     <br>
+
     <button id="delete-event-btn" disabled>Delete event</button>
-    <br>
-    <br>
+    <p></p>
+
     <label style="font-size: 20px" for="event-location">Location</label>
     <input type="text" id="event-location">
     <br>
+
     <label style="font-size: 20px" for="event-start-date">Start date</label>
     <input type="date" id="event-start-date"/>
     <label style="font-size: 20px" for="event-start-time">Start time</label>
     <input type="time" id="event-start-time"/>
     <br>
+
     <label style="font-size: 20px" for="event-end-date">End date</label>
     <input type="date" id="event-end-date">
     <label style="font-size: 20px" for="event-end-time">End time</label>
     <input type="time" id="event-end-time">
-    <br>
-    <br>
+    <p></p>
     <h3>Get events from the time interval</h3>
+    <br>
+
     <label style="font-size: 20px" for="search-event-start-date">Enter a start date: </label>
     <input type="date" id="search-event-start-date">
     <label style="font-size: 20px" for="search-event-start-time">Enter a start time: </label>
     <input type="time" id="search-event-start-time">
     <br>
+
     <label style="font-size: 20px" for="search-event-end-date">Enter an end date: </label>
     <input type="date" id="search-event-end-date">
     <label style="font-size: 20px" for="search-event-end-time">Enter an end time: </label>
@@ -52,46 +58,53 @@
     <br>
     <button id="search-event-by-date-btn" disabled>OK</button>
 
-    <br>
-    <br>
+    <p></p>
     <h3>Set new name for event</h3>
+    <br>
     <label style="font-size: 20px" for="new-event-name">Enter a name: </label>
     <input type="text" id="new-event-name">
     <button id="new-event-name-btn" disabled>Set name</button>
+    <p></p>
+
     <h3>Set new location</h3>
+    <br>
     <label style="font-size: 20px" for="new-event-location">Enter location: </label>
     <input type="text" id="new-event-location">
     <button id="new-event-location-btn" disabled>Set date</button>
 
-    <br>
-    <br>
+    <p>
     <h3>Edit dates</h3>
-
+    <br>
     <label for="new-event-start-date">Enter a new start date: </label>
     <input type="date" id="new-event-start-date">
+    <br>
     <label for="new-event-start-time">Enter a new start time: </label>
     <input type="time" id="new-event-start-time">
     <button id="new-event-start-date-btn" disabled>Set date</button>
-
     <br>
     <label for="new-event-end-date">Enter a new end date: </label>
     <input type="date" id="new-event-end-date">
+    <br>
     <label for="new-event-end-time">Enter a new end time: </label>
     <input type="time" id="new-event-end-time">
     <button id="new-event-end-date-btn" disabled>Set date</button>
 
-    <br>
-    <br>
+
 
     <h2>Interaction with mailing lists</h2>
     <div id="list-name"></div>
 
-    <h3>Send invitations to chosen event to all people from a chosen mail list</h3>
+    <h3 class="noMargin">Send invitations to chosen event to all people from a chosen mail list</h3>
     <button id="send-invitation-to-one-mailing-list-btn" disabled>Send</button>
 
-    <h3>Cancel invitations to chosen event to all people from a chosen mail list</h3>
+    <h3 class="noMargin">Cancel invitations to chosen event to all people from a chosen mail list</h3>
     <button id="cancel-invitation-to-one-mailing-list-btn" disabled>Cancel</button>
 </div>
 </body>
 </html>
 <script src="edit_event.js"></script>
+<style>
+    .noMargin {
+        margin-left: 0;
+    }
+</style>
