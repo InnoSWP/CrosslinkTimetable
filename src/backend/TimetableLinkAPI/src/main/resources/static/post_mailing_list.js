@@ -39,3 +39,10 @@ function isEmail (str) {
   const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@innopolis.university$/
   return !!(str.match(pattern))
 }
+
+function enableDisable(txt1, txt2) {
+  if (txt1.value === "" || txt2.value.trim() === "")
+      btn.setAttribute('disabled', 'disabled')
+  else
+    btn.removeAttribute('disabled')
+}

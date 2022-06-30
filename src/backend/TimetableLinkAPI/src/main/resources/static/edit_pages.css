@@ -1,0 +1,20 @@
+textarea {
+    text-align: left;
+    border-radius: 5px;
+    width: 50vw;
+    height: 20vh;
+}
+input {
+    border-radius: 5px;
+}
+label {
+    font-size: 20px
+}
+.major {
+    margin-left: 5vw;
+    margin-top: 8vh;
+}
+h3 {
+    margin-left: 40px;
+    display: inline-block;
+}

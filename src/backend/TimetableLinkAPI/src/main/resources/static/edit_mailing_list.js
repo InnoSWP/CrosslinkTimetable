@@ -1,4 +1,5 @@
 let currentMailingListName
+let currentMailingListEmails
 
 /**
  * Fetch mailing lists
@@ -6,11 +7,10 @@ let currentMailingListName
 async function start () {
   try {
     const response = await fetch('/mailingLists/names')
-    console.log(response);
     const data = await response.json()
     createMailNameList(data)
   } catch (e) {
-    alert('There was a problem fetching the mailing list\'s names.')
+    //alert('There was a problem fetching the mailing list\'s names.')
   }
 }
 
@@ -30,9 +30,10 @@ function createMailNameList (nameList) {
 
 const deleteMailingListBtn = document.getElementById('delete-mailing-list-btn')
 const deleteEmailsBtn = document.getElementById('delete-emails-btn')
-const addMailsBtn = document.getElementById('add-mails-btn')
+const addEmailsBtn = document.getElementById('add-mails-btn')
 const newMailingListNameBtn = document.getElementById('new-mailing-list-name-btn')
 const importOutlookContactsBtn = document.getElementById('import-outlook-contacts-btn')
+const changeEmailsBtn = document.getElementById('change-emails-btn')
 
 /**
  * Load chosen mailing list
@@ -40,26 +41,22 @@ const importOutlookContactsBtn = document.getElementById('import-outlook-contact
 async function loadByName (name) {
   if (name !== 'Choose a mailing list') {
     deleteMailingListBtn.removeAttribute('disabled')
-    deleteEmailsBtn.removeAttribute('disabled')
-    addMailsBtn.removeAttribute('disabled')
-    newMailingListNameBtn.removeAttribute('disabled')
     importOutlookContactsBtn.removeAttribute('disabled')
     currentMailingListName = name
 
     let link2 = `/mailingLists/${name}/emails`
     const response2 = await fetch(link2)
     let mailsArray = await response2.json()
+    currentMailingListEmails = mailsArray;
     let areaStr = ''
     for (let i = 0; i < mailsArray.length; i++) {
       areaStr = areaStr + mailsArray[i] + ' '
     }
     document.getElementById('emails-area').innerHTML = areaStr
+    document.getElementById('mailing-list-name').value = name;
   } else {
     deleteMailingListBtn.setAttribute('disabled', 'disabled')
-    deleteEmailsBtn.setAttribute('disabled', 'disabled')
-    addMailsBtn.setAttribute('disabled', 'disabled')
-    newMailingListNameBtn.setAttribute('disabled', 'disabled')
-    importOutlookContactsBtn.removeAttribute('disabled')
+    importOutlookContactsBtn.setAttribute('disabled', 'disabled')
   }
 }
 
@@ -77,14 +74,62 @@ deleteMailingListBtn.addEventListener('click', (event) => {
       }
     })
         .then(response => {
-          console.log(response);
           return response.json();
         })
       .then(() => {
       })
       .catch(error => console.log(error))
+    deleteEmailsBtn.disabled = true;
   }
 })
+
+/**
+ * Change/update a mailing list's name
+ */
+newMailingListNameBtn.addEventListener('click', (event) => {
+  event.preventDefault()
+  const newName = document.getElementById('mailing-list-name').value
+  if (newName === "") {
+    alert("Name cannot be empty. Try again.")
+  } else {
+    fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
+      method: 'PATCH'
+    })
+        .then(response => {
+          return response.json();
+        })
+        .then(() => {
+        })
+        .catch(error => console.log(error))
+  }
+})
+
+/**
+ * Change/update emails
+ */
+changeEmailsBtn.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  // First, delete these emails
+  fetching(`/mailingLists/${currentMailingListName}/emails/delete`, currentMailingListEmails)
+  console.log(document.getElementById('emails-area').value)
+
+  // Second, add emails from text area
+  const mailsStr = document.getElementById('emails-area').value
+  const mailsArray = mailsStr.split(' ').filter(el => el !== '')
+  if (validateEmails(mailsArray)) {
+    console.log(mailsArray)
+    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
+    console.log(document.getElementById('emails-area').value)
+  } else {
+    alertIncorrectEmailError();
+  }
+
+})
+
+function alertIncorrectEmailError() {
+  alert('Emails are not in correct form. Try again')
+}
 
 /**
  * Import contact lists from Outlook
@@ -95,15 +140,13 @@ importOutlookContactsBtn.addEventListener('click', (event) => {
     method: 'PATCH'
   })
       .then(response => {
-        console.log(response);
         return response.json();
       })
       .then(() => {
       })
       .catch(error => console.log(error))
+  importOutlookContactsBtn.setAttribute('disabled', 'disabled')
 })
-
-
 
 function fetching (PATH, mailsArray) {
   fetch(PATH, {
@@ -115,7 +158,6 @@ function fetching (PATH, mailsArray) {
     }
   })
       .then(response => {
-        console.log(response);
         return response.json();
       })
     .then(() => {
@@ -139,14 +181,14 @@ deleteEmailsBtn.addEventListener('click', (event) => {
 /**
  * Add email(s) to a mailing list
  */
-addMailsBtn.addEventListener('click', (event) => {
+addEmailsBtn.addEventListener('click', (event) => {
   event.preventDefault()
-  const mailsStr = document.getElementById('mails').value
+  const mailsStr = document.getElementById('add-mails-btn').value
   const mailsArray = mailsStr.split(' ').filter(el => el !== '')
   if (validateEmails(mailsArray)) {
     fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
   } else {
-    alert('Emails are not in correct form. Try again')
+    alertIncorrectEmailError()
   }
 })
 
@@ -164,22 +206,19 @@ function isEmail (str) {
   return !!(str.match(pattern))
 }
 
-/**
- * Change/update a mailing list's name
- */
-newMailingListNameBtn.addEventListener('click', (event) => {
-  event.preventDefault()
-  const newName = document.getElementById('new-mailing-list-name').value
-  fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
-    method: 'PATCH'
-  })
-      .then(response => {
-        console.log(response);
-        return response.json();
-      })
-    .then(() => {
-    })
-    .catch(error => console.log(error))
-})
+function enableDisableNameField(txt) {
+  newMailingListNameBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentMailingListName;
+}
 
-start()
+function enableDisableEmailsArea(txt) {
+  changeEmailsBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentMailingListEmails;
+}
+
+function enableDisableAddEmailsArea(txt) {
+  addEmailsBtn.disabled = txt.value.trim() === "";
+}
+
+function enableDisableDeleteEmailsArea(txt) {
+  deleteEmailsBtn.disabled = txt.value.trim() === "";
+}
+start().then()

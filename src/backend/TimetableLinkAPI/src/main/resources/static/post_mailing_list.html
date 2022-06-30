@@ -5,6 +5,7 @@
     <title>Create mailing list</title>
     <link rel="stylesheet" href="./bootstrap.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./edit_pages.css">
 </head>
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
@@ -24,20 +25,25 @@
             </ul>
         </div>
     </nav>
-    <div>
-        <label style="font-size: 20px" for="mailing-list-name">Enter name:</label>
+    <div class="major">
+        <label for="mailing-list-name">Enter name:</label>
         <br>
-        <input style="width : 30%; height : 40px" type="text" id="mailing-list-name">
+        <input type="text" id="mailing-list-name" onkeyup="enableDisable(this, 'mails')">
+        <p></p>
+        <label for="mails">Enter emails separated by the space(s): </label>
         <br>
+        <textarea id="mails" onkeyup="enableDisable('mailing-list-name', this)"></textarea>
         <br>
-        <label style="font-size: 20px" for="mails">Enter emails separated by the space(s): </label>
-        <br>
-        <textarea style="width:50%" id="mails"></textarea>
-        <br>
-        <button id="create-btn">
+        <button id="create-btn" value="submit" disabled>
         Create
         </button>
     </div>
 </body>
 <script src="post_mailing_list.js"></script>
 </html>
+
+<style>
+    textarea {
+        width: 30vw;
+    }
+</style>
