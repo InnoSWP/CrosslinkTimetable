@@ -9,9 +9,7 @@ import org.springframework.web.util.UriUtils;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/events")
@@ -24,16 +22,17 @@ public class EventController {
     }
 
     @PostMapping
-    public String createEvent(@RequestBody Event event) {
+    public Map<String, String> createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());
-        String eventId = null;
+        Map<String, String> eventIdMap = new HashMap<>();
         try {
-            eventId = eventService.createEvent(event);
+            String eventId = eventService.createEvent(event);
+            eventIdMap.put("eventId", eventId);
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        return eventId;
+        return eventIdMap;
     }
 
     @GetMapping ("/{eventId}")
