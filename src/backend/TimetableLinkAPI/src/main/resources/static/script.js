@@ -25,7 +25,6 @@
     //Draw Month
     this.drawMonth();
 
-    this.drawLegend();
   }
 
   Calendar.prototype.drawHeader = function() {
@@ -58,9 +57,10 @@
     let self = this;
 
     this.events.forEach(function(ev) {
-      d = Math.random() * (29 - 1) + 1
-      ev.date = self.current.clone().date(d);
+      let m = moment(ev.startDate, "YYYY-MM-DDTHH:mm:ss.SSS+HH:mm");
+      ev.date = m;
     });
+    console.log(this.events);
 
 
     if(this.month) {
@@ -132,9 +132,10 @@
     this.getWeek(day);
 
     //Outer Day
-    let outer = createElement('div', this.getDayClass(day));
+    let classes = this.getDayClass(day);
+    let outer = createElement('div', classes);
     outer.addEventListener('click', function() {
-      self.openDay(this);
+      if (!classes.includes("other")) self.openDay(this);
     });
 
     //Day Name
@@ -165,13 +166,23 @@
 
 
       todaysEvents.forEach(function(ev) {
-        let evSpan = createElement('span', ev.color);
+        let evSpan = createElement('span', "blue");
         element.appendChild(evSpan);
       });
     }
   }
 
   Calendar.prototype.getDayClass = function(day) {
+    classes = ['day'];
+    if(day.month() !== this.current.month()) {
+      classes.push('other');
+    } else if (today.isSame(day, 'day')) {
+      classes.push('today');
+    }
+    return classes.join(' ');
+  }
+
+  Calendar.prototype.getEventType = function(day) {
     classes = ['day'];
     if(day.month() !== this.current.month()) {
       classes.push('other');
@@ -189,13 +200,6 @@
 
     let currentOpened = document.querySelector('.details');
 
-    //Check to see if there is an open detais box on the current row
-    //if (true){ //(currentOpened && currentOpened.parentNode === el.parentNode) {
-      //   details = currentOpened;
-      //   arrow = document.querySelector('.arrow');
-      // } else {
-      //Close the open events on differnt week row
-      //currentOpened && currentOpened.parentNode.removeChild(currentOpened);
       if(currentOpened) {
         currentOpened.addEventListener('webkitAnimationEnd', function() {
           currentOpened.parentNode.removeChild(currentOpened);
@@ -237,7 +241,85 @@
 
     arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
   }
+  function getEventForm(){
+    let br = createElement('br');
+    let eventForm = createElement('form');
+    eventForm.setAttribute('method', 'post');
+    let eventTitle = createElement('input', 'eventtitle');
+    eventTitle.setAttribute('id', 'eventtitle');
+    eventTitle.setAttribute('type', 'text');
+    eventTitle.setAttribute('placeholder', 'Event Title');
+    let eventLocation = createElement('input', 'eventlocation');
+    eventLocation.setAttribute('id', 'eventlocation');
+    eventLocation.setAttribute('type', 'text');
+    eventLocation.setAttribute('placeholder', 'Event Location');
+    let times = [
+      '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00',
+      '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30',
+      '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00',
+      '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
+      '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
+      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
+      '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
+    ]
+    const eventStart = createElement('select', 'eventstarttime');
+    eventStart.appendChild(new Option('Start', 'Start', true));
+    eventStart.setAttribute('id', 'eventstarttime');
+    const eventEnd = createElement('select', 'eventendtime');
+    eventEnd.appendChild(new Option('End', 'End', true));
+    eventEnd.setAttribute('id', 'eventendtime');
+    times.forEach(function(item, _){
+      eventStart.appendChild(new Option(item, item));
+      eventEnd.appendChild(new Option(item, item));
+    });
+    const submitForm = createElement('button', 'eventSubmit');
+    submitForm.innerText = '➔';
+    eventForm.appendChild(eventTitle);
+    eventForm.appendChild(eventLocation);
+    eventForm.appendChild(br.cloneNode());
+    eventForm.appendChild(eventStart);
+    eventForm.appendChild(eventEnd);
+    eventForm.appendChild(submitForm);
+    submitForm.addEventListener('click', (event) => {
+      event.preventDefault();
+      let date = document.getElementById('datecontainer').dataset['date'];
+      let startTime = document.getElementById('eventstarttime').value;
+      let endTime = document.getElementById('eventendtime').value;
+      let name = document.getElementById('eventtitle').value;
+      let location = document.getElementById('eventlocation').value;
+      let dict = {
+        'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
+        'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'
+      };
+      let monyear = document.getElementById('monthname').innerHTML.split(' ');
+      let month = dict[monyear[0]];
+      let year = monyear[1];
+      let formattedStart = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${startTime}:00.000+03:00`;
+      let formattedEnd = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${endTime}:00.000+03:00`;
 
+      fetch('/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'name': name,
+          'location': location,
+          'startDate': formattedStart,
+          'endDate': formattedEnd})
+      })
+      .then (response => {
+        console.log("%j", response);
+        return response.text();
+      })
+      .then ((data) => {
+        console.log(data);
+        document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
+        location.reload();
+      })
+      .catch(error => console.log(error));
+    });
+    return eventForm;
+  }
   Calendar.prototype.renderEvents = function(events, ele) {
     //Remove any events in the current details element
     let currentWrapper = ele.querySelector('.events');
@@ -245,9 +327,9 @@
 
     events.forEach(function(ev) {
       let div = createElement('div', 'event');
-      let square = createElement('div', 'event-category ' + ev.color);
-      let span = createElement('span', '', ev.eventName);
-
+      let square = createElement('div', 'event-category ' + 'blue');
+      let span = createElement('span', '', ev.name);
+      span.setAttribute('onclick', 'this.remove()');
       div.appendChild(square);
       div.appendChild(span);
       wrapper.appendChild(div);
@@ -255,82 +337,9 @@
 
     if(!events.length) {
       let div = createElement('div', 'event empty');
-      let br = createElement('br');
-      let eventForm = createElement('form');
-      eventForm.setAttribute('method', 'post');
-      let eventTitle = createElement('input', 'eventtitle');
-      eventTitle.setAttribute('id', 'eventtitle');
-      eventTitle.setAttribute('type', 'text');
-      eventTitle.setAttribute('placeholder', 'Event Title');
-      let eventLocation = createElement('input', 'eventlocation');
-      eventLocation.setAttribute('id', 'eventlocation');
-      eventLocation.setAttribute('type', 'text');
-      eventLocation.setAttribute('placeholder', 'Event Location');
-      let times = [
-        '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00',
-        '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30',
-        '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00',
-        '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
-        '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
-        '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30',
-        '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
-      ]
-      const eventStart = createElement('select', 'eventstarttime');
-      eventStart.appendChild(new Option('Start', 'Start', true));
-      eventStart.setAttribute('id', 'eventstarttime');
-      const eventEnd = createElement('select', 'eventendtime');
-      eventEnd.appendChild(new Option('End', 'End', true));
-      eventEnd.setAttribute('id', 'eventendtime');
-      times.forEach(function(item, _){
-        eventStart.appendChild(new Option(item, item));
-        eventEnd.appendChild(new Option(item, item));
-      });
-      const submitForm = createElement('button', 'eventSubmit');
-      submitForm.innerText = '➔';
-      eventForm.appendChild(eventTitle);
-      eventForm.appendChild(eventLocation);
-      eventForm.appendChild(br.cloneNode());
-      eventForm.appendChild(eventStart);
-      eventForm.appendChild(eventEnd);
-      eventForm.appendChild(submitForm);
+      let eventForm = getEventForm();
       div.appendChild(eventForm);
       wrapper.appendChild(div);
-      submitForm.addEventListener('click', (event) => {
-        event.preventDefault();
-        let date = document.getElementById('datecontainer').dataset['date'];
-        let startTime = document.getElementById('eventstarttime').value;
-        let endTime = document.getElementById('eventendtime').value;
-        let name = document.getElementById('eventtitle').value;
-        let location = document.getElementById('eventlocation').value;
-        let dict = {
-          'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
-          'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'
-        };
-        let monyear = document.getElementById('monthname').innerHTML.split(' ');
-        let month = dict[monyear[0]];
-        let year = monyear[1];
-        let formattedStart = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${startTime}:00.000+03:00`;
-        let formattedEnd = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${endTime}:00.000+03:00`;
-
-        fetch('/events', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({'name': name,
-            'location': location,
-            'startDate': formattedStart,
-            'endDate': formattedEnd})
-        })
-            .then (response => {
-              console.log(response);
-              return response.json();
-            })
-            .then (() => {
-              document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
-            })
-            .catch(error => console.log(error));
-      });
     }
 
     if(currentWrapper) {
@@ -400,16 +409,18 @@
 }();
 
 !function() {
-  let data = [
-  ];
-
+  let self = this;
+  fetch('/events')
+  .then(response => response.json())
+  .then(data => {
+    let calendar = new Calendar('#calendar', data);
+  })
+  .catch(err => console.log(err));
 
 
   function addDate(ev) {
 
   }
-
-  let calendar = new Calendar('#calendar', data);
 
 }();
 

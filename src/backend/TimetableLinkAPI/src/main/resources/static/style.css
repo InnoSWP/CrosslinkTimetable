@@ -245,6 +245,8 @@
       letter-spacing: .5px;
       padding: 2px 16px;
       vertical-align: top;
+      color: black;
+      font-weight: 400;
     }
     
     .event.empty {

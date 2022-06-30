@@ -20,6 +20,7 @@ async function start () {
     const mailData = await mailResponse.json();
     createMailNameList(mailData);
   } catch (e) {
+    console.log(e);
     alert('There was a problem fetching the events and/or mailing lists names.')
   }
 }
