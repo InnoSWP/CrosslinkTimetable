@@ -105,8 +105,9 @@ public class MailingListMySQLRepository implements MailingListRepository {
         Long emailId = jdbcTemplate.queryForObject(
                 """
                     SELECT email.id FROM email
-                    JOIN emailBelonging ON email.id = emailBelonging.emailId 
-                    WHERE email.emailAddress = ?; 
+                    JOIN emailBelonging ON email.id = emailBelonging.emailId
+                    WHERE email.emailAddress = ?
+                    LIMIT 1;
                     """, Long.class, emailAddress);
         jdbcTemplate.update(
                 "DELETE FROM emailBelonging WHERE mailingListId = ? AND emailId = ?",
@@ -156,7 +157,7 @@ public class MailingListMySQLRepository implements MailingListRepository {
                  SELECT DISTINCT emailAddress FROM
                  email LEFT JOIN emailBelonging
                  ON email.id = emailBelonging.emailId
-                 WHERE mailingListId = ?
+                 WHERE mailingListId = ?;
                  """;
         return jdbcTemplate.queryForList(
                         getEmailsSqlRequest, String.class, mailingListId);

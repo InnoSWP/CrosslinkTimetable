@@ -6,6 +6,6 @@ COPY . .
 RUN mvn package
 
 FROM openjdk:17
-EXPOSE 8080
+#EXPOSE 8080
 COPY --from=builder /usr/src/app/target/*.jar ./
 ENTRYPOINT ["java", "-jar", "/spring-boot-docker.jar"]

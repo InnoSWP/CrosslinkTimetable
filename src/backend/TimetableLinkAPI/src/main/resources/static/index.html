@@ -29,9 +29,13 @@
 
 
         <div class="split left">
+            <h2 class="noMargin">Mailing lists names</h2>
+
             <div class="split left top">
-                <div id="list-name"></div>
+                <div class="loadedByScript" id="cb"></div>
+                <!-- checkbox loaded by "load_mail_lists_to_index.js -->
             </div>
+
             <div class="split left bottom">
                 <div class="major">
                     <label for="mailing-list-name">Enter name:</label>
@@ -101,6 +105,12 @@
         margin-left: 1vw;
         margin-top: 1vh;
         margin-bottom: 1vh
+    }
+    .noMargin {
+        margin: 0;
+    }
+    .loadedByScript {
+        margin-top: 30px;
     }
 </style>
 

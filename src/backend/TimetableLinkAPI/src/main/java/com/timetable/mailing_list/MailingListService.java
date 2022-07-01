@@ -36,16 +36,22 @@ public class MailingListService {
 
     public void addEmailsToList(String textIdentifier, List<String> emails) {
         Long mailingListId = mailingListRepository.getMailingListId(textIdentifier);
+        System.out.println(emails.toString());
         emails.forEach(emailAddress ->
             mailingListRepository.addEmailToList(mailingListId, emailAddress));
     }
 
     public void deleteEmailsFromList(String textIdentifier, List<String> emails) {
         Long mailingListId = mailingListRepository.getMailingListId(textIdentifier);
-        emails.forEach(emailAddress -> {
-                try {
-            mailingListRepository.deleteEmailFromList(mailingListId, emailAddress);
-            } catch(Exception ignored){}});
+        for (String emailAddress : emails) {
+            try {
+                System.out.println("before " + getEmailsFromList(textIdentifier).toString());
+                mailingListRepository.deleteEmailFromList(mailingListId, emailAddress);
+                System.out.println("after " + getEmailsFromList(textIdentifier).toString());
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     public MailingList getMailingList(String textIdentifier) {
