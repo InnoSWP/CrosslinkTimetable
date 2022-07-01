@@ -46,13 +46,14 @@ async function loadByName (name) {
 
     let link2 = `/mailingLists/${name}/emails`
     const response2 = await fetch(link2)
-    let mailsArray = await response2.json()
+    let mailsArray = await response2.json();
+    console.log(mailsArray);
     currentMailingListEmails = mailsArray;
     let areaStr = ''
     for (let i = 0; i < mailsArray.length; i++) {
       areaStr = areaStr + mailsArray[i] + ' '
     }
-    document.getElementById('emails-area').innerHTML = areaStr
+    document.getElementById('emails-area').value = areaStr
     document.getElementById('mailing-list-name').value = name;
   } else {
     deleteMailingListBtn.setAttribute('disabled', 'disabled')
@@ -108,19 +109,19 @@ newMailingListNameBtn.addEventListener('click', (event) => {
  * Change/update emails
  */
 changeEmailsBtn.addEventListener('click', (event) => {
-  event.preventDefault()
+  event.preventDefault();
 
   // First, delete these emails
-  fetching(`/mailingLists/${currentMailingListName}/emails/delete`, currentMailingListEmails)
-  console.log(document.getElementById('emails-area').value)
+  fetching(`/mailingLists/${currentMailingListName}/emails/delete`, currentMailingListEmails);
+  console.log(document.getElementById('emails-area').value);
 
   // Second, add emails from text area
-  const mailsStr = document.getElementById('emails-area').value
-  const mailsArray = mailsStr.split(' ').filter(el => el !== '')
+  const mailsStr = document.getElementById('emails-area').value;
+  const mailsArray = mailsStr.split(' ').filter(el => el !== '');
   if (validateEmails(mailsArray)) {
-    console.log(mailsArray)
-    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
-    console.log(document.getElementById('emails-area').value)
+    console.log(mailsArray);
+    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray);
+    console.log(document.getElementById('emails-area').value);
   } else {
     alertIncorrectEmailError();
   }
@@ -157,12 +158,12 @@ function fetching (PATH, mailsArray) {
       'Content-Type': 'application/json'
     }
   })
-      .then(response => {
-        return response.json();
-      })
-    .then(() => {
+      .then(response => response.text())
+    .then((data) => {
+      console.log(data);
+      return data;
     })
-    .catch(error => console.log(error))
+    .catch(error => console.log(error));
 }
 
 /**
@@ -183,7 +184,7 @@ deleteEmailsBtn.addEventListener('click', (event) => {
  */
 addEmailsBtn.addEventListener('click', (event) => {
   event.preventDefault()
-  const mailsStr = document.getElementById('add-mails-btn').value
+  const mailsStr = document.getElementById('add-mails').value
   const mailsArray = mailsStr.split(' ').filter(el => el !== '')
   if (validateEmails(mailsArray)) {
     fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
@@ -202,7 +203,7 @@ function validateEmails (mailsArray) {
 }
 
 function isEmail (str) {
-  const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+  const pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@innopolis.university$/
   return !!(str.match(pattern))
 }
 

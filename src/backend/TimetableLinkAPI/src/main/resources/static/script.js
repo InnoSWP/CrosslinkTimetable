@@ -415,7 +415,10 @@
   .then(data => {
     let calendar = new Calendar('#calendar', data);
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err);
+    let calendar = new Calendar('#calendar', []);
+  });
 
 
   function addDate(ev) {

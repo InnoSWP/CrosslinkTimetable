@@ -437,10 +437,14 @@
 }
 
 .eventsubmit {
-  background-color: transparent;
-  color: rgba(0, 0, 0);
-  width: 40px;
-  border-color: transparent;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 1);
+    width: 40px;
+    border-color: transparent;
+}
+
+textarea {
+    width: 30vw;
 }
 
 
