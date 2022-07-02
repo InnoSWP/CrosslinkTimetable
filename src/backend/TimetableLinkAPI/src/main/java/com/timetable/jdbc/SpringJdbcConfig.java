@@ -27,10 +27,10 @@ public class SpringJdbcConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-        System.out.println("username " + username);
-        System.out.println("url " + url);
-        System.out.println("password " + password);
-        System.out.println("driver " + driverClassName);
+//        System.out.println("username " + username);
+//        System.out.println("url " + url);
+//        System.out.println("password " + password);
+//        System.out.println("driver " + driverClassName);
         return dataSource;
     }
 

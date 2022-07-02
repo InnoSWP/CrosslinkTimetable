@@ -4,6 +4,7 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.stereotype.Repository;
 
@@ -105,12 +106,17 @@ public class MailingListMySQLRepository implements MailingListRepository {
         Long emailId = jdbcTemplate.queryForObject(
                 """
                     SELECT email.id FROM email
-                    JOIN emailBelonging ON email.id = emailBelonging.emailId 
-                    WHERE email.emailAddress = ?; 
+                    JOIN emailBelonging ON email.id = emailBelonging.emailId
+                    WHERE email.emailAddress = ?
+                    LIMIT 1;
                     """, Long.class, emailAddress);
         jdbcTemplate.update(
                 "DELETE FROM emailBelonging WHERE mailingListId = ? AND emailId = ?",
                 mailingListId, emailId);
+        List<String> list = jdbcTemplate.queryForList(
+                "SELECT id FROM emailBelonging", String.class
+        );
+        System.out.println(list + " " + list.size());
         jdbcTemplate.update(
                 """
                     DELETE FROM email

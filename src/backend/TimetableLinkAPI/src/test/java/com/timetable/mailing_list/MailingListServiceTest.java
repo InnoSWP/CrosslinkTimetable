@@ -97,27 +97,4 @@ class MailingListServiceTest {
         }
     }
 
-    @Test
-    void getMailingList() {
-    }
-
-    @Test
-    void getAllMailingLists() {
-    }
-
-    @Test
-    void getEmailsFromList() {
-    }
-
-    @Test
-    void importMailingList() {
-    }
-
-    @Test
-    void cancelInvitations() {
-    }
-
-    @Test
-    void updateTextIdentifier() {
-    }
 }

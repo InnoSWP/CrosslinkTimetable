@@ -23,7 +23,6 @@ public class EventController {
 
     @PostMapping
     public Map<String, String> createEvent(@RequestBody Event event) {
-        //System.out.println(event.getEndDate());
         Map<String, String> eventIdMap = new HashMap<>();
         try {
             String eventId = eventService.createEvent(event);

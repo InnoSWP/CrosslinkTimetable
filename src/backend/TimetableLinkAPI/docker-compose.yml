@@ -20,9 +20,9 @@ services:
     image: mysql:8.0
     platform: linux/x86_64
     restart: always
-    command: --init-file /data/application/init.sql
-    volumes:
-      - ./init.sql:/data/application/init.sql
+#    command: --init-file /data/application/schema.sql
+#    volumes:
+#      - ./schema.sql:/data/application/schema.sql
     environment:
       - MYSQL_DATABASE=timetable
       - MYSQL_ROOT_PASSWORD=pass
