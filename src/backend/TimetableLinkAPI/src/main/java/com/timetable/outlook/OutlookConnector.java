@@ -22,15 +22,15 @@ public class OutlookConnector {
     public OutlookConnector(
             @Value("${personal.email}") String personalEmail,
             @Value("${personal.password}") String personalPassword) {
-        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-        ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
-        service.setCredentials(credentials);
-        try {
-            service.autodiscoverUrl(
-                    personalEmail, new OutlookConnector.RedirectionUrlCallback());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+//        ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
+//        service.setCredentials(credentials);
+//        try {
+//            service.autodiscoverUrl(
+//                    personalEmail, new OutlookConnector.RedirectionUrlCallback());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 

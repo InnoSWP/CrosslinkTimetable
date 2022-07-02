@@ -1,12 +1,11 @@
 package com.timetable.authentication;
 
 import com.timetable.outlook.OutlookConnector;
+import com.timetable.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -21,12 +20,12 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping
-    public Map<String, String> login(String email, String password) {
+    @PostMapping("/login")
+    public Map<String, String> login(@RequestBody User user) {
         try {
-            authenticationService.login(email, password);
+            authenticationService.login(user.getEmail(), user.getPassword());
             String token = authenticationService.generateNewToken();
-            Map<String, String> tokenJson = new HashMap<String, String>();
+            Map<String, String> tokenJson = new HashMap<>();
             tokenJson.put("token", token);
             return tokenJson;
         } catch (Exception ex) {
