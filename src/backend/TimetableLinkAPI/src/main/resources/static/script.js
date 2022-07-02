@@ -427,3 +427,18 @@
 
 }();
 
+let showCreateMailingListPageBtn = document.getElementById('show-create-mailing-list-page-btn')
+showCreateMailingListPageBtn.addEventListener('click', (event) => {
+  event.preventDefault();
+  let createMailingListPage = document.getElementById('create-mailing-list-page')
+
+  if (showCreateMailingListPageBtn.innerText === 'Create') {
+    createMailingListPage.removeAttribute('disabled')
+    showCreateMailingListPageBtn.innerText = 'Cancel'
+  } else {
+    createMailingListPage.setAttribute('disabled', 'true');
+    showCreateMailingListPageBtn.innerText = 'Create';
+  }
+
+})
+

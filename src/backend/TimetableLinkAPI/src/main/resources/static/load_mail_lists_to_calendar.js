@@ -1,7 +1,11 @@
 let currentMailingListNames = []
 
 async function start() {
-    const mailResponse = await fetch('/mailingLists/names');
+    const mailResponse = await fetch('/mailingLists/names', {
+        headers: {
+            'Authorization': currentToken
+        }
+    });
     const nameArray = await mailResponse.json();
     loadCheckbox(nameArray);
 }

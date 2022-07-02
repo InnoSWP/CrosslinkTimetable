@@ -1,0 +1,647 @@
+[33mcommit 7f58c735383b002049588d6872d142a8af6343bc[m[33m ([m[1;36mHEAD[m[33m)[m
+Merge: cffe345 545d767
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jul 2 19:20:16 2022 +0300
+
+    Merge remote-tracking branch 'origin/backend_development' into EventFrontend
+
+[33mcommit 545d767ff6a0ab46c02dec46d5335c34613fa70a[m[33m ([m[1;32mbackend_development[m[33m)[m
+Merge: 553ee90 2d5286c
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jul 2 19:18:26 2022 +0300
+
+    Merge branch 'backend_development' of https://github.com/InnoSWP/CrosslinkTimetable into backend_development
+
+[33mcommit 553ee9034460258ac4c9258cbe920ca27e1a3cb4[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jul 2 19:17:57 2022 +0300
+
+    started implementing authentication
+
+[33mcommit cffe3452e36af5deb3e7c533a5d0b1fb0e7856cc[m
+Merge: aa85cc4 2d5286c
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jul 2 19:15:26 2022 +0300
+
+    Merge branch 'backend_development' of https://github.com/InnoSWP/CrosslinkTimetable into EventFrontend
+
+[33mcommit 2d5286c33e6007a8ed0e45193f2e67806fa88787[m
+Author: Ivan Kornienko <101111710+OldCoachman@users.noreply.github.com>
+Date:   Sat Jul 2 19:14:57 2022 +0300
+
+    Delete src/backend/TimetableLinkAPI/data/demo #jdbc:h2: directory
+
+[33mcommit aa85cc47cebe97ed3a32efef6a14690e42934385[m
+Merge: 7a6d985 97f687c
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jul 2 19:02:09 2022 +0300
+
+    merged
+
+[33mcommit 2f219fa4cf298cd1129208029556f6b5fe37188f[m
+Merge: 2da87d9 7a6d985
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jul 2 10:58:37 2022 +0300
+
+    merged EventFrontend
+
+[33mcommit 2da87d9f7e98b97e02223bd96aab0ee0096cc6b1[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jul 2 10:48:42 2022 +0300
+
+    Add more tests
+
+[33mcommit 7a6d985965c88c1cc9ba5769e231229c8c1e6507[m[33m ([m[1;31morigin/EventFrontend[m[33m)[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jul 1 21:44:29 2022 +0300
+
+    test
+
+[33mcommit 3246e7af0cecc0b237ca7c00ea91fc7e1a1ae035[m
+Merge: 80b828a 842f1b1
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jul 1 12:58:05 2022 +0300
+
+    Merge remote-tracking branch 'origin/EventFrontend' into EventFrontend
+
+[33mcommit 80b828ab0dd19d1ea4f360a5660668587a79a899[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jul 1 12:56:39 2022 +0300
+
+    did demo index
+
+[33mcommit 842f1b16f034ec1dee283428036c5cf0a7d184cc[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Fri Jul 1 10:43:44 2022 +0300
+
+    completed some parts of the Readme, and also added a demo image.
+
+[33mcommit 97f687c81147ae12b658993de9cb35f765739a7b[m[33m ([m[1;32mback_development[m[33m)[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 30 22:00:05 2022 +0300
+
+    Merge branch 'back_development' of D:\Codes\crosslink with conflicts.
+
+[33mcommit f03db72a89315ec52c8bec2d5cf4f94a1f993942[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 30 13:27:50 2022 +0300
+
+    set disable/unable btn
+
+[33mcommit 8506dd33d1460979c79ccea45d1a2ad4126b7a68[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 30 13:20:09 2022 +0300
+
+    edited design & changed edit mail list logic
+
+[33mcommit 4d83def37c149b488df79abb6ecc90fa078ca15a[m[33m ([m[1;31morigin/back_development[m[33m)[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 30 10:23:01 2022 +0300
+
+    eventId is returned as Json
+
+[33mcommit 9c740d71cae1fbe7cfcb0935f5a31f28a77326d0[m
+Author: pptx704 <rafeedm.bhuiyan@gmail.com>
+Date:   Thu Jun 30 09:24:25 2022 +0300
+
+    Patch: Shows created events on calendar. Edit functionality still to be built. Bug fixed on email validator
+
+[33mcommit 7680b9ffbbbc09a0cfd6e7fb2cc3691809ef12fb[m
+Author: pptx704 <rafeedm.bhuiyan@gmail.com>
+Date:   Thu Jun 30 04:22:32 2022 +0300
+
+    Small bugfix. Nothing useful
+
+[33mcommit 8c4495d226328bae9717f422a8ff6c222ed3519b[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Wed Jun 29 21:47:43 2022 +0300
+
+    edited time slots and edit mailing list
+
+[33mcommit 4e017ec34b3465cf7dc9f2d6e41e0c6233a83b33[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Wed Jun 29 21:32:31 2022 +0300
+
+    test
+
+[33mcommit af36a33665b9ef212577984ec9b20bb6edcc4cd4[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 29 16:59:10 2022 +0300
+
+    new tests
+
+[33mcommit 64c87519eca01d39e4ba19d65fc6478f894a655b[m
+Merge: a047994 3e8b0cc
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Wed Jun 29 16:50:06 2022 +0300
+
+    Merge remote-tracking branch 'origin/EventFrontend' into EventFrontend
+
+[33mcommit a04799477939be9cf2bd23971d2f3afe9cd4ad95[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Wed Jun 29 16:49:45 2022 +0300
+
+    pain
+
+[33mcommit 3e8b0cc87236f8e35bbaf471ab43b88f10d3dedf[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Wed Jun 29 15:55:28 2022 +0300
+
+    Added License.txt with MIT license and updated README.md
+
+[33mcommit 6534ef9fd4444ec8942bae904d8694ca9c36cf62[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Tue Jun 28 22:04:52 2022 +0300
+
+    removed center alignment and fixed headers
+
+[33mcommit 354bca07b91451e02a42068a9d35f36fd4452f76[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Tue Jun 28 19:27:30 2022 +0300
+
+    all date inputs edited on "date" + "time" type
+
+[33mcommit c0ee1538122d13d7e87d4c4f7475792ce94cc765[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Tue Jun 28 18:58:19 2022 +0300
+
+    customized "Create mailing list", "Edit mailing list" and "edit event" pages. Also added scrolling on all pages.
+
+[33mcommit 719cc9cf3faa9465180927d5e7eb5d10a876423b[m
+Merge: 676bba6 b1f7c44
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Tue Jun 28 17:15:44 2022 +0300
+
+    pulled changes
+
+[33mcommit 676bba663fe6380a4e9f7e32283e58bc70075589[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Tue Jun 28 17:14:04 2022 +0300
+
+    normal tests
+
+[33mcommit a8f97d12b74d4a72e31087494981d2ef24f2431f[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Tue Jun 28 14:58:51 2022 +0300
+
+    added method to mailing list and methods for events. DEMO
+
+[33mcommit 9ff26636810d4ad0e2db26dc3026dcb18b69902d[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Mon Jun 27 20:05:34 2022 +0300
+
+    test
+
+[33mcommit 556b526022eaa573e55528372fd5777462f618bb[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Mon Jun 27 15:26:57 2022 +0300
+
+    Added headers to edit_mailing_list.html and post_mailing_list.html
+
+[33mcommit 891fbff785ef1081f3fda08bea3d6fe78907f5de[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Mon Jun 27 14:25:05 2022 +0300
+
+    edited ids for code style
+
+[33mcommit b1f7c4489687a3b5dd2a0d5b9df76ef4fb22e1eb[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 23:04:51 2022 +0300
+
+    Update mvn.yml
+
+[33mcommit 487408941efca1536f3da12a9754becb0cc775e7[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:57:08 2022 +0300
+
+    Update TimetableLinkApiApplicationTests.java
+
+[33mcommit 82198100ab95927801df891c01a7f4b926fe2cd9[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:45:07 2022 +0300
+
+    Update and rename mvn to mvn.yml
+
+[33mcommit 1b0bd18651711c53380062f2e79e3360b0523f3c[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:43:26 2022 +0300
+
+    Create mvn
+
+[33mcommit ffeac972699747369d43b592d614b100b259ab4d[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:30:39 2022 +0300
+
+    Delete MailingListMySQLRepositoryTest.java
+
+[33mcommit 52bbe4a15b6beb7e033b462680318ac16b381f40[m
+Merge: 2060698 5507c2f
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jun 25 22:29:52 2022 +0300
+
+    Merge branch 'back_development' of https://github.com/InnoSWP/CrosslinkTimetable into back_development
+
+[33mcommit 5507c2f7805d3ec17fb05ea958c024917edb6e91[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:24:34 2022 +0300
+
+    Update linter.yml
+
+[33mcommit 62ec2618acb052abda3edc768fbc1f8bcf1ab2bf[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 22:24:04 2022 +0300
+
+    Update linter.yml
+
+[33mcommit 206069815db28d1b9ff085d2792d56a4e7ff59ee[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jun 25 22:07:23 2022 +0300
+
+    fixed tests
+
+[33mcommit 09526e33a06db764f7400bacd6ae1908fd851eff[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Sat Jun 25 21:53:37 2022 +0300
+
+    update linter
+
+[33mcommit 19dd18123bacf7456feb9f06c8d59b3cdc10bef9[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jun 25 21:03:05 2022 +0300
+
+    add tests
+
+[33mcommit 9d30fa2aabf328e8e6282f8696e121c613751a95[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jun 25 20:05:00 2022 +0300
+
+    undo commented function and set left text align
+
+[33mcommit 9afdc720789570491ae5a53e69f65896a0f01aba[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:54:44 2022 +0300
+
+    fixed some bugs
+
+[33mcommit 9331651558458d953f9e85a84d326846d6295ed7[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:46:28 2022 +0300
+
+    implemented method "fetching"
+
+[33mcommit c0fa4d462c74fe935fef4731d5cd2bb8ac044f1f[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:43:33 2022 +0300
+
+    implemented method "fetching"
+
+[33mcommit 20e20e16918e3f2608c0efda19d576f14e490416[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:33:58 2022 +0300
+
+    edited files for linter AND erased in in edit_mailing_list.js in 87 \
+
+[33mcommit f0962ef279799424c6c9aef746ce37fc495b5fc7[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:21:20 2022 +0300
+
+    edited files for linter
+
+[33mcommit da59746b4ec6281dd33475dbed2479761a6a0386[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 17:07:24 2022 +0300
+
+    edited file for linter
+
+[33mcommit d5dc654ca2c93feddf601f74a3abec0b8b4807f8[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 16:41:44 2022 +0300
+
+    replaced all " by '
+
+[33mcommit 894349e652593c3313499a15c75602b8742b1130[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 16:34:11 2022 +0300
+
+    added .idea to gitignore
+
+[33mcommit b6d9b20f0041e8c45a4132a686ecf1f34cf5a925[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 16:33:17 2022 +0300
+
+    Deleted .idea
+
+[33mcommit 3053067abf46331dfc15336744a35cc1c20bf53a[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 16:27:23 2022 +0300
+
+    edited all html and js files, because should be id-class-value.
+
+[33mcommit fedb12b066120d4d2143f8e5b70c8c22b1ac91de[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Sat Jun 25 16:22:06 2022 +0300
+
+    edited all html and js files, because should be id-class-value.
+
+[33mcommit 0aba80c946d3a1c04eb9e56c3aaf5aa85e8249dd[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jun 25 15:45:10 2022 +0300
+
+    completed to write all the mailing lists' methods
+
+[33mcommit 6dd71ccb9a886cee3aef77f138e7690abb6ab114[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jun 25 14:34:25 2022 +0300
+
+    updated mailing list methods
+
+[33mcommit 5866fe9dec3a86089270ad3fda037f86b45bef26[m
+Merge: 925d23b cfa59ee
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jun 25 10:57:40 2022 +0300
+
+    merged back_debelopment
+
+[33mcommit cfa59eefc9fe89567654715a84ebffd279cd8d57[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jun 25 10:50:52 2022 +0300
+
+    fixed some bugs in docker-compose
+
+[33mcommit 925d23bc077bc7347257b2f13e89b49d5f3d2092[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Sat Jun 25 10:47:11 2022 +0300
+
+    commit
+
+[33mcommit 4905b54316ca9048716f39b0cec4fa348de88711[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jun 24 18:42:49 2022 +0300
+
+    added methods for mailing lists
+
+[33mcommit b3070b6bcbd98a0e73281567bd9db039c0b9053c[m
+Merge: 32a891a 855615e
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jun 24 17:17:06 2022 +0300
+
+    Merge branch 'back_development' of https://github.com/InnoSWP/CrosslinkTimetable into back_development
+
+[33mcommit a7ced7dbf4c53fb529eb9a81aecf469bf4281659[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Fri Jun 24 17:16:00 2022 +0300
+
+    added api methods
+
+[33mcommit 02d124241f721490cd1a58e96da7c0d3b8174c94[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 20:13:39 2022 +0300
+
+    added pages for mailing list methods
+
+[33mcommit 62834d3f6a7c4fd0e02403c36b897bfe2a584300[m
+Merge: 22d14b6 32a891a
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 20:13:18 2022 +0300
+
+    Merge branch 'back_development' into EventFrontend
+
+[33mcommit 855615e1ffda1d8049c8c1675dde239f11c68e57[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 23 20:00:50 2022 +0300
+
+    Finished dockerization
+
+[33mcommit 32a891a0c35600269336020bbcb966559033c479[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 16:36:47 2022 +0300
+
+    set up the service
+
+[33mcommit 22d14b65eef11ac820f296d4a9ec3804c04fe7e0[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 15:25:10 2022 +0300
+
+    created separate pages for editing mailing lists and events
+
+[33mcommit e8efbbc2391ae1f652f377234948b7835820e462[m
+Merge: e682f7e 9c91ab7
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 23 14:39:24 2022 +0300
+
+    merged with main
+
+[33mcommit 9c91ab7cb392c1ffa759f2b7f62f8f8e13bc85d6[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 23 14:35:35 2022 +0300
+
+    Dockerize the whole project
+
+[33mcommit 6aa34bec5c6fd002ef79649d2251287947a35f5c[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 23 14:33:42 2022 +0300
+
+    dockerize the project
+
+[33mcommit db76a303d12cc3847898e6543627559faf6111c9[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 23 13:45:09 2022 +0300
+
+    Implemented view controller in backend
+
+[33mcommit f0058c857bcd8ade1eea12e10199d277839a93f2[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 11:58:34 2022 +0300
+
+    updated POST mailing list
+
+[33mcommit ef9f272b07558b082b9c42f26128529cf3a96d3b[m
+Author: OldCoachman <thedarkknight.vanerk@gmail.com>
+Date:   Thu Jun 23 11:55:32 2022 +0300
+
+    added POST mailing list
+
+[33mcommit 5ee6a7c9fe531fcdf8217264ad81df7941bd5945[m
+Merge: 739ca83 007b142
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 22 22:42:53 2022 +0300
+
+    Merge branch 'main' of https://github.com/InnoSWP/CrosslinkTimetable
+    Connection of frontend and backend
+
+[33mcommit 739ca831911d7a6708dee7a7dc49ed5627bbc69f[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 22 22:39:42 2022 +0300
+
+    Connected frontend and backend
+
+[33mcommit 007b1420458a8f0be4bb930326527aef8393921e[m
+Author: Renat <renat_ja02@mail.ru>
+Date:   Wed Jun 22 12:52:59 2022 +0300
+
+    POST methods (#10)
+    
+    * Update - Event add frontend done - @pptx704
+    
+    * Patch - Changed pop-up color to tinted green and made all frontend dependencies offline - @pptx704
+    
+    * Added button description and link to import mailing list - @Snapman7
+    
+    * Connected event add frontend to backend - @OldCoachman
+    
+    * Replaced all var on let - @Snapman7
+    
+    * Replaced all var on let and added events POST method - @Snapman7
+    
+    * Fixed details button - @Snapman7
+    
+    * Bug fixes on script.js - @pptx704
+    
+    Checked and Bugfixes by - @pptx704
+
+[33mcommit 9ac9afbfb2c4e9d35e09c61950d4cabb81c25679[m[33m ([m[1;31morigin/new_front[m[33m)[m
+Merge: f0efe81 4a98a81
+Author: Rafeed <57295797+pptx704@users.noreply.github.com>
+Date:   Wed Jun 22 12:48:57 2022 +0300
+
+    Merge branch 'main' into EventFrontend
+
+[33mcommit f0efe81bfe94255524f5ba9e4d732af34be8aa23[m
+Author: Md Motasim Bhuiyan <rafeedm.bhuiyan@gmail.com>
+Date:   Wed Jun 22 12:43:52 2022 +0300
+
+    Bug fixes on script.js
+
+[33mcommit 4a98a814082ad5af9c46dd0b3c4fcbf14f4e6a72[m
+Author: Rafeed <57295797+pptx704@users.noreply.github.com>
+Date:   Wed Jun 22 12:28:05 2022 +0300
+
+    Backend Implementation (#6)
+    
+    Implemented all fundumental features of the API
+    Now user can:
+    - create, update, delete events
+    - create, update, delete mailing lists
+    - import mailing lists
+    - invite students from mailing lists to the created events
+    
+    Co-authored-by: FK12344321 <fk0606@yandex.ru>
+    Co-authored-by: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+
+[33mcommit e682f7e125fbecee40932031233106ac485b082b[m
+Merge: 62d37c8 dafea19
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 22 12:19:25 2022 +0300
+
+    Merge branch 'back_development' of https://github.com/InnoSWP/CrosslinkTimetable into back_development
+    back_development and origin/back_development are the same branches
+
+[33mcommit 62d37c810072c7e770dabbb8cc0607dd00f10d78[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 22 12:17:30 2022 +0300
+
+    Finished the implementation of the project
+
+[33mcommit 9afbc60273aab9c6b3fee0cb3acfdc7191e48fb6[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Wed Jun 22 11:37:49 2022 +0300
+
+    fixed details button
+
+[33mcommit be88284f4229f4420eb4cb4e284d8946e6ffc017[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Wed Jun 22 11:29:02 2022 +0300
+
+    replaced all var on let and added events POST method
+
+[33mcommit 2c97a3e1fdc11469ae24586db421e643cf62784d[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Wed Jun 22 10:25:12 2022 +0300
+
+    replaced all var on let
+
+[33mcommit dafea194a239b022e5f75ce300d9ab65331f972a[m
+Author: FK12344321 <69464701+FK12344321@users.noreply.github.com>
+Date:   Tue Jun 21 22:12:12 2022 +0300
+
+    Delete src/backend/TimetableAPI directory
+    
+    deleted deprecated project implementation
+
+[33mcommit 3f0d4f0c711af0e07594248f275318f504a822d7[m
+Author: Snapman7 <renat_ja02@mail.ru>
+Date:   Tue Jun 21 21:11:48 2022 +0300
+
+    added button description and link to import mailing list
+
+[33mcommit f2dc99f87f12a6eb6ddc14031b6b573563886ae3[m
+Author: Renat <renat_ja02@mail.ru>
+Date:   Mon Jun 20 15:15:52 2022 +0300
+
+    Created linter.yml (#9)
+    
+    Linter added. Approved.
+
+[33mcommit 603ea22db9db649f02164d96e43af6ee25408463[m
+Author: Rafeed <57295797+pptx704@users.noreply.github.com>
+Date:   Sat Jun 18 15:17:55 2022 +0300
+
+    Update - Event add frontend complete
+    
+    * Update - Event add frontend done
+    
+    * Patch - Changed pop-up color to tinted green and made all frontend dependencies offline
+
+[33mcommit 3765740489615c6febd3a4a6c71d809f30bad22a[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Sat Jun 18 15:15:39 2022 +0300
+
+    Backend implementation
+
+[33mcommit de0c2f3232d6820c21f0c60928bbf4b3d091f588[m
+Author: Md Motasim Bhuiyan <rafeedm.bhuiyan@gmail.com>
+Date:   Sat Jun 18 15:15:02 2022 +0300
+
+    Patch - Changed pop-up color to tinted green and made all frontend dependencies offline
+
+[33mcommit eef34672d1f3b31515cf29440928e17f159b19e3[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Thu Jun 16 18:47:34 2022 +0300
+
+    Implemented Mailing list
+
+[33mcommit 473ebb0299eb1ad1580a839fd3250de655e4ad43[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Wed Jun 15 18:18:20 2022 +0300
+
+    Basic functionality
+
+[33mcommit 090287c6a0f61798bd64d24844843b4dd8bd67b4[m
+Author: FK12344321 <fk0606@yandex.ru>
+Date:   Tue Jun 14 14:17:17 2022 +0300
+
+    blank project
+
+[33mcommit fd51257f7deb59783b6d8fdc8595d69fdf6978a9[m
+Author: Md Motasim Bhuiyan <rafeedm.bhuiyan@gmail.com>
+Date:   Sun Jun 12 20:35:37 2022 +0300
+
+    Update - Event add frontend done
+
+[33mcommit 0fe3baf80428947440497ab9ec09b40d63013350[m
+Author: Md Motasim Bhuiyan <rafeedm.bhuiyan@gmail.com>
+Date:   Wed Jun 8 18:09:22 2022 +0300
+
+    Project code template
+
+[33mcommit f4c2cb489c886444cf2777572b0682d88b291b84[m
+Author: Md Motasim Bhuiyan <rafeedm.bhuiyan@gmail.com>
+Date:   Wed Jun 8 18:05:44 2022 +0300
+
+    Git process
+
+[33mcommit 2ea1a9cb91e54839e11e8f27f1e65814b120c5af[m
+Author: Rafeed <57295797+pptx704@users.noreply.github.com>
+Date:   Mon May 30 19:20:06 2022 +0300
+
+    Initial commit

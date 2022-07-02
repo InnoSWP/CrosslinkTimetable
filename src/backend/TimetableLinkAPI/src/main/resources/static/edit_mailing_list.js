@@ -3,13 +3,18 @@ let currentMailingListEmails
 let currentPatchEmails
 let currentAddEmails
 let currentDeleteEmails
+let currentToken
 
 /**
  * Fetch mailing lists
  */
 async function start () {
   try {
-    const response = await fetch('/mailingLists/names')
+    const response = await fetch('/mailingLists/names', {
+      headers: {
+        'Authorization': currentToken
+      }
+    })
     const data = await response.json()
     createMailNameList(data)
   } catch (e) {
@@ -48,7 +53,11 @@ async function loadByName (name) {
     currentMailingListName = name
 
     let link2 = `/mailingLists/${name}/emails`
-    const response2 = await fetch(link2)
+    const response2 = await fetch(link2, {
+      headers: {
+        'Authorization': currentToken
+      }
+    })
     let mailsArray = await response2.json();
     console.log(mailsArray);
     currentMailingListEmails = mailsArray;
@@ -76,7 +85,8 @@ deleteMailingListBtn.addEventListener('click', (event) => {
     fetch(`/mailingLists/${currentMailingListName}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': currentToken
       }
     })
         .then(response => {
@@ -99,7 +109,10 @@ newMailingListNameBtn.addEventListener('click', (event) => {
     alert("Name cannot be empty. Try again.")
   } else {
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
-      method: 'PATCH'
+      method: 'PATCH',
+      headers: {
+        'Authorization': currentToken
+      }
     })
         .then(response => {
           return response.json();
@@ -141,7 +154,10 @@ function alertIncorrectEmailError() {
 importOutlookContactsBtn.addEventListener('click', (event) => {
   event.preventDefault()
   fetch(`/mailingLists/importOutlookMailingLists`, {
-    method: 'PATCH'
+    method: 'PATCH',
+    headers: {
+      'Authorization': currentToken
+    }
   })
       .then(response => {
         return response.json();
@@ -158,7 +174,8 @@ function fetching (PATH, mailsArray) {
     body: JSON.stringify(
       mailsArray),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': currentToken
     }
   })
       .then(response => response.text())

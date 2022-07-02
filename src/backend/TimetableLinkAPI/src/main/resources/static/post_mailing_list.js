@@ -1,8 +1,9 @@
 const btn = document.getElementById('create-btn')
 btn.addEventListener('click', (event) => {
   event.preventDefault()
-  const mailsStr = document.getElementById('mails').value
+  const mailsStr = document.getElementById('emails').value
   const mailsArray = mailsStr.split(' ').filter(el => el !== '')
+
   if (validateEmails(mailsArray)) {
     const mailsName = document.getElementById('mailing-list-name').value
 
@@ -13,7 +14,8 @@ btn.addEventListener('click', (event) => {
         textIdentifier: mailsName
       }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorisation': currentToken
       }
     })
       .then(response => response.json())
