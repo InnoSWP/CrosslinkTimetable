@@ -12,9 +12,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-
-import javax.sql.DataSource;
-
 @SpringBootApplication
 @Import({SpringJdbcConfig.class})
 public class App {

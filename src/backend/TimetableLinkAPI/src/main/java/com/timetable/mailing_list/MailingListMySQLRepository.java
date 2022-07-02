@@ -163,7 +163,7 @@ public class MailingListMySQLRepository implements MailingListRepository {
                  SELECT DISTINCT emailAddress FROM
                  email LEFT JOIN emailBelonging
                  ON email.id = emailBelonging.emailId
-                 WHERE mailingListId = ?
+                 WHERE mailingListId = ?;
                  """;
         return jdbcTemplate.queryForList(
                         getEmailsSqlRequest, String.class, mailingListId);

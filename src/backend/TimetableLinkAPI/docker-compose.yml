@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   server:
     container_name: timetable_server

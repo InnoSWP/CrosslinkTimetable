@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit mailing list</title>
+    <link rel="stylesheet" href="./bootstrap.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./edit_pages.css">
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Crosslink Timetable</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">
+                    Return to calendar
+                </a>
+            </li>
+            <li class="nav-item">
+                <p><a class="nav-link active" aria-current="page" href="post_mailing_list.html">
+                    Create mailing lists
+                </a></p>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="major">
+    <div id="list-name"></div>
+    <button id="delete-mailing-list-btn" disabled>Delete list</button>
+    <p></p>
+
+    <label for="mailing-list-name">Name</label>
+    <input type="text" id="mailing-list-name" onkeyup="enableDisableNameField(this)">
+    <button id="new-mailing-list-name-btn" value="submit" disabled>Save</button>
+    <br>
+
+    <label for="emails-area">Emails for this list separated by the space(s)</label>
+    <br>
+    <textarea id="emails-area" onkeyup="enableDisableEmailsArea(this)"></textarea>
+    <br>
+    <button id="change-emails-btn" value="submit" disabled>Save</button>
+
+    <p></p>
+    <h3 style="margin-left: 0">Import contact lists from Outlook</h3>
+    <button id="import-outlook-contacts-btn" value="submit" disabled>Import</button>
+
+    <p>
+    <h3>Add emails</h3>
+    <br>
+    <label for="add-mails">Enter emails separated by the space(s) you want to add: </label>
+    <br>
+    <textarea id="add-mails" onkeyup="enableDisableAddEmailsArea(this)"></textarea>
+    <br>
+    <button id="add-mails-btn" value="submit" disabled>Add email(s)</button>
+
+    <p>
+    <h3>Delete emails</h3>
+    <br>
+    <label for="delete-mails">Enter emails separated by the space(s) you want to delete: </label>
+    <br>
+    <textarea id="delete-mails" onkeyup="enableDisableDeleteEmailsArea(this)"></textarea>
+    <br>
+    <button id="delete-emails-btn" value="submit" disabled>Delete email(s)</button>
+</div>
+</body>
+
+<script src="edit_mailing_list.js"></script>
+</html>
