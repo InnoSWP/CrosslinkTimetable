@@ -113,10 +113,9 @@ public class MailingListMySQLRepository implements MailingListRepository {
         jdbcTemplate.update(
                 "DELETE FROM emailBelonging WHERE mailingListId = ? AND emailId = ?",
                 mailingListId, emailId);
-        List<String> list = jdbcTemplate.queryForList(
-                "SELECT id FROM emailBelonging", String.class
-        );
-        System.out.println(list + " " + list.size());
+//        List<String> list = jdbcTemplate.queryForList(
+//                "SELECT id FROM emailBelonging", String.class
+//        );
         jdbcTemplate.update(
                 """
                     DELETE FROM email

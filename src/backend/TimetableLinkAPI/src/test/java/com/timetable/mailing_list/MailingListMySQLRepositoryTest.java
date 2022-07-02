@@ -96,6 +96,29 @@ class MailingListMySQLRepositoryTest {
     }
 
     @Test
+    void addAndDeleteEmails() {
+        MailingList mailingList = mailingLists.get(0);
+        repo.createMailingList(mailingLists.get(0));
+        Long id = repo.getMailingListId(mailingList.getTextIdentifier());
+        for (String email : mailingList.getEmails()) {
+            assertTrue(repo.getEmailsByListId(id).contains(email));
+            repo.deleteEmailFromList(id, email);
+            assertFalse(repo.getEmailsByListId(id).contains(email));
+        }
+        assertEquals(repo.getEmailsByListId(id).size(), 0);
+        List<String> emailsToAdd = new ArrayList<>(mailingLists.get(0).getEmails());
+        emailsToAdd.addAll(List.of("o", "l", "t"));
+        for (String email : emailsToAdd) {
+            assertFalse(repo.getEmailsByListId(id).contains(email));
+            repo.addEmailToList(id, email);
+            assertTrue(repo.getEmailsByListId(id).contains(email));
+        }
+        List<String> currentEmails = repo.getEmailsByListId(id);
+        assertTrue(currentEmails.containsAll(emailsToAdd));
+        assertEquals(currentEmails.size(), emailsToAdd.size());
+    }
+
+    @Test
     void mailingListExists() {
         repo.createMailingList(mailingLists.get(0));
         assertTrue(repo.mailingListExists("list1"));

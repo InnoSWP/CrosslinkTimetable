@@ -15,7 +15,7 @@ import java.net.URI;
 @Component
 @PropertySource("classpath:personal.properties")
 public class OutlookConnector {
-    private final ExchangeService service;
+    private ExchangeService service;
     //private ExchangeCredentials credentials;
 
     @Autowired
@@ -32,6 +32,14 @@ public class OutlookConnector {
             e.printStackTrace();
         }
 
+    }
+
+    public void setCredentials(String personalEmail, String personalPassword) throws Exception {
+        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+        ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
+        service.setCredentials(credentials);
+        service.autodiscoverUrl(
+                personalEmail, new OutlookConnector.RedirectionUrlCallback());
     }
 
     public ExchangeService getService() {

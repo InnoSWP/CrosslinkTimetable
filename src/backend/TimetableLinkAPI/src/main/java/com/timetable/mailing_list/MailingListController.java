@@ -37,6 +37,12 @@ public class MailingListController {
         mailingListService.deleteEmailsFromList(textIdentifier, emails);
     }
 
+    @PatchMapping("/{textIdentifier}/emails/update")
+    public void updateEmailsFromList(@PathVariable String textIdentifier,
+                                     @RequestBody List<String> emails) {
+        mailingListService.updateEmailsFromList(textIdentifier, emails);
+    }
+
     @PatchMapping("/{textIdentifier}")
     public void updateTextIdentifier(
             @PathVariable String textIdentifier,
