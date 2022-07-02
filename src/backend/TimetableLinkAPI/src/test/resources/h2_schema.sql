@@ -1,7 +1,4 @@
-CREATE DATABASE IF NOT EXISTS timetable;
-USE timetable;
-
-SET SQL_SAFE_UPDATES = 0;
+SET MODE=MYSQL;
 
 CREATE TABLE IF NOT EXISTS mailingList (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -24,11 +21,3 @@ CREATE TABLE IF NOT EXISTS emailBelonging(
 CREATE TABLE IF NOT EXISTS event(
     outlookAppointmentId varchar(400) PRIMARY KEY
 );
-
--- CREATE DATABASE IF NOT EXISTS test;
--- USE test;
---
--- CREATE TABLE LIKE timetable.mailingList;
--- CREATE TABLE LIKE timetable.email;
--- CREATE TABLE LIKE timetable.emailBelonging;
--- CREATE TABLE LIKE timetable.event;

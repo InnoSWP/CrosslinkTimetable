@@ -2,7 +2,10 @@ package com.timetable.mailing_list;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MailingListService {
@@ -65,7 +68,7 @@ public class MailingListService {
         mailingLists.forEach(mailingList -> {
             // Long id = mailingListRepository.getMailingListId(mailingList.getTextIdentifier());
             if (mailingListRepository.mailingListExists(mailingList.getTextIdentifier())) {
-                mailingListRepository.updateMailingList(mailingList);
+                updateExistingMailingList(mailingList);
             } else {
                mailingListRepository.createMailingList(mailingList);
             }
@@ -75,5 +78,23 @@ public class MailingListService {
     public void cancelInvitations(String eventId, String textIdentifier) throws Exception {
         List<String> emails = getEmailsFromList(textIdentifier);
         mailingListManager.cancelInvitations(eventId, emails);
+    }
+
+    public void updateTextIdentifier(String textIdentifier, String newTextIdentifier) {
+        mailingListRepository.updateTextIdentifier(textIdentifier, newTextIdentifier);
+    }
+
+    private void updateExistingMailingList(MailingList mailingList) {
+        Long id = mailingListRepository.getMailingListId(mailingList.getTextIdentifier());
+        Set<String> oldEmails = new HashSet<>(mailingListRepository.getEmailsByListId(id));
+        Set<String> newEmails = new HashSet<>(mailingList.getEmails());
+        Set<String> emailsToDelete = new HashSet<>(oldEmails);
+        emailsToDelete.removeAll(newEmails);
+        Set<String> emailsToAdd = new HashSet<>(newEmails);
+        emailsToAdd.removeAll(oldEmails);
+        emailsToDelete.forEach(email ->
+                mailingListRepository.deleteEmailFromList(id, email));
+        emailsToAdd.forEach(email ->
+                mailingListRepository.addEmailToList(id, email));
     }
 }

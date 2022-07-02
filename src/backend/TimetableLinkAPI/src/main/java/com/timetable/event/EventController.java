@@ -2,15 +2,14 @@ package com.timetable.event;
 
 import org.apache.tomcat.util.buf.UDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriUtils;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/events")
@@ -23,17 +22,17 @@ public class EventController {
     }
 
     @PostMapping
-    @CrossOrigin(origins = "http://localhost:63342")
-    public String createEvent(@RequestBody Event event) {
+    public Map<String, String> createEvent(@RequestBody Event event) {
         //System.out.println(event.getEndDate());
-        String eventId = null;
+        Map<String, String> eventIdMap = new HashMap<>();
         try {
-            eventId = eventService.createEvent(event);
+            String eventId = eventService.createEvent(event);
+            eventIdMap.put("eventId", eventId);
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        return eventId;
+        return eventIdMap;
     }
 
     @GetMapping ("/{eventId}")
@@ -98,6 +97,15 @@ public class EventController {
             e.printStackTrace();
         }
         return events;
+    }
+
+    @GetMapping("/names")
+    public List<String> getAllNames() {
+        List<String> names = null;
+        try {
+            names = getAllEvents().stream().map(Event::getName).toList();
+        } catch (Exception ex) {}
+        return names;
     }
 
     @PatchMapping ("/{eventId}/invite/{mailingListTextIdentifier}")

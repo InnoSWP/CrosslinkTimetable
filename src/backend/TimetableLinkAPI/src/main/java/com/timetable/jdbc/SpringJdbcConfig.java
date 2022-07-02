@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -15,7 +16,6 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class SpringJdbcConfig {
     @Bean
-   //@Primary
     public DataSource mySqlDataSource(
             @Value("${spring.datasource.username}") String username,
             @Value("${spring.datasource.url}") String url,
@@ -27,7 +27,10 @@ public class SpringJdbcConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-
+        System.out.println("username " + username);
+        System.out.println("url " + url);
+        System.out.println("password " + password);
+        System.out.println("driver " + driverClassName);
         return dataSource;
     }
 

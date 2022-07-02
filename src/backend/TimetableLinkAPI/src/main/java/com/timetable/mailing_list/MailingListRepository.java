@@ -16,4 +16,7 @@ public interface MailingListRepository {
     void deleteEmailFromList(Long mailingListId, String emailAddress);
     boolean mailingListExists(String textIdentifier);
     void updateMailingList(MailingList mailingList);
+    void updateTextIdentifier(String textIdentifier, String newTextIdentifier);
+    List<String> getEmailsByListId(Long id);
+    void init();
 }
