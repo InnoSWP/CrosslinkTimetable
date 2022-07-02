@@ -22,7 +22,12 @@ CREATE TABLE IF NOT EXISTS emailBelonging(
 );
 
 CREATE TABLE IF NOT EXISTS event(
-    outlookAppointmentId varchar(400) PRIMARY KEY
+    outlookAppointmentId VARCHAR(400) PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS token(
+    content VARCHAR(100),
+    expireTime BIGINT
 );
 
 -- CREATE DATABASE IF NOT EXISTS test;
