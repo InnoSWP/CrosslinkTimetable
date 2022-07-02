@@ -9,4 +9,11 @@ public class ViewController {
     public String index() {
         return "index.html";
     }
+
+    @GetMapping("/create/mailing")
+    public String create_mailing(){ return "post_mailing_list.html";}
+
+    @GetMapping("/edit/mailing")
+    public String edit_mailing(){ return "edit_mailing_list.html";}
 }
+

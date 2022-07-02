@@ -29,11 +29,13 @@
 
 
         <div class="split left">
-            <h2 class="noMargin">Mailing lists names</h2>
+            <h2 class="noMargin">Choose mailing lists</h2>
 
             <div class="split left top">
                 <div class="loadedByScript" id="cb"></div>
                 <!-- checkbox loaded by "load_mail_lists_to_index.js -->
+
+                <button style="position: absolute; bottom: 0; left: 0">Create new mailing list</button>;
             </div>
 
             <div class="split left bottom">
@@ -44,7 +46,7 @@
                     <p></p>
                     <label for="mails">Enter emails separated by the space(s): </label>
                     <br>
-                    <textarea id="mails" onkeyup="enableDisable('mailing-list-name', this)"></textarea>
+                    <textarea class="smallArea" id="mails" onkeyup="enableDisable('mailing-list-name', this)"></textarea>
                     <br>
                     <button id="create-btn" value="submit" disabled>
                         Create
@@ -111,6 +113,10 @@
     }
     .loadedByScript {
         margin-top: 30px;
+    }
+    .smallArea {
+        width: 30vw;
+        height: 18vh;
     }
 </style>
 

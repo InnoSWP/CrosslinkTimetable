@@ -1,5 +1,8 @@
 let currentMailingListName
 let currentMailingListEmails
+let currentPatchEmails
+let currentAddEmails
+let currentDeleteEmails
 
 /**
  * Fetch mailing lists
@@ -53,6 +56,8 @@ async function loadByName (name) {
     for (let i = 0; i < mailsArray.length; i++) {
       areaStr = areaStr + mailsArray[i] + ' '
     }
+    areaStr = areaStr.substring(0, areaStr.length-1);
+    currentPatchEmails = areaStr;
     document.getElementById('emails-area').value = areaStr
     document.getElementById('mailing-list-name').value = name;
   } else {
@@ -111,25 +116,23 @@ newMailingListNameBtn.addEventListener('click', (event) => {
 changeEmailsBtn.addEventListener('click', (event) => {
   event.preventDefault();
 
-  // First, delete these emails
-  fetching(`/mailingLists/${currentMailingListName}/emails/delete`, currentMailingListEmails);
-  console.log(document.getElementById('emails-area').value);
+  const emailsStr = document.getElementById('emails-area').value;
+  const emailsArray = emailsStr.split(' ').filter(el => el !== '');
 
-  // Second, add emails from text area
-  const mailsStr = document.getElementById('emails-area').value;
-  const mailsArray = mailsStr.split(' ').filter(el => el !== '');
-  if (validateEmails(mailsArray)) {
-    console.log(mailsArray);
-    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray);
-    console.log(document.getElementById('emails-area').value);
+  if (validateEmails(emailsArray)) {
+    fetching(`/mailingLists/${currentMailingListName}/emails/update`, emailsArray);
+    changeEmailsBtn.setAttribute('disabled', 'disabled')
+    currentPatchEmails = emailsStr;
   } else {
     alertIncorrectEmailError();
   }
-
 })
 
+/**
+ * Alert wrong emails error
+ */
 function alertIncorrectEmailError() {
-  alert('Emails are not in correct form. Try again')
+  alert('Emails are not in correct form. Make sure your set "innopolis.university" emails. Try again')
 }
 
 /**
@@ -167,29 +170,38 @@ function fetching (PATH, mailsArray) {
 }
 
 /**
- * Delete email(s) from a mailing list
- */
-deleteEmailsBtn.addEventListener('click', (event) => {
-  const isAgree = confirm(`\Delete email(s) from the ${currentMailingListName} mailing list?`)
-  if (isAgree) {
-    event.preventDefault()
-    const mailsStr = document.getElementById('delete-mails').value
-    const mailsArray = mailsStr.split(' ').filter(el => el !== '')
-    fetching(`/mailingLists/${currentMailingListName}/emails/delete`, mailsArray)
-  }
-})
-
-/**
  * Add email(s) to a mailing list
  */
 addEmailsBtn.addEventListener('click', (event) => {
   event.preventDefault()
-  const mailsStr = document.getElementById('add-mails').value
-  const mailsArray = mailsStr.split(' ').filter(el => el !== '')
-  if (validateEmails(mailsArray)) {
-    fetching(`/mailingLists/${currentMailingListName}/emails/add`, mailsArray)
+  const emailsStr = document.getElementById('add-mails').value
+  const emailsArray = emailsStr.split(' ').filter(el => el !== '')
+
+  if (validateEmails(emailsArray)) {
+    fetching(`/mailingLists/${currentMailingListName}/emails/add`, emailsArray)
+    addEmailsBtn.setAttribute('disabled', 'disabled')
+    currentAddEmails = emailsStr;
   } else {
     alertIncorrectEmailError()
+  }
+})
+
+/**
+ * Delete email(s) from a mailing list
+ */
+deleteEmailsBtn.addEventListener('click', (event) => {
+  const isAgree = confirm(`\Delete email(s) from the ${currentMailingListName} mailing list?`)
+
+  if (isAgree) {
+    event.preventDefault()
+    const emailsStr = document.getElementById('delete-mails').value
+    const emailsArray = emailsStr.split(' ').filter(el => el !== '')
+
+    if (validateEmails(emailsArray)) {
+      fetching(`/mailingLists/${currentMailingListName}/emails/delete`, emailsArray)
+      deleteEmailsBtn.setAttribute('disabled', 'disabled')
+      currentDeleteEmails = emailsStr;
+    }
   }
 })
 
@@ -212,14 +224,14 @@ function enableDisableNameField(txt) {
 }
 
 function enableDisableEmailsArea(txt) {
-  changeEmailsBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentMailingListEmails;
+  changeEmailsBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentPatchEmails;
 }
 
 function enableDisableAddEmailsArea(txt) {
-  addEmailsBtn.disabled = txt.value.trim() === "";
+  addEmailsBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentAddEmails;
 }
 
 function enableDisableDeleteEmailsArea(txt) {
-  deleteEmailsBtn.disabled = txt.value.trim() === "";
+  deleteEmailsBtn.disabled = txt.value.trim() === "" || txt.value.trim() === currentDeleteEmails;
 }
 start().then()
