@@ -16,7 +16,6 @@ import javax.sql.DataSource;
 @PropertySource("classpath:application.properties")
 public class SpringJdbcConfig {
     @Bean
-   //@Primary
     public DataSource mySqlDataSource(
             @Value("${spring.datasource.username}") String username,
             @Value("${spring.datasource.url}") String url,
@@ -28,10 +27,10 @@ public class SpringJdbcConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-        System.out.println("username " + username);
-        System.out.println("url " + url);
-        System.out.println("password " + password);
-        System.out.println("driver " + driverClassName);
+//        System.out.println("username " + username);
+//        System.out.println("url " + url);
+//        System.out.println("password " + password);
+//        System.out.println("driver " + driverClassName);
         return dataSource;
     }
 
