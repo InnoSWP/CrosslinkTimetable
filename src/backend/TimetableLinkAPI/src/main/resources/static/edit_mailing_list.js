@@ -3,13 +3,13 @@ let currentMailingListEmails
 let currentPatchEmails
 let currentAddEmails
 let currentDeleteEmails
-let currentToken
 
 /**
  * Fetch mailing lists
  */
 async function start () {
   try {
+    console.log(currentToken)
     const response = await fetch('/mailingLists/names', {
       headers: {
         'Authorization': currentToken
@@ -111,7 +111,7 @@ newMailingListNameBtn.addEventListener('click', (event) => {
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': currentToken
+        'Authorization': currentToken,
       }
     })
         .then(response => {

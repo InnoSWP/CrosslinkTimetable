@@ -1,32 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Please sign in</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="edit_pages.css">
+    <title>Document</title>
 </head>
 <body>
-<div class="container">
-    <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <p>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" title="Fill this field." name="username" class="form-control" placeholder="Username" required oninvalid="this.setCustomValidity('Fill this field.')" oninput="setCustomValidity('')" autofocus>
-        </p>
-        <p>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" title="Fill this field." id="password" name="password" class="form-control" placeholder="Password" required oninvalid="this.setCustomValidity('Fill this field.')" oninput="setCustomValidity('')">
-        </p>
-        <input name="_csrf" type="hidden" value="d4ee661b-7b3a-4847-894e-7d4499e85128" />
-        <button style="background-color: forestgreen" class="btn btn-lg btn-primary btn-block" id="login-btn" type="submit">Sign in</button>
-    </form>
-</div>
-</body>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Crosslink Timetable</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="edit_mailing_list.html">Edit mailing list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="edit_event.html">Edit event</a>
+                    </li>
+                </ul>
+        </div>
+    </nav>
 
-<script src="authorise.js"></script>
+
+        <div class="split left">
+
+
+            <div class="split left top">
+<!--                <h2>Choose mailing lists</h2>-->
+                <div class="loadedByScript" id="cb"></div>
+                <!-- checkbox loaded by "load_mail_lists_to_calendar.js -->
+            </div>
+
+            <div class="split left bottom">
+                <div class="major" disabled>
+                    <h2 style="display: inline-block; margin-top: 0">OR create new mailings lists</h2>
+                    <button id="show-create-mailing-list-page-btn">Create</button>
+                    <fieldset id="create-mailing-list-page" disabled>
+                        <label for="mailing-list-name">Enter name:</label>
+                        <br>
+                        <input type="text" id="mailing-list-name" onkeyup="enableDisable(this, 'mails')">
+                        <p></p>
+                        <label for="emails">Enter emails separated by the space(s): </label>
+                        <br>
+                        <textarea class="smallArea" id="emails" onkeyup="enableDisable('mailing-list-name', this)"></textarea>
+                        <br>
+                        <button id="create-btn" value="submit" disabled>
+                            Create
+                        </button>
+                    </fieldset>
+                </div>
+            </div>
+
+        </div>
+        <div class="split right">
+            <div class="centered">
+                <div class="calendar" id="calendar"></div>
+            </div>
+        </div>
+
+</body>
+<style>
+    /* Split the screen in half */
+    .split {
+        height: 100%;
+        position: fixed;
+        z-index: 1;
+        top: 63px;
+        overflow-x: hidden;
+        padding-top: 0;
+        border: 0;
+    }
+
+    /* Control the left side */
+    .left {
+        width: 40vw;
+        left: 0;
+    }
+
+    /* Control the right side */
+    .right {
+        width: 60vw;
+        right: 0;
+    }
+    /* If you want the content centered horizontally and vertically */
+    .centered {
+        position: absolute;
+        top: 46.5vh;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .top {
+        height: 45vh;
+        top: 64px;
+    }
+    .bottom {
+        height: 45vh;
+        top: 55vh;
+    }
+    .major {
+        margin-left: 4vw;
+        margin-top: 1vh;
+        margin-bottom: 1vh
+    }
+    .noMargin {
+        margin: 0;
+    }
+    .loadedByScript {
+        margin-top: 30px;
+    }
+    .smallArea {
+        width: 30vw;
+        height: 16vh;
+    }
+</style>
+
+<script src="dayjs.js"></script>
+<script src="popper.js"></script>
+<script src="bootstrap.js"></script>
+<script src="moment.js"></script>
+<script src="script.js"></script>
+<script src="post_mailing_list.js"></script>
+<script src="load_mail_lists_to_calendar.js"></script>
 </html>
 

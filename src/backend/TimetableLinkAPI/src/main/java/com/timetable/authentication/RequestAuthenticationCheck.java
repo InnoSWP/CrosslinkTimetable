@@ -22,8 +22,13 @@ public class RequestAuthenticationCheck implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(request.getServletPath());
-        if (request.getServletPath().equals("/login")) return true;
+        //System.out.println(request.getServletPath());
+        if (request.getServletPath().equals("/") ||
+                request.getServletPath().equals("/login") ||
+                request.getServletPath().endsWith(".html") ||
+                request.getServletPath().endsWith(".js") ||
+                request.getServletPath().endsWith(".css"))
+            return true;
         System.out.println("catch");
         String token = request.getHeader("Authorization");
         if (authenticationService.checkToken(token))
