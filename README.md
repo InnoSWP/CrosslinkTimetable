@@ -6,7 +6,7 @@
 
 This application is a combination of all `Innopolis University` timetables. With it, DoE will create events that will be sent to the calendars of students and teachers of the university. Moreover, this application combines all the events created on `Moodle and MS Exchange` and also sends them to the `Outlook calendars` of students and teachers.
 
-![Demo for DoE](images/DemoCalendar.png)
+![Create Mailing list](images/CreateList.png)
 
 ## Why this important?
 
@@ -15,7 +15,11 @@ In `University Innopolis` there a lot of links that have some events on them(e.g
 ## How to use?
 
 our application is based on the site, so just open the site and log in. 
-[Event adder](link *TODO*)
+[Event adder](https://degrassi-minister-88544.herokuapp.com/index.html)
+
+![Edit events](images/EditEvent.png)
+
+![Edit events Outlook](images/EditEvent2.png)
 
 ## Features
 
@@ -29,6 +33,10 @@ There's some features in our application :
 ## Tools
 
 For frontend developing we used html, css and js. For backend developing of our site we used spring, docker, maven.
+
+![Edit mailing list](images/EditList.png)
+
+![Edit mailing list](images/EditList2.png)
 
 ## Important Links
 
