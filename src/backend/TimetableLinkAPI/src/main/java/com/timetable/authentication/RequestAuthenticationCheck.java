@@ -27,7 +27,8 @@ public class RequestAuthenticationCheck implements HandlerInterceptor {
                 request.getServletPath().equals("/login") ||
                 request.getServletPath().endsWith(".html") ||
                 request.getServletPath().endsWith(".js") ||
-                request.getServletPath().endsWith(".css"))
+                request.getServletPath().endsWith(".css") ||
+                request.getServletPath().endsWith(".ico"))
             return true;
         System.out.println("catch");
         String token = request.getHeader("Authorization");

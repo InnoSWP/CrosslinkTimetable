@@ -60,7 +60,6 @@
       let m = moment(ev.startDate, "YYYY-MM-DDTHH:mm:ss.SSS+HH:mm");
       ev.date = m;
     });
-    console.log(this.events);
 
 
     if(this.month) {
@@ -241,7 +240,7 @@
 
     arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
   }
-  function getEventForm(){
+  function getEventForm(eventName = "", eventloc = ""){
     let br = createElement('br');
     let eventForm = createElement('form');
     eventForm.setAttribute('method', 'post');
@@ -249,10 +248,12 @@
     eventTitle.setAttribute('id', 'eventtitle');
     eventTitle.setAttribute('type', 'text');
     eventTitle.setAttribute('placeholder', 'Event Title');
+    eventTitle.setAttribute('value', eventName);
     let eventLocation = createElement('input', 'eventlocation');
     eventLocation.setAttribute('id', 'eventlocation');
     eventLocation.setAttribute('type', 'text');
     eventLocation.setAttribute('placeholder', 'Event Location');
+    eventLocation.setAttribute('value', eventloc);
     let times = [
       '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00',
       '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30',
@@ -272,6 +273,7 @@
       eventStart.appendChild(new Option(item, item));
       eventEnd.appendChild(new Option(item, item));
     });
+
     const submitForm = createElement('button', 'eventSubmit');
     submitForm.innerText = '➔';
     eventForm.appendChild(eventTitle);
@@ -310,12 +312,12 @@
       })
       .then (response => {
         console.log("%j", response);
-        return response.text();
+        return response.json();
       })
       .then ((data) => {
         console.log(data);
         document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
-        location.reload();
+        //window.location.reload();
       })
       .catch(error => console.log(error));
     });
@@ -326,14 +328,22 @@
     let currentWrapper = ele.querySelector('.events');
     let wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
 
+    function remAndAdd(elem, sq) {
+      console.log(elem);
+      p = elem.parentNode;
+      p.removeChild(elem);
+      p.removeChild(sq);
+      p.appendChild(getEventForm(eventName="Hi", eventloc="Hello"));
+    }
+
     events.forEach(function(ev) {
       let div = createElement('div', 'event');
       let square = createElement('div', 'event-category ' + 'blue');
       let span = createElement('span', '', ev.name);
-      span.setAttribute('onclick', 'this.remove()');
       div.appendChild(square);
       div.appendChild(span);
       wrapper.appendChild(div);
+      span.addEventListener('click', () => remAndAdd(span, square));
     });
 
     if(!events.length) {
@@ -429,7 +439,15 @@
   })
   .catch(err => {
     console.log(err);
-    let calendar = new Calendar('#calendar', []);
+    let calendar = new Calendar('#calendar', [
+        {
+          "id": "abcdefg",
+          "name": "Event 1",
+          "location": "1234",
+          "startDate": "2022-07-04T09:30:00.000Z",
+          "endDate": "2022-07-04T10:30:00.000Z"
+        }
+    ]);
   });
 
 

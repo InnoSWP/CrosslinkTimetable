@@ -9,6 +9,7 @@ let currentDeleteEmails
  */
 async function start () {
   try {
+    console.log(sessionStorage.getItem("token"))
     const response = await fetch('/mailingLists/names', {
       headers: {
         'Authorization': sessionStorage.getItem("token")
@@ -17,7 +18,7 @@ async function start () {
     const data = await response.json()
     createMailNameList(data)
   } catch (e) {
-    alert('There was a problem fetching the mailing list\'s names.')
+    //alert('There was a problem fetching the mailing list\'s names.')
   }
 }
 
@@ -71,8 +72,6 @@ async function loadByName (name) {
   } else {
     deleteMailingListBtn.setAttribute('disabled', 'disabled')
     importOutlookContactsBtn.setAttribute('disabled', 'disabled')
-    document.getElementById('emails-area').value = ""
-    document.getElementById('mailing-list-name').value = ""
   }
 }
 
@@ -112,7 +111,7 @@ newMailingListNameBtn.addEventListener('click', (event) => {
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': sessionStorage.getItem("token")
+        'Authorization': sessionStorage.getItem("token"),
       }
     })
         .then(response => {
