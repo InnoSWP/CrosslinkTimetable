@@ -1,4 +1,5 @@
 const btn = document.getElementById('create-btn')
+
 btn.addEventListener('click', (event) => {
   event.preventDefault()
   const mailsStr = document.getElementById('emails').value
@@ -15,11 +16,12 @@ btn.addEventListener('click', (event) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorisation': currentToken
+        'Authorization': sessionStorage.getItem("token")
       }
     })
       .then(response => response.json())
       .then(() => {
+        btn.setAttribute('disabled', 'true')
 
       })
       .catch(error => console.log(error))
@@ -43,7 +45,7 @@ function isEmail (str) {
 }
 
 function enableDisable(txt1, txt2) {
-  if (txt1.value === "" || txt2.value.trim() === "")
+  if (txt1.value === "" || txt2.value === "")
       btn.setAttribute('disabled', 'disabled')
   else
     btn.removeAttribute('disabled')

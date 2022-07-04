@@ -1,8 +1,8 @@
 async function start() {
     const mailResponse = await fetch('/mailingLists/names', {
-        // headers: {
-        //     'Authorization': currentToken
-        // }
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
     });
     const nameArray = await mailResponse.json();
     loadCheckbox(nameArray);
