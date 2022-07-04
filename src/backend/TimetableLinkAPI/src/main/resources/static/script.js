@@ -312,8 +312,11 @@
             'endDate': formattedEnd})
         })
         .then (response => {
-          console.log("%j", response);
-          return response.json();
+          if (response.status == 200){
+            window.location.reload();
+          } else {
+            return;
+          };
         })
         .then ((data) => {
           console.log(data);
@@ -334,8 +337,7 @@
             'endDate': formattedEnd})
         })
         .then (response => {
-          console.log("%j", response);
-          return response.json();
+          response.json();
         })
         .then ((data) => {
           console.log(data);
