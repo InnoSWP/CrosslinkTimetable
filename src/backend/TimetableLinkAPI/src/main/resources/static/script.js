@@ -318,7 +318,7 @@
         .then ((data) => {
           console.log(data);
           document.getElementsByClassName('event empty')[0].innerHTML = 'Event changed Successfully!';
-          //window.location.reload();
+          window.location.reload();
         })
         .catch(error => console.log(error));
       } else {
@@ -340,7 +340,7 @@
         .then ((data) => {
           console.log(data);
           document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
-          //window.location.reload();
+          window.location.reload();
         })
         .catch(error => console.log(error));
       }
