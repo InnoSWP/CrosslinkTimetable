@@ -16,20 +16,20 @@ loginBtn.addEventListener('click', (event) => {
         }
     })
         .then(response => {
+            console.log(response);
             if (response.status === 403) {
                 processWrongData();
                 return;
             }
-            return response.json()
+            return response.json();
         })
         .then(data => {
             console.log(data)
             currentToken = data["token"];
-            console.log(currentToken)
-
+            sessionStorage.setItem("token", currentToken);
+            window.location.replace("index.html");
         })
         .catch(error => console.log(error))
-        window.location.replace("index.html");
 })
 
 function processWrongData() {

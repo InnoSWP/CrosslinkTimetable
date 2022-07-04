@@ -410,8 +410,19 @@
 
 !function() {
   let self = this;
-  fetch('/events')
-  .then(response => response.json())
+  fetch('/events', {
+      method: 'GET',
+      headers: {
+        'Authorization': sessionStorage.getItem("token")
+      }
+  })
+  .then(response => {
+    if (response.status == 403){
+      console.log("Crying");
+      return;
+    }
+    return response.json();
+  })
   .then(data => {
     let calendar = new Calendar('#calendar', data);
   })

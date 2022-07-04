@@ -1,8 +1,8 @@
-package com.timetable;
+// package com.timetable;
 
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class TimetableLinkApiApplicationTests {
+// @SpringBootTest
+// class TimetableLinkApiApplicationTests {
 
-}
+// }
