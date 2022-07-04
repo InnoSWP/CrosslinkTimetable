@@ -240,7 +240,7 @@
 
     arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
   }
-  function getEventForm(eventName = "", eventloc = ""){
+  function getEventForm(eventName = "", eventloc = "", starttime = "Start", endtime = "End", eventid=null){
     let br = createElement('br');
     let eventForm = createElement('form');
     eventForm.setAttribute('method', 'post');
@@ -264,10 +264,10 @@
       '21:00', '21:30', '22:00', '22:30', '23:00', '23:30'
     ]
     const eventStart = createElement('select', 'eventstarttime');
-    eventStart.appendChild(new Option('Start', 'Start', true));
+    eventStart.appendChild(new Option(starttime, starttime, true));
     eventStart.setAttribute('id', 'eventstarttime');
     const eventEnd = createElement('select', 'eventendtime');
-    eventEnd.appendChild(new Option('End', 'End', true));
+    eventEnd.appendChild(new Option(endtime, endtime, true));
     eventEnd.setAttribute('id', 'eventendtime');
     times.forEach(function(item, _){
       eventStart.appendChild(new Option(item, item));
@@ -299,27 +299,51 @@
       let formattedStart = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${startTime}:00.000+03:00`;
       let formattedEnd = `${year}-${month}-${date < 10 ? '0' : ''}${date}T${endTime}:00.000+03:00`;
 
-      fetch('/events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': sessionStorage.getItem("token")
-        },
-        body: JSON.stringify({'name': name,
-          'location': location,
-          'startDate': formattedStart,
-          'endDate': formattedEnd})
-      })
-      .then (response => {
-        console.log("%j", response);
-        return response.json();
-      })
-      .then ((data) => {
-        console.log(data);
-        document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
-        //window.location.reload();
-      })
-      .catch(error => console.log(error));
+      if (eventid != null){
+        fetch(`/events/${eventid}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
+          },
+          body: JSON.stringify({'name': name,
+            'location': location,
+            'startDate': formattedStart,
+            'endDate': formattedEnd})
+        })
+        .then (response => {
+          console.log("%j", response);
+          return response.json();
+        })
+        .then ((data) => {
+          console.log(data);
+          document.getElementsByClassName('event empty')[0].innerHTML = 'Event changed Successfully!';
+          //window.location.reload();
+        })
+        .catch(error => console.log(error));
+      } else {
+        fetch('/events', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
+          },
+          body: JSON.stringify({'name': name,
+            'location': location,
+            'startDate': formattedStart,
+            'endDate': formattedEnd})
+        })
+        .then (response => {
+          console.log("%j", response);
+          return response.json();
+        })
+        .then ((data) => {
+          console.log(data);
+          document.getElementsByClassName('event empty')[0].innerHTML = 'Event Added Successfully!';
+          //window.location.reload();
+        })
+        .catch(error => console.log(error));
+      }
     });
     return eventForm;
   }
@@ -333,13 +357,21 @@
       p = elem.parentNode;
       p.removeChild(elem);
       p.removeChild(sq);
-      p.appendChild(getEventForm(eventName="Hi", eventloc="Hello"));
+      console.log(elem.dataset.eventstart);
+      starttime = moment(elem.dataset.eventstart).format("HH:mm");
+      endtime = moment(elem.dataset.eventend).format("HH:mm");
+      p.appendChild(getEventForm(elem.dataset.eventname, elem.dataset.eventlocation, starttime, endtime, elem.dataset.eventid));
     }
 
     events.forEach(function(ev) {
       let div = createElement('div', 'event');
       let square = createElement('div', 'event-category ' + 'blue');
       let span = createElement('span', '', ev.name);
+      span.setAttribute('data-eventId', ev.id);
+      span.setAttribute('data-eventName', ev.name);
+      span.setAttribute('data-eventLocation', ev.location);
+      span.setAttribute('data-eventStart', ev.startDate);
+      span.setAttribute('data-eventEnd', ev.endDate);
       div.appendChild(square);
       div.appendChild(span);
       wrapper.appendChild(div);

@@ -13,6 +13,7 @@ import microsoft.exchange.webservices.data.property.complex.MessageBody;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 import microsoft.exchange.webservices.data.search.ItemView;
 import microsoft.exchange.webservices.data.search.filter.SearchFilter;
+import microsoft.exchange.webservices.data.core.enumeration.service.ConflictResolutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -83,7 +84,7 @@ public class OutlookEventManager {
         appointment.setStart(event.getStartDate());
         appointment.setEnd(event.getEndDate());
         appointment.setLocation(event.getLocation());
-        appointment.save();
+        appointment.update(ConflictResolutionMode.AutoResolve);
     }
 
     public void cancelEvent(String eventId) throws Exception {
