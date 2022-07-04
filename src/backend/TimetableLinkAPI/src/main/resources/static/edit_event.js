@@ -10,7 +10,11 @@ let currentEventEndDate
  */
 async function start () {
   try {
-    const response = await fetch('/events');
+    const response = await fetch('/events', {
+        headers: {
+            'Authorization': sessionStorage.getItem("token")
+        }
+    });
     console.log(response);
     const data = await response.json();
     console.log(data);
@@ -51,7 +55,7 @@ function stringToDate(datetimeString){
   let parts = datetimeString.split("T");
   let datePart = new Date(parts[0]);
   console.log(datePart);
-};
+}
 
 /**
  * Load chosen event
@@ -67,7 +71,11 @@ function loadEventById(eventId){
         newEventEndDateBtn.removeAttribute('disabled')
         let link = `/events/${eventId}`
 
-        fetch(link)
+        fetch(link, {
+            headers: {
+                'Authorization': sessionStorage.getItem("token")
+            }
+        })
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -152,7 +160,8 @@ deleteEventBtn.addEventListener('click', (event) => {
     fetch(`/events/${currentEventName}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+          'Authorization': sessionStorage.getItem("token")
       }
     })
         .then(response => {
@@ -178,7 +187,8 @@ searchEventByDateBtn.addEventListener('click', (event) => {
     fetch(`events/eventsFromTimeInterval?start=${startDate}&end=${endDate}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
@@ -205,7 +215,8 @@ newEventNameBtn.addEventListener('click', (event) => {
               'endDate': currentEventEndDate}
           ),
       headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': sessionStorage.getItem("token")
       }
   })
       .then(response => response.json())
@@ -229,7 +240,8 @@ newEventLocationBtn.addEventListener('click', (event) => {
             'endDate': currentEventEndDate}
         ),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
@@ -253,7 +265,8 @@ newEventStartDateBtn.addEventListener('click', (event) => {
             'endDate': currentEventEndDate}
         ),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
@@ -277,7 +290,8 @@ newEventStartDateBtn.addEventListener('click', (event) => {
             'endDate': newEndDate}
         ),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
@@ -297,7 +311,8 @@ sendInvitationToOneMailingListBtn.addEventListener('click', (event) => {
             currentMailingListName
         ),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
@@ -315,7 +330,8 @@ cancelInvitationToOneMailingListBtn.addEventListener('click', (event) => {
     fetch(`/events/${currentEventName}/cancelInvitation/${currentMailingListName}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem("token")
         }
     })
         .then(response => response.json())
