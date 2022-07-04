@@ -9,10 +9,10 @@ let currentDeleteEmails
  */
 async function start () {
   try {
-    console.log(currentToken)
+    console.log(sessionStorage.getItem("token"))
     const response = await fetch('/mailingLists/names', {
       headers: {
-        'Authorization': currentToken
+        'Authorization': sessionStorage.getItem("token")
       }
     })
     const data = await response.json()
@@ -55,7 +55,7 @@ async function loadByName (name) {
     let link2 = `/mailingLists/${name}/emails`
     const response2 = await fetch(link2, {
       headers: {
-        'Authorization': currentToken
+        'Authorization': sessionStorage.getItem("token")
       }
     })
     let mailsArray = await response2.json();
@@ -86,7 +86,7 @@ deleteMailingListBtn.addEventListener('click', (event) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': currentToken
+        'Authorization': sessionStorage.getItem("token")
       }
     })
         .then(response => {
@@ -111,7 +111,7 @@ newMailingListNameBtn.addEventListener('click', (event) => {
     fetch(`mailingLists/${currentMailingListName}?newTextIdentifier=${newName}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': currentToken,
+        'Authorization': sessionStorage.getItem("token"),
       }
     })
         .then(response => {
@@ -156,7 +156,7 @@ importOutlookContactsBtn.addEventListener('click', (event) => {
   fetch(`/mailingLists/importOutlookMailingLists`, {
     method: 'PATCH',
     headers: {
-      'Authorization': currentToken
+      'Authorization': sessionStorage.getItem("token")
     }
   })
       .then(response => {
@@ -175,7 +175,7 @@ function fetching (PATH, mailsArray) {
       mailsArray),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': currentToken
+      'Authorization': sessionStorage.getItem("token")
     }
   })
       .then(response => response.text())

@@ -15,12 +15,12 @@ btn.addEventListener('click', (event) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorisation': currentToken
+        'Authorization': sessionStorage.getItem("token")
       }
     })
-      .then(response => response.json())
-      .then(() => {
-
+      .then(response => response.text())
+      .then((data) => {
+        console.log(data);
       })
       .catch(error => console.log(error))
   } else {

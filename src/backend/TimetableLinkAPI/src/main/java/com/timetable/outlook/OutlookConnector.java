@@ -22,6 +22,7 @@ public class OutlookConnector {
     public OutlookConnector(
             @Value("${personal.email}") String personalEmail,
             @Value("${personal.password}") String personalPassword) {
+            service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
 //        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
 //        ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
 //        service.setCredentials(credentials);
@@ -35,7 +36,6 @@ public class OutlookConnector {
     }
 
     public void setCredentials(String personalEmail, String personalPassword) throws Exception {
-        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
         ExchangeCredentials credentials = new WebCredentials(personalEmail, personalPassword);
         service.setCredentials(credentials);
         service.autodiscoverUrl(
